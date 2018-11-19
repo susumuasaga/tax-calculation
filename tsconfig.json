@@ -27,6 +27,8 @@
     "webpack",
     "jest",
     "src/setupTests.ts",
-    "gulpfile.js"
+    "gulpfile.js",
+    "server",
+    "dist"
   ]
 }
