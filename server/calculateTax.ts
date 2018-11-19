@@ -130,15 +130,7 @@ function calculateIEC(taxDetail: Detail, taxSummary: TaxSummary): void {
   } else {
     throw new Error('Not implemented.');
   }
-  calculatedTax.tax += taxDetail.tax;
-  taxSummary.tax += taxDetail.tax;
-  taxSummary.jurisdictions.push(
-    {
-      jurisdictionType: taxDetail.jurisdictionType,
-      jurisdictionName: taxDetail.jurisdictionName,
-      tax: taxDetail.tax
-    }
-  );
+  calculateSummary(taxDetail, taxSummary);
 }
 
 function calculateIST(taxDetail: Detail, taxSummary: TaxSummary): void {
@@ -166,15 +158,7 @@ function calculateIST(taxDetail: Detail, taxSummary: TaxSummary): void {
     // item.productType == 'product'
     calculationFixed(taxDetail);
   }
-  calculatedTax.tax += taxDetail.tax;
-  taxSummary.tax += taxDetail.tax;
-  taxSummary.jurisdictions.push(
-    {
-      jurisdictionType: taxDetail.jurisdictionType,
-      jurisdictionName: taxDetail.jurisdictionName,
-      tax: taxDetail.tax
-    }
-  );
+  calculateSummary(taxDetail, taxSummary);
 }
 
 function calculationFixed(taxDetail: Detail): void {
@@ -202,15 +186,7 @@ function calculateISC(taxDetail: Detail, taxSummary: TaxSummary): void {
     // receiver.address.cityCode !== 1302603
     throw new Error('Not implemented.');
   }
-  calculatedTax.tax += taxDetail.tax;
-  taxSummary.tax += taxDetail.tax;
-  taxSummary.jurisdictions.push(
-    {
-      jurisdictionType: taxDetail.jurisdictionType,
-      jurisdictionName: taxDetail.jurisdictionName,
-      tax: taxDetail.tax
-    }
-  );
+  calculateSummary(taxDetail, taxSummary);
 }
 
 function calculationExempt(taxDetail: Detail): void {

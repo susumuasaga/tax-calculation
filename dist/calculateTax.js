@@ -110,13 +110,7 @@ function calculateIEC(taxDetail, taxSummary) {
     else {
         throw new Error('Not implemented.');
     }
-    calculatedTax.tax += taxDetail.tax;
-    taxSummary.tax += taxDetail.tax;
-    taxSummary.jurisdictions.push({
-        jurisdictionType: taxDetail.jurisdictionType,
-        jurisdictionName: taxDetail.jurisdictionName,
-        tax: taxDetail.tax
-    });
+    calculateSummary(taxDetail, taxSummary);
 }
 function calculateIST(taxDetail, taxSummary) {
     const item = line.item;
@@ -138,13 +132,7 @@ function calculateIST(taxDetail, taxSummary) {
     else {
         calculationFixed(taxDetail);
     }
-    calculatedTax.tax += taxDetail.tax;
-    taxSummary.tax += taxDetail.tax;
-    taxSummary.jurisdictions.push({
-        jurisdictionType: taxDetail.jurisdictionType,
-        jurisdictionName: taxDetail.jurisdictionName,
-        tax: taxDetail.tax
-    });
+    calculateSummary(taxDetail, taxSummary);
 }
 function calculationFixed(taxDetail) {
     taxDetail.scenario = 'Calculation Fixed';
@@ -166,13 +154,7 @@ function calculateISC(taxDetail, taxSummary) {
     else {
         throw new Error('Not implemented.');
     }
-    calculatedTax.tax += taxDetail.tax;
-    taxSummary.tax += taxDetail.tax;
-    taxSummary.jurisdictions.push({
-        jurisdictionType: taxDetail.jurisdictionType,
-        jurisdictionName: taxDetail.jurisdictionName,
-        tax: taxDetail.tax
-    });
+    calculateSummary(taxDetail, taxSummary);
 }
 function calculationExempt(taxDetail) {
     taxDetail.scenario = 'Calculation Exempt';
