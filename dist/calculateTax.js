@@ -2,52 +2,18 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 const perf_hooks_1 = require("perf_hooks");
 exports.VERSION_ID = '1.0';
+let transaction;
 let emitter;
 let receiver;
 let line;
 let amount;
 let otherCosts;
 let discount;
-let calculatedTax;
-let calculatedTaxSummary;
-function calculateTax(transaction) {
+function calculateTax(t) {
     const ti = perf_hooks_1.performance.now();
-    const header = transaction.header;
-    [emitter, receiver] = (header.transactionType === 'Sale') ?
-        [header.location, header.entity] :
-        [header.entity, header.location];
-    const taxByType = {
-        iec: {
-            tax: 0,
-            jurisdictions: [{
-                    jurisdictionType: 'Country',
-                    jurisdictionName: 'Brasil',
-                    tax: 0
-                }]
-        },
-        ist: {
-            tax: 0, jurisdictions: [{
-                    jurisdictionType: 'State',
-                    jurisdictionName: receiver.address.state,
-                    tax: 0
-                }]
-        },
-        isc: { tax: 0, jurisdictions: [{
-                    jurisdictionType: 'City',
-                    jurisdictionName: emitter.address.cityName,
-                    tax: 0
-                }] }
-    };
-    calculatedTaxSummary = {
-        numberOfLines: 0,
-        subtotal: 0,
-        totalTax: 0,
-        grandTotal: 0,
-        taxByType
-    };
-    transaction.calculatedTaxSummary = calculatedTaxSummary;
-    const processingInfo = { versionId: exports.VERSION_ID, duration: 0 };
-    transaction.processingInfo = processingInfo;
+    transaction = t;
+    initialize();
+    const calculatedTaxSummary = transaction.calculatedTaxSummary;
     for (line of transaction.lines) {
         const taxDetails = {
             iec: {
@@ -81,7 +47,7 @@ function calculateTax(transaction) {
                 tax: 0
             }
         };
-        calculatedTax = {
+        const calculatedTax = {
             tax: 0,
             CST: '99',
             taxDetails
@@ -99,9 +65,9 @@ function calculateTax(transaction) {
         calculatedTaxSummary.numberOfLines += 1;
         calculatedTaxSummary.subtotal += currencyTrunc(amount - discount);
         calculateCST();
-        calculateIEC(taxDetails.iec, taxByType.iec);
-        calculateIST(taxDetails.ist, taxByType.ist);
-        calculateISC(taxDetails.isc, taxByType.isc);
+        calculateIEC();
+        calculateIST();
+        calculateISC();
         calculatedTaxSummary.totalTax += calculatedTax.tax;
     }
     calculatedTaxSummary.grandTotal =
@@ -110,13 +76,54 @@ function calculateTax(transaction) {
     transaction.processingInfo.duration = tf - ti;
 }
 exports.calculateTax = calculateTax;
+function initialize() {
+    const header = transaction.header;
+    [emitter, receiver] = (header.transactionType === 'Sale') ?
+        [header.location, header.entity] :
+        [header.entity, header.location];
+    const taxByType = {
+        iec: {
+            tax: 0,
+            jurisdictions: [{
+                    jurisdictionType: 'Country',
+                    jurisdictionName: 'Brasil',
+                    tax: 0
+                }]
+        },
+        ist: {
+            tax: 0, jurisdictions: [{
+                    jurisdictionType: 'State',
+                    jurisdictionName: receiver.address.state,
+                    tax: 0
+                }]
+        },
+        isc: {
+            tax: 0, jurisdictions: [{
+                    jurisdictionType: 'City',
+                    jurisdictionName: emitter.address.cityName,
+                    tax: 0
+                }]
+        }
+    };
+    const calculatedTaxSummary = {
+        numberOfLines: 0,
+        subtotal: 0,
+        totalTax: 0,
+        grandTotal: 0,
+        taxByType
+    };
+    transaction.calculatedTaxSummary = calculatedTaxSummary;
+    const processingInfo = { versionId: exports.VERSION_ID, duration: 0 };
+    transaction.processingInfo = processingInfo;
+}
 function calculateCST() {
+    const calculatedTax = line.calculatedTax;
     if (emitter.taxRegime === 'individual') {
-        if (line.item.productType === 'product') {
-            calculatedTax.CST = '99';
+        if (line.item.productType === 'merchandise') {
+            calculatedTax.CST = '50';
         }
         else {
-            throw new Error('Not implemented.');
+            calculatedTax.CST = '99';
         }
     }
     else {
@@ -134,23 +141,28 @@ function calculateCST() {
         }
     }
 }
-function calculateIEC(taxDetail, taxSummary) {
+function calculateIEC() {
+    const taxDetail = line.calculatedTax.taxDetails.iec;
+    const taxSummary = transaction.calculatedTaxSummary.taxByType.iec;
     taxDetail.jurisdictionType = 'Country';
     taxDetail.jurisdictionName = 'Brasil';
     taxDetail.taxType = 'IEC';
-    if (calculatedTax.CST >= '31' && calculatedTax.CST <= '37') {
+    const cst = line.calculatedTax.CST;
+    if (cst >= '31' && cst <= '37') {
         calculationExempt(taxDetail);
     }
     else {
-        if (line.useType === 'use' || line.useType === 'consumption') {
+        const useType = line.useType;
+        if (useType === 'use' || useType === 'consumption') {
             throw new Error('Not implemented.');
         }
-        else if (line.useType === 'resale' || line.useType === 'production') {
+        else if (useType === 'resale' || useType === 'production') {
             throw new Error('Not implemented.');
         }
         else {
-            if (line.item.productType === 'merchandise') {
-                throw new Error('Not implemented.');
+            const item = line.item;
+            if (item.productType === 'merchandise') {
+                calculationSimple(taxDetail, item.federalTax.IEC.rate);
             }
             else {
                 calculationExempt(taxDetail);
@@ -159,48 +171,59 @@ function calculateIEC(taxDetail, taxSummary) {
     }
     calculateSummary(taxDetail.tax, taxSummary);
 }
-function calculateIST(taxDetail, taxSummary) {
-    const item = line.item;
+function calculateIST() {
+    const taxDetail = line.calculatedTax.taxDetails.ist;
+    const taxSummary = transaction.calculatedTaxSummary.taxByType.ist;
     taxDetail.jurisdictionType = 'State';
     taxDetail.jurisdictionName = receiver.address.state;
     taxDetail.taxType = 'IST';
-    if (calculatedTax.CST === '35' || calculatedTax.CST === '36') {
+    const cst = line.calculatedTax.CST;
+    if (cst === '35' || cst === '36') {
         calculationExempt(taxDetail);
     }
-    else if (line.useType === 'resale') {
-        throw new Error('Not implemented.');
-    }
-    else if (line.useType === 'production') {
-        throw new Error('Not implemented.');
-    }
-    else if (item.productType === 'merchandise') {
-        throw new Error('Not implemented.');
-    }
     else {
-        calculationFixed(taxDetail);
+        if (line.useType === 'resale') {
+            throw new Error('Not implemented.');
+        }
+        else if (line.useType === 'production') {
+            throw new Error('Not implemented.');
+        }
+        else {
+            const item = line.item;
+            if (item.productType === 'merchandise') {
+                calculationSimple(taxDetail, item.federalTax.IST.rate);
+            }
+            else {
+                const rate = 0.14;
+                const fact = 0.08;
+                calculationFixed(taxDetail, rate, fact);
+            }
+        }
     }
     calculateSummary(taxDetail.tax, taxSummary);
 }
-function calculationFixed(taxDetail) {
-    taxDetail.scenario = 'Calculation Fixed';
-    taxDetail.calcBase = amount + otherCosts;
-    taxDetail.rate = 0.14;
-    taxDetail.fact = 0.08;
-    taxDetail.tax =
-        currencyTrunc(taxDetail.calcBase * (1 - taxDetail.fact) * taxDetail.rate);
-}
-function calculateISC(taxDetail, taxSummary) {
-    const item = line.item;
+function calculateISC() {
+    const taxDetail = line.calculatedTax.taxDetails.isc;
+    const taxSummary = transaction.calculatedTaxSummary.taxByType.isc;
     taxDetail.jurisdictionType = 'City';
     taxDetail.jurisdictionName = emitter.address.cityName;
     taxDetail.taxType = 'ISC';
-    if ((new Set(['99', '34', '35', '36'])).has(calculatedTax.CST) ||
+    const cst = line.calculatedTax.CST;
+    if ((new Set(['99', '34', '35', '36'])).has(cst) ||
         receiver.suframa !== undefined ||
         receiver.address.cityCode === 1302603) {
         calculationExempt(taxDetail);
     }
     else {
-        throw new Error('Not implemented.');
+        const item = line.item;
+        if (item.productType === 'merchandise') {
+            calculationSimple(taxDetail, item.federalTax.ISC.rate);
+        }
+        else {
+            const rate = 0.02;
+            const factor = 0.12;
+            calculationFixed(taxDetail, rate, factor);
+        }
     }
     calculateSummary(taxDetail.tax, taxSummary);
 }
@@ -211,11 +234,26 @@ function calculationExempt(taxDetail) {
     taxDetail.fact = 0;
     taxDetail.tax = 0;
 }
-function calculateSummary(tax, taxSummary) {
-    calculatedTax.tax += tax;
-    taxSummary.tax += tax;
-    taxSummary.jurisdictions[0].tax += tax;
+function calculationFixed(taxDetail, rate, fact) {
+    taxDetail.scenario = 'Calculation Fixed';
+    taxDetail.calcBase = amount + otherCosts;
+    taxDetail.rate = rate;
+    taxDetail.fact = fact;
+    taxDetail.tax =
+        currencyTrunc(taxDetail.calcBase * (1 - fact) * rate);
+}
+function calculationSimple(taxDetail, rate) {
+    taxDetail.scenario = 'Calculation Simple';
+    taxDetail.calcBase = currencyTrunc(amount + otherCosts - discount);
+    taxDetail.rate = rate;
+    taxDetail.fact = 0;
+    taxDetail.tax = currencyTrunc(taxDetail.calcBase * rate);
 }
 function currencyTrunc(x) {
     return Math.floor(x * 100) * 0.01;
+}
+function calculateSummary(tax, taxSummary) {
+    line.calculatedTax.tax += tax;
+    taxSummary.tax += tax;
+    taxSummary.jurisdictions[0].tax += tax;
 }

@@ -24,7 +24,8 @@ it(`case 0
 it(`case 1
   emitter.taxRegime != 'individual'
   receiver.type == 'cityGovernment'
-  line.useType not in {'resale', 'production'}`, () => { verify(actual01, expected01); });
+  line[0].useType not in {'resale', 'production'}
+  line[0].productType == 'product'`, () => { verify(actual01, expected01); });
 it(`case 2
   emitter.taxRegime != 'individual'
   receiver.type == 'stateGovernment'`, () => { verify(actual02, expected02); });
@@ -33,7 +34,10 @@ it(`case 3
   receiver.type == 'federalGovernment'`, () => { verify(actual03, expected03); });
 it(`case 4
   emitter.taxRegime == 'individual'
-  item[0].typeProduct == 'product'`, () => { verify(actual04, expected04); });
+  line[0].item.productType == 'product'
+  line[0].useType not in {'use', 'consumption', 'resale', 'production'}
+  item[1].item.productType == 'merchandise'
+  line[1].useType not in {'use', 'consumption', 'resale', 'production'}`, () => { verify(actual04, expected04); });
 const actual00 = {
     header: {
         transactionType: 'Sale',
@@ -389,21 +393,30 @@ const actual04 = {
             address: { cityName: 'São Paulo', state: 'SP' }
         }
     },
-    lines: [
-        {
+    lines: [{
             numberOfItems: 2,
             itemPrice: 45,
             otherCostAmount: 20,
             lineDiscount: 10,
             item: { productType: 'product' }
-        }
-    ]
+        }, {
+            numberOfItems: 2,
+            itemPrice: 45,
+            otherCostAmount: 20,
+            lineDiscount: 10,
+            item: {
+                productType: 'merchandise',
+                federalTax: {
+                    IEC: { rate: 0.1 },
+                    IST: { rate: 0.05 },
+                    ISC: { rate: 0.02 }
+                }
+            }
+        }]
 };
 const expected04 = {
     header: Object.assign({}, actual04.header),
-    lines: [
-        Object.assign({}, actual04.lines[0], { calculatedTax: {
-                tax: 14.16,
+    lines: [Object.assign({}, actual04.lines[0], { calculatedTax: {
                 CST: '99',
                 taxDetails: {
                     iec: {
@@ -436,44 +449,73 @@ const expected04 = {
                         fact: 0,
                         tax: 0
                     }
-                }
-            } })
-    ],
-    calculatedTaxSummary: {
-        numberOfLines: 1,
-        subtotal: 80,
-        totalTax: 14.16,
-        grandTotal: 94.16,
-        taxByType: {
-            iec: {
-                tax: 0,
-                jurisdictions: [
-                    {
+                },
+                tax: 14.16
+            } }), Object.assign({}, actual04.lines[0], { calculatedTax: {
+                CST: '50',
+                taxDetails: {
+                    iec: {
                         jurisdictionType: 'Country',
                         jurisdictionName: 'Brasil',
-                        tax: 0
-                    }
-                ]
-            },
-            ist: {
-                tax: 14.16,
-                jurisdictions: [
-                    {
+                        taxType: 'IEC',
+                        scenario: 'Calculation Simple',
+                        calcBase: 100,
+                        rate: 0.1,
+                        fact: 0,
+                        tax: 10
+                    },
+                    ist: {
                         jurisdictionType: 'State',
                         jurisdictionName: 'SP',
-                        tax: 14.16
-                    }
-                ]
-            },
-            isc: {
-                tax: 0,
-                jurisdictions: [
-                    {
+                        taxType: 'IST',
+                        scenario: 'Calculation Simple',
+                        calcBase: 100,
+                        rate: 0.05,
+                        fact: 0,
+                        tax: 5
+                    },
+                    isc: {
                         jurisdictionType: 'City',
                         jurisdictionName: 'Florianópolis',
-                        tax: 0
+                        taxType: 'ISC',
+                        scenario: 'Calculation Simple',
+                        calcBase: 100,
+                        rate: 0.02,
+                        fact: 0,
+                        tax: 2
                     }
-                ]
+                },
+                tax: 17
+            } })],
+    calculatedTaxSummary: {
+        numberOfLines: 2,
+        subtotal: 160,
+        totalTax: 14.16 + 17,
+        grandTotal: 160 + 14.16 + 17,
+        taxByType: {
+            iec: {
+                tax: 10,
+                jurisdictions: [{
+                        jurisdictionType: 'Country',
+                        jurisdictionName: 'Brasil',
+                        tax: 10
+                    }]
+            },
+            ist: {
+                tax: 14.16 + 5,
+                jurisdictions: [{
+                        jurisdictionType: 'State',
+                        jurisdictionName: 'SP',
+                        tax: 14.16 + 5
+                    }]
+            },
+            isc: {
+                tax: 2,
+                jurisdictions: [{
+                        jurisdictionType: 'City',
+                        jurisdictionName: 'Florianópolis',
+                        tax: 2
+                    }]
             }
         }
     }

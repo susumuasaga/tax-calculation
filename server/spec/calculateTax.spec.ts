@@ -31,7 +31,8 @@ it(
   `case 1
   emitter.taxRegime != 'individual'
   receiver.type == 'cityGovernment'
-  line.useType not in {'resale', 'production'}`,
+  line[0].useType not in {'resale', 'production'}
+  line[0].productType == 'product'`,
   () => { verify(actual01, expected01); }
 );
 
@@ -52,7 +53,10 @@ it(
 it(
   `case 4
   emitter.taxRegime == 'individual'
-  item[0].typeProduct == 'product'`,
+  line[0].item.productType == 'product'
+  line[0].useType not in {'use', 'consumption', 'resale', 'production'}
+  item[1].item.productType == 'merchandise'
+  line[1].useType not in {'use', 'consumption', 'resale', 'production'}`,
   () => { verify(actual04, expected04); }
 );
 
@@ -113,7 +117,8 @@ const expected00: Transaction = {
 case 1
   emitter.taxRegime != 'individual'
   receiver.type == 'cityGovernment'
-  line.useType not in {'resale', 'production'}
+  line[0].useType not in {'resale', 'production'}
+  line[0].productType == 'product'
 */
 const actual01: Transaction = {
   header: {
@@ -436,7 +441,10 @@ const expected03: Transaction = {
 /*
 case 4
   emitter.taxRegime == 'individual'
-  item[0].typeProduct == 'product'
+  line[0].item.productType == 'product'
+  line[0].useType not in {'use', 'consumption', 'resale', 'production'}`
+  item[1].item.productType == 'merchandise'
+  line[1].useType not in {'use', 'consumption', 'resale', 'production'}`
 */
 const actual04: Transaction = {
   header: {
@@ -449,94 +457,135 @@ const actual04: Transaction = {
       address: { cityName: 'São Paulo', state: 'SP' }
     }
   },
-  lines: [
-    {
-      numberOfItems: 2,
-      itemPrice: 45,
-      otherCostAmount: 20,
-      lineDiscount: 10,
-      item: { productType: 'product' }
+  lines: [{
+    numberOfItems: 2,
+    itemPrice: 45,
+    otherCostAmount: 20,
+    lineDiscount: 10,
+    item: { productType: 'product' }
+  }, {
+    numberOfItems: 2,
+    itemPrice: 45,
+    otherCostAmount: 20,
+    lineDiscount: 10,
+    item: {
+      productType: 'merchandise',
+      federalTax: {
+        IEC: { rate: 0.1 },
+        IST: { rate: 0.05 },
+        ISC: { rate: 0.02 }
+      }
     }
-  ]
+  }]
 };
 const expected04: Transaction = {
   header: { ...actual04.header },
-  lines: [
-    {
-      ...actual04.lines[0],
-      calculatedTax: {
-        tax: 14.16,
-        CST: '99',
-        taxDetails: {
-          iec: {
-            jurisdictionType: 'Country',
-            jurisdictionName: 'Brasil',
-            taxType: 'IEC',
-            scenario: 'Calculation Exempt',
-            calcBase: 100,
-            rate: 0,
-            fact: 0,
-            tax: 0
-          },
-          ist: {
-            jurisdictionType: 'State',
-            jurisdictionName: 'SP',
-            taxType: 'IST',
-            scenario: 'Calculation Fixed',
-            calcBase: 110,
-            rate: 0.14,
-            fact: 0.08,
-            tax: 14.16
-          },
-          isc: {
-            jurisdictionType: 'City',
-            jurisdictionName: 'Florianópolis',
-            taxType: 'ISC',
-            scenario: 'Calculation Exempt',
-            calcBase: 100,
-            rate: 0,
-            fact: 0,
-            tax: 0
-          }
+  lines: [{
+    ...actual04.lines[0],
+    calculatedTax: {
+      CST: '99',
+      taxDetails: {
+        iec: {
+          jurisdictionType: 'Country',
+          jurisdictionName: 'Brasil',
+          taxType: 'IEC',
+          scenario: 'Calculation Exempt',
+          calcBase: 100,
+          rate: 0,
+          fact: 0,
+          tax: 0
+        },
+        ist: {
+          jurisdictionType: 'State',
+          jurisdictionName: 'SP',
+          taxType: 'IST',
+          scenario: 'Calculation Fixed',
+          calcBase: 110,
+          rate: 0.14,
+          fact: 0.08,
+          tax: 14.16
+        },
+        isc: {
+          jurisdictionType: 'City',
+          jurisdictionName: 'Florianópolis',
+          taxType: 'ISC',
+          scenario: 'Calculation Exempt',
+          calcBase: 100,
+          rate: 0,
+          fact: 0,
+          tax: 0
         }
-      }
+      },
+      tax: 14.16
     }
-  ],
+  }, {
+    ...actual04.lines[0],
+    calculatedTax: {
+      CST: '50',
+      taxDetails: {
+        iec: {
+          jurisdictionType: 'Country',
+          jurisdictionName: 'Brasil',
+          taxType: 'IEC',
+          scenario: 'Calculation Simple',
+          calcBase: 100,
+          rate: 0.1,
+          fact: 0,
+          tax: 10
+        },
+        ist: {
+          jurisdictionType: 'State',
+          jurisdictionName: 'SP',
+          taxType: 'IST',
+          scenario: 'Calculation Simple',
+          calcBase: 100,
+          rate: 0.05,
+          fact: 0,
+          tax: 5
+        },
+        isc: {
+          jurisdictionType: 'City',
+          jurisdictionName: 'Florianópolis',
+          taxType: 'ISC',
+          scenario: 'Calculation Simple',
+          calcBase: 100,
+          rate: 0.02,
+          fact: 0,
+          tax: 2
+        }
+      },
+      tax: 17
+    }
+  }],
   calculatedTaxSummary: {
-    numberOfLines: 1,
-    subtotal: 80,
-    totalTax: 14.16,
-    grandTotal: 94.16,
+    numberOfLines: 2,
+    subtotal: 160,
+    totalTax: 14.16 + 17,
+    grandTotal: 160 + 14.16 + 17,
     taxByType: {
       iec: {
-        tax: 0,
-        jurisdictions: [
-          {
-            jurisdictionType: 'Country',
-            jurisdictionName: 'Brasil',
-            tax: 0
-          }
-        ]
+        tax: 10,
+        jurisdictions: [{
+          jurisdictionType: 'Country',
+          jurisdictionName: 'Brasil',
+          tax: 10
+        }]
       },
       ist: {
-        tax: 14.16,
-        jurisdictions: [
-          {
-            jurisdictionType: 'State',
-            jurisdictionName: 'SP',
-            tax: 14.16
-          }
-        ]
+        tax: 14.16 + 5,
+        jurisdictions: [{
+          jurisdictionType: 'State',
+          jurisdictionName: 'SP',
+          tax: 14.16 + 5
+        }]
       },
       isc: {
-        tax: 0,
-        jurisdictions: [
-          {
-            jurisdictionType: 'City',
-            jurisdictionName: 'Florianópolis',
-            tax: 0
-          }
-        ]
+        tax: 2,
+        jurisdictions: [{
+          jurisdictionType: 'City',
+          jurisdictionName: 'Florianópolis',
+          tax: 2
+        }]
       }
     }
   }
