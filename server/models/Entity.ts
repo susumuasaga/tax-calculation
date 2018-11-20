@@ -37,8 +37,7 @@ export interface Entity {
   type?:
     'cityGovernment' |
     'stateGovernment' |
-    'stateGovernment' |
-    'nonGovernment';
+    'federalGovernment';
   /**
    * Location Address
    */

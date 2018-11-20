@@ -12,10 +12,31 @@ let calculatedTax;
 let calculatedTaxSummary;
 function calculateTax(transaction) {
     const ti = perf_hooks_1.performance.now();
+    const header = transaction.header;
+    [emitter, receiver] = (header.transactionType === 'Sale') ?
+        [header.location, header.entity] :
+        [header.entity, header.location];
     const taxByType = {
-        iec: { tax: 0, jurisdictions: [] },
-        ist: { tax: 0, jurisdictions: [] },
-        isc: { tax: 0, jurisdictions: [] }
+        iec: {
+            tax: 0,
+            jurisdictions: [{
+                    jurisdictionType: 'Country',
+                    jurisdictionName: 'Brasil',
+                    tax: 0
+                }]
+        },
+        ist: {
+            tax: 0, jurisdictions: [{
+                    jurisdictionType: 'State',
+                    jurisdictionName: receiver.address.state,
+                    tax: 0
+                }]
+        },
+        isc: { tax: 0, jurisdictions: [{
+                    jurisdictionType: 'City',
+                    jurisdictionName: emitter.address.cityName,
+                    tax: 0
+                }] }
     };
     calculatedTaxSummary = {
         numberOfLines: 0,
@@ -27,17 +48,13 @@ function calculateTax(transaction) {
     transaction.calculatedTaxSummary = calculatedTaxSummary;
     const processingInfo = { versionId: exports.VERSION_ID, duration: 0 };
     transaction.processingInfo = processingInfo;
-    const header = transaction.header;
-    [emitter, receiver] = (header.transactionType === 'Sale') ?
-        [header.location, header.entity] :
-        [header.entity, header.location];
     for (line of transaction.lines) {
         const taxDetails = {
             iec: {
                 jurisdictionType: 'Country',
                 jurisdictionName: 'Brasil',
                 taxType: 'IEC',
-                scenario: 'Calculation Exempt',
+                scenario: 'To be determined',
                 calcBase: 0,
                 rate: 0,
                 fact: 0,
@@ -45,9 +62,9 @@ function calculateTax(transaction) {
             },
             ist: {
                 jurisdictionType: 'State',
-                jurisdictionName: 'SP',
+                jurisdictionName: receiver.address.state,
                 taxType: 'IST',
-                scenario: 'Calculation Exempt',
+                scenario: 'To be determined',
                 calcBase: 0,
                 rate: 0,
                 fact: 0,
@@ -55,9 +72,9 @@ function calculateTax(transaction) {
             },
             isc: {
                 jurisdictionType: 'City',
-                jurisdictionName: 'São Paulo',
+                jurisdictionName: emitter.address.cityName,
                 taxType: 'ISC',
-                scenario: 'Calculation Exempt',
+                scenario: 'To be determined',
                 calcBase: 0,
                 rate: 0,
                 fact: 0,
@@ -80,7 +97,7 @@ function calculateTax(transaction) {
             line.lineDiscount :
             0;
         calculatedTaxSummary.numberOfLines += 1;
-        calculatedTaxSummary.subtotal += amount - discount;
+        calculatedTaxSummary.subtotal += currencyTrunc(amount - discount);
         calculateCST();
         calculateIEC(taxDetails.iec, taxByType.iec);
         calculateIST(taxDetails.ist, taxByType.ist);
@@ -94,10 +111,27 @@ function calculateTax(transaction) {
 }
 exports.calculateTax = calculateTax;
 function calculateCST() {
-    const emitterIndividual = emitter.taxRegime === 'individual';
-    const receiverCityGovernment = receiver.type === 'cityGovernment';
-    if (!emitterIndividual && receiverCityGovernment) {
-        calculatedTax.CST = '34';
+    if (emitter.taxRegime === 'individual') {
+        if (line.item.productType === 'product') {
+            calculatedTax.CST = '99';
+        }
+        else {
+            throw new Error('Not implemented.');
+        }
+    }
+    else {
+        if (receiver.type === 'cityGovernment') {
+            calculatedTax.CST = '34';
+        }
+        else if (receiver.type === 'stateGovernment') {
+            calculatedTax.CST = '35';
+        }
+        else if (receiver.type === 'federalGovernment') {
+            calculatedTax.CST = '36';
+        }
+        else {
+            throw new Error('Not implemented');
+        }
     }
 }
 function calculateIEC(taxDetail, taxSummary) {
@@ -108,9 +142,22 @@ function calculateIEC(taxDetail, taxSummary) {
         calculationExempt(taxDetail);
     }
     else {
-        throw new Error('Not implemented.');
+        if (line.useType === 'use' || line.useType === 'consumption') {
+            throw new Error('Not implemented.');
+        }
+        else if (line.useType === 'resale' || line.useType === 'production') {
+            throw new Error('Not implemented.');
+        }
+        else {
+            if (line.item.productType === 'merchandise') {
+                throw new Error('Not implemented.');
+            }
+            else {
+                calculationExempt(taxDetail);
+            }
+        }
     }
-    calculateSummary(taxDetail, taxSummary);
+    calculateSummary(taxDetail.tax, taxSummary);
 }
 function calculateIST(taxDetail, taxSummary) {
     const item = line.item;
@@ -132,14 +179,15 @@ function calculateIST(taxDetail, taxSummary) {
     else {
         calculationFixed(taxDetail);
     }
-    calculateSummary(taxDetail, taxSummary);
+    calculateSummary(taxDetail.tax, taxSummary);
 }
 function calculationFixed(taxDetail) {
     taxDetail.scenario = 'Calculation Fixed';
     taxDetail.calcBase = amount + otherCosts;
     taxDetail.rate = 0.14;
     taxDetail.fact = 0.08;
-    taxDetail.tax = taxDetail.calcBase * (1 - taxDetail.fact) * taxDetail.rate;
+    taxDetail.tax =
+        currencyTrunc(taxDetail.calcBase * (1 - taxDetail.fact) * taxDetail.rate);
 }
 function calculateISC(taxDetail, taxSummary) {
     const item = line.item;
@@ -154,21 +202,20 @@ function calculateISC(taxDetail, taxSummary) {
     else {
         throw new Error('Not implemented.');
     }
-    calculateSummary(taxDetail, taxSummary);
+    calculateSummary(taxDetail.tax, taxSummary);
 }
 function calculationExempt(taxDetail) {
     taxDetail.scenario = 'Calculation Exempt';
-    taxDetail.calcBase = amount + otherCosts - discount;
+    taxDetail.calcBase = currencyTrunc(amount + otherCosts - discount);
     taxDetail.rate = 0;
     taxDetail.fact = 0;
     taxDetail.tax = 0;
 }
-function calculateSummary(taxDetail, taxSummary) {
-    calculatedTax.tax += taxDetail.tax;
-    taxSummary.tax += taxDetail.tax;
-    taxSummary.jurisdictions.push({
-        jurisdictionType: taxDetail.jurisdictionType,
-        jurisdictionName: taxDetail.jurisdictionName,
-        tax: taxDetail.tax
-    });
+function calculateSummary(tax, taxSummary) {
+    calculatedTax.tax += tax;
+    taxSummary.tax += tax;
+    taxSummary.jurisdictions[0].tax += tax;
+}
+function currencyTrunc(x) {
+    return Math.floor(x * 100) * 0.01;
 }

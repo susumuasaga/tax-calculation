@@ -266,7 +266,10 @@ export interface Jurisdiction {
    */
   jurisdictionType: 'City' | 'State' | 'Country';
   /**
-   * Jurisdiction Name
+   * Depends on `jurisdictionType`, according to the following rule:
+   * * `'City'`: emitter.address.cityName;
+   * * `'State'`: receiver.address.state;
+   * * `'Country'`: 'Brasil'
    */
   jurisdictionName: string;
   /**
