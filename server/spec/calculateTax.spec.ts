@@ -80,7 +80,9 @@ it(
   receiver.type not in {'cityGovernment', 'stateGovernment', 'federalGovernment'}
   receiver.address.state == emitter.address.state
   line[0].item.productType == 'product'
-  line[0].useType == 'production'`,
+  line[0].useType == 'production'
+  line[1].item.productType == 'merchandise'
+  line[1].useType == 'production'`,
   () => { verify(given06, expected06); }
 );
 
@@ -793,6 +795,8 @@ const expected05: Transaction = {
   receiver.address.state == emitter.address.state
   line[0].item.productType == 'product'
   line[0].useType == 'production'
+  line[0].item.productType == 'merchandise'
+  line[0].useType == 'production'
  */
 const given06: Transaction = {
   header: {
@@ -806,21 +810,37 @@ const given06: Transaction = {
       address: { cityName: 'Jundiaí', state: 'SP' }
     }
   },
-  lines: [{
-    numberOfItems: 2,
-    itemPrice: 45,
-    otherCostAmount: 20,
-    lineDiscount: 10,
-    useType: 'production',
-    item: {
-      productType: 'product',
-      federalTax: {
-        IEC: { fact: 0.1 },
-        IST: { rate: 0.1 },
-        ISC: {}
+  lines: [
+    {
+      numberOfItems: 2,
+      itemPrice: 45,
+      otherCostAmount: 20,
+      lineDiscount: 10,
+      useType: 'production',
+      item: {
+        productType: 'product',
+        federalTax: {
+          IEC: { fact: 0.1 },
+          IST: { rate: 0.1 },
+          ISC: {}
+        }
+      }
+    }, {
+      numberOfItems: 2,
+      itemPrice: 45,
+      otherCostAmount: 20,
+      lineDiscount: 10,
+      useType: 'production',
+      item: {
+        productType: 'merchandise',
+        federalTax: {
+          IEC: { rate: 0.1 },
+          IST: { rate: 0.1 },
+          ISC: { rate: 0.05 }
+        }
       }
     }
-  }]
+  ]
 };
 const expected06: Transaction = {
   header: { ...given06.header },
@@ -863,36 +883,74 @@ const expected06: Transaction = {
         },
         tax: 17.79
       }
+    }, {
+      ...given06.lines[1],
+      calculatedTax: {
+        CST: '50',
+        taxDetails: {
+          iec: {
+            jurisdictionType: 'Country',
+            jurisdictionName: 'Brasil',
+            taxType: 'IEC',
+            scenario: 'Calculation Simple',
+            calcBase: 100,
+            rate: 0.1,
+            fact: 0,
+            tax: 10
+          },
+          ist: {
+            jurisdictionType: 'State',
+            jurisdictionName: 'SP',
+            taxType: 'IST',
+            scenario: 'Calculation Simple',
+            calcBase: 100,
+            rate: 0.1,
+            fact: 0,
+            tax: 10
+          },
+          isc: {
+            jurisdictionType: 'City',
+            jurisdictionName: 'São Paulo',
+            taxType: 'ISC',
+            scenario: 'Calculation Simple',
+            calcBase: 100,
+            rate: 0.05,
+            fact: 0,
+            tax: 5
+          }
+        },
+        tax: 25
+      }
     }
   ],
   calculatedTaxSummary: {
-    numberOfLines: 1,
-    subtotal: 80,
-    totalTax: 17.79,
-    grandTotal: 97.79,
+    numberOfLines: 2,
+    subtotal: 160,
+    totalTax: 42.79,
+    grandTotal: 202.79,
     taxByType: {
       iec: {
-        tax: 5.85,
+        tax: 15.85,
         jurisdictions: [{
           jurisdictionType: 'Country',
           jurisdictionName: 'Brasil',
-          tax: 5.85
+          tax: 15.85
         }]
       },
       ist: {
-        tax: 10,
+        tax: 20,
         jurisdictions: [{
           jurisdictionType: 'State',
           jurisdictionName: 'SP',
-          tax: 10
+          tax: 20
         }]
       },
       isc: {
-        tax: 1.94,
+        tax: 6.94,
         jurisdictions: [{
           jurisdictionType: 'City',
           jurisdictionName: 'São Paulo',
-          tax: 1.94
+          tax: 6.94
         }]
       }
     }
