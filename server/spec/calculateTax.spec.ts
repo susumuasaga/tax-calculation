@@ -74,6 +74,16 @@ it(
   () => { verify(given05, expected05); }
 );
 
+it(
+  `case 6
+  emitter.taxRegime == 'realProfit'
+  receiver.type not in {'cityGovernment', 'stateGovernment', 'federalGovernment'}
+  receiver.address.state == emitter.address.state
+  line[0].item.productType == 'product'
+  line[0].useType == 'production'`,
+  () => { verify(given06, expected06); }
+);
+
 /*
 case 0
   lines == []
@@ -770,6 +780,119 @@ const expected05: Transaction = {
           jurisdictionType: 'City',
           jurisdictionName: 'Parintins',
           tax: 0
+        }]
+      }
+    }
+  }
+};
+
+/*
+  case 6
+  emitter.taxRegime == 'realProfit'
+  receiver.type not in {'cityGovernment', 'stateGovernment', 'federalGovernment'}
+  receiver.address.state == emitter.address.state
+  line[0].item.productType == 'product'
+  line[0].useType == 'production'
+ */
+const given06: Transaction = {
+  header: {
+    transactionType: 'Sale',
+    transactionDate: '2018-01-15',
+    location: {
+      taxRegime: 'realProfit',
+      address: { cityName: 'São Paulo', state: 'SP' }
+    },
+    entity: {
+      address: { cityName: 'Jundiaí', state: 'SP' }
+    }
+  },
+  lines: [{
+    numberOfItems: 2,
+    itemPrice: 45,
+    otherCostAmount: 20,
+    lineDiscount: 10,
+    useType: 'production',
+    item: {
+      productType: 'product',
+      federalTax: {
+        IEC: { fact: 0.1 },
+        IST: { rate: 0.1 },
+        ISC: {}
+      }
+    }
+  }]
+};
+const expected06: Transaction = {
+  header: { ...given06.header },
+  lines: [
+    {
+      ...given06.lines[0],
+      calculatedTax: {
+        CST: '50',
+        taxDetails: {
+          iec: {
+            jurisdictionType: 'Country',
+            jurisdictionName: 'Brasil',
+            taxType: 'IEC',
+            scenario: 'Calculation Table',
+            calcBase: 100,
+            rate: 0.065,
+            fact: 0.1,
+            tax: 5.85
+          },
+          ist: {
+            jurisdictionType: 'State',
+            jurisdictionName: 'SP',
+            taxType: 'IST',
+            scenario: 'Calculation Simple',
+            calcBase: 100,
+            rate: 0.1,
+            fact: 0,
+            tax: 10
+          },
+          isc: {
+            jurisdictionType: 'City',
+            jurisdictionName: 'São Paulo',
+            taxType: 'ISC',
+            scenario: 'Calculation Fixed',
+            calcBase: 110,
+            rate: 0.02,
+            fact: 0.12,
+            tax: 1.94
+          }
+        },
+        tax: 17.79
+      }
+    }
+  ],
+  calculatedTaxSummary: {
+    numberOfLines: 1,
+    subtotal: 80,
+    totalTax: 17.79,
+    grandTotal: 97.79,
+    taxByType: {
+      iec: {
+        tax: 5.85,
+        jurisdictions: [{
+          jurisdictionType: 'Country',
+          jurisdictionName: 'Brasil',
+          tax: 5.85
+        }]
+      },
+      ist: {
+        tax: 10,
+        jurisdictions: [{
+          jurisdictionType: 'State',
+          jurisdictionName: 'SP',
+          tax: 10
+        }]
+      },
+      isc: {
+        tax: 1.94,
+        jurisdictions: [{
+          jurisdictionType: 'City',
+          jurisdictionName: 'São Paulo',
+          tax: 1.94
         }]
       }
     }
