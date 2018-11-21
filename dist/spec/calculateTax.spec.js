@@ -2,43 +2,53 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 const calculateTax_1 = require("../calculateTax");
 const TIME_LIMIT = 200;
-function verify(actual, expected) {
-    calculateTax_1.calculateTax(actual);
-    expect(actual.lines.length)
+function verify(given, expected) {
+    calculateTax_1.calculateTax(given);
+    expect(given.lines.length)
         .toBe(expected.lines.length);
-    for (let i = 0; i < actual.lines.length; i += 1) {
-        expect(actual.lines[i].calculatedTax)
+    for (let i = 0; i < given.lines.length; i += 1) {
+        expect(given.lines[i].calculatedTax)
             .toEqual(expected.lines[i].calculatedTax);
     }
-    expect(actual.calculatedTaxSummary)
+    expect(given.calculatedTaxSummary)
         .toEqual(expected.calculatedTaxSummary);
-    expect(actual.processingInfo.versionId)
+    expect(given.processingInfo.versionId)
         .toBe(calculateTax_1.VERSION_ID);
-    expect(actual.processingInfo.duration)
+    expect(given.processingInfo.duration)
         .toBeLessThan(TIME_LIMIT);
 }
 it(`case 0
   lines == []`, () => {
-    verify(actual00, expected00);
+    verify(given00, expected00);
 });
 it(`case 1
   emitter.taxRegime != 'individual'
   receiver.type == 'cityGovernment'
   line[0].useType not in {'resale', 'production'}
-  line[0].productType == 'product'`, () => { verify(actual01, expected01); });
+  line[0].productType == 'product'`, () => { verify(given01, expected01); });
 it(`case 2
   emitter.taxRegime != 'individual'
-  receiver.type == 'stateGovernment'`, () => { verify(actual02, expected02); });
+  receiver.type == 'stateGovernment'`, () => { verify(given02, expected02); });
 it(`case 3
   emitter.taxRegime != 'individual'
-  receiver.type == 'federalGovernment'`, () => { verify(actual03, expected03); });
+  receiver.type == 'federalGovernment'`, () => { verify(given03, expected03); });
 it(`case 4
   emitter.taxRegime == 'individual'
+  receiver.suframa != undefined
   line[0].item.productType == 'product'
   line[0].useType not in {'use', 'consumption', 'resale', 'production'}
   item[1].item.productType == 'merchandise'
-  line[1].useType not in {'use', 'consumption', 'resale', 'production'}`, () => { verify(actual04, expected04); });
-const actual00 = {
+  line[1].useType not in {'use', 'consumption', 'resale', 'production'}`, () => { verify(given04, expected04); });
+it(`case 5
+  transactionDate == '2018-01-15'
+  emitter.taxRegime == 'simplified'
+  receiver.type not in {'cityGovernment', 'stateGovernment', 'federalGovernment'}
+  receiver.cityCode = 1302603
+  line[0].item.productType == 'product'
+  line[0].useType == 'resale'
+  line[1].item.productType == 'merchandise'
+  line[1].useType == 'resale'`, () => { verify(given05, expected05); });
+const given00 = {
     header: {
         transactionType: 'Sale',
         location: {
@@ -51,7 +61,7 @@ const actual00 = {
     lines: []
 };
 const expected00 = {
-    header: Object.assign({}, actual00.header),
+    header: Object.assign({}, given00.header),
     lines: [],
     calculatedTaxSummary: {
         numberOfLines: 0,
@@ -86,7 +96,7 @@ const expected00 = {
         }
     }
 };
-const actual01 = {
+const given01 = {
     header: {
         transactionType: 'Sale',
         location: {
@@ -109,9 +119,9 @@ const actual01 = {
     ]
 };
 const expected01 = {
-    header: Object.assign({}, actual01.header),
+    header: Object.assign({}, given01.header),
     lines: [
-        Object.assign({}, actual01.lines[0], { calculatedTax: {
+        Object.assign({}, given01.lines[0], { calculatedTax: {
                 tax: 12.88,
                 CST: '34',
                 taxDetails: {
@@ -181,7 +191,7 @@ const expected01 = {
         }
     }
 };
-const actual02 = {
+const given02 = {
     header: {
         transactionType: 'Purchase',
         location: {
@@ -205,9 +215,9 @@ const actual02 = {
     ]
 };
 const expected02 = {
-    header: Object.assign({}, actual02.header),
+    header: Object.assign({}, given02.header),
     lines: [
-        Object.assign({}, actual02.lines[0], { calculatedTax: {
+        Object.assign({}, given02.lines[0], { calculatedTax: {
                 tax: 0,
                 CST: '35',
                 taxDetails: {
@@ -283,7 +293,7 @@ const expected02 = {
         }
     }
 };
-const actual03 = {
+const given03 = {
     header: {
         transactionType: 'Sale',
         location: {
@@ -304,9 +314,9 @@ const actual03 = {
     ]
 };
 const expected03 = {
-    header: Object.assign({}, actual03.header),
+    header: Object.assign({}, given03.header),
     lines: [
-        Object.assign({}, actual03.lines[0], { calculatedTax: {
+        Object.assign({}, given03.lines[0], { calculatedTax: {
                 tax: 0,
                 CST: '36',
                 taxDetails: {
@@ -382,7 +392,7 @@ const expected03 = {
         }
     }
 };
-const actual04 = {
+const given04 = {
     header: {
         transactionType: 'Sale',
         location: {
@@ -390,14 +400,15 @@ const actual04 = {
             address: { cityName: 'Florianópolis', state: 'SC' }
         },
         entity: {
+            suframa: '12345678',
             address: { cityName: 'São Paulo', state: 'SP' }
         }
     },
     lines: [{
-            numberOfItems: 2,
+            numberOfItems: 1,
             itemPrice: 45,
-            otherCostAmount: 20,
-            lineDiscount: 10,
+            otherCostAmount: 10,
+            lineDiscount: 5,
             item: { productType: 'product' }
         }, {
             numberOfItems: 2,
@@ -409,14 +420,14 @@ const actual04 = {
                 federalTax: {
                     IEC: { rate: 0.1 },
                     IST: { rate: 0.05 },
-                    ISC: { rate: 0.02 }
+                    ISC: { rate: 0.1 }
                 }
             }
         }]
 };
 const expected04 = {
-    header: Object.assign({}, actual04.header),
-    lines: [Object.assign({}, actual04.lines[0], { calculatedTax: {
+    header: Object.assign({}, given04.header),
+    lines: [Object.assign({}, given04.lines[0], { calculatedTax: {
                 CST: '99',
                 taxDetails: {
                     iec: {
@@ -424,7 +435,7 @@ const expected04 = {
                         jurisdictionName: 'Brasil',
                         taxType: 'IEC',
                         scenario: 'Calculation Exempt',
-                        calcBase: 100,
+                        calcBase: 50,
                         rate: 0,
                         fact: 0,
                         tax: 0
@@ -434,24 +445,24 @@ const expected04 = {
                         jurisdictionName: 'SP',
                         taxType: 'IST',
                         scenario: 'Calculation Fixed',
-                        calcBase: 110,
+                        calcBase: 55,
                         rate: 0.14,
                         fact: 0.08,
-                        tax: 14.16
+                        tax: 7.08
                     },
                     isc: {
                         jurisdictionType: 'City',
                         jurisdictionName: 'Florianópolis',
                         taxType: 'ISC',
                         scenario: 'Calculation Exempt',
-                        calcBase: 100,
+                        calcBase: 50,
                         rate: 0,
                         fact: 0,
                         tax: 0
                     }
                 },
-                tax: 14.16
-            } }), Object.assign({}, actual04.lines[0], { calculatedTax: {
+                tax: 7.08
+            } }), Object.assign({}, given04.lines[1], { calculatedTax: {
                 CST: '50',
                 taxDetails: {
                     iec: {
@@ -478,20 +489,20 @@ const expected04 = {
                         jurisdictionType: 'City',
                         jurisdictionName: 'Florianópolis',
                         taxType: 'ISC',
-                        scenario: 'Calculation Simple',
+                        scenario: 'Calculation Exempt',
                         calcBase: 100,
-                        rate: 0.02,
+                        rate: 0,
                         fact: 0,
-                        tax: 2
+                        tax: 0
                     }
                 },
-                tax: 17
+                tax: 15
             } })],
     calculatedTaxSummary: {
         numberOfLines: 2,
-        subtotal: 160,
-        totalTax: 14.16 + 17,
-        grandTotal: 160 + 14.16 + 17,
+        subtotal: 40 + 80,
+        totalTax: 10 + 7.08 + 5,
+        grandTotal: 40 + 80 + 10 + 7.08 + 5,
         taxByType: {
             iec: {
                 tax: 10,
@@ -502,19 +513,171 @@ const expected04 = {
                     }]
             },
             ist: {
-                tax: 14.16 + 5,
+                tax: 7.08 + 5,
                 jurisdictions: [{
                         jurisdictionType: 'State',
                         jurisdictionName: 'SP',
-                        tax: 14.16 + 5
+                        tax: 7.08 + 5
                     }]
             },
             isc: {
-                tax: 2,
+                tax: 0,
                 jurisdictions: [{
                         jurisdictionType: 'City',
                         jurisdictionName: 'Florianópolis',
-                        tax: 2
+                        tax: 0
+                    }]
+            }
+        }
+    }
+};
+const given05 = {
+    header: {
+        transactionType: 'Sale',
+        transactionDate: '2018-01-15',
+        location: {
+            taxRegime: 'simplified',
+            address: { cityName: 'Parintins', state: 'AM' }
+        },
+        entity: {
+            address: { cityName: 'Manaus', state: 'AM', cityCode: 1302603 }
+        }
+    },
+    lines: [{
+            numberOfItems: 2,
+            itemPrice: 45,
+            otherCostAmount: 20,
+            lineDiscount: 10,
+            useType: 'resale',
+            item: {
+                productType: 'product',
+                federalTax: {
+                    IEC: { fact: 0.1 },
+                    IST: { fact: 0.05 },
+                    ISC: {}
+                }
+            }
+        }, {
+            numberOfItems: 2,
+            itemPrice: 45,
+            otherCostAmount: 20,
+            lineDiscount: 10,
+            useType: 'resale',
+            item: {
+                productType: 'merchandise',
+                federalTax: {
+                    IEC: { rate: 0.1 },
+                    IST: { rate: 0.05, fact: 0.05 },
+                    ISC: {}
+                }
+            }
+        }]
+};
+const expected05 = {
+    header: Object.assign({}, given05.header),
+    lines: [
+        Object.assign({}, given05.lines[0], { calculatedTax: {
+                CST: '99',
+                taxDetails: {
+                    iec: {
+                        jurisdictionType: 'Country',
+                        jurisdictionName: 'Brasil',
+                        taxType: 'IEC',
+                        scenario: 'Calculation Table',
+                        calcBase: 100,
+                        rate: 0.045,
+                        fact: 0.1,
+                        tax: 4.05
+                    },
+                    ist: {
+                        jurisdictionType: 'State',
+                        jurisdictionName: 'AM',
+                        taxType: 'IST',
+                        scenario: 'Calculation Table',
+                        calcBase: 104.05,
+                        rate: 0.12,
+                        fact: 0.05,
+                        tax: 11.86
+                    },
+                    isc: {
+                        jurisdictionType: 'City',
+                        jurisdictionName: 'Parintins',
+                        taxType: 'ISC',
+                        scenario: 'Calculation Exempt',
+                        calcBase: 100,
+                        rate: 0,
+                        fact: 0,
+                        tax: 0
+                    }
+                },
+                tax: 15.91
+            } }),
+        Object.assign({}, given05.lines[1], { calculatedTax: {
+                CST: '50',
+                taxDetails: {
+                    iec: {
+                        jurisdictionType: 'Country',
+                        jurisdictionName: 'Brasil',
+                        taxType: 'IEC',
+                        scenario: 'Calculation Simple',
+                        calcBase: 100,
+                        rate: 0.1,
+                        fact: 0,
+                        tax: 10
+                    },
+                    ist: {
+                        jurisdictionType: 'State',
+                        jurisdictionName: 'AM',
+                        taxType: 'IST',
+                        scenario: 'Calculation Period',
+                        month: '01',
+                        calcBase: 80,
+                        rate: 0.05,
+                        fact: 0.05,
+                        tax: 3.8
+                    },
+                    isc: {
+                        jurisdictionType: 'City',
+                        jurisdictionName: 'Parintins',
+                        taxType: 'ISC',
+                        scenario: 'Calculation Exempt',
+                        calcBase: 100,
+                        rate: 0,
+                        fact: 0,
+                        tax: 0
+                    }
+                },
+                tax: 13.8
+            } })
+    ],
+    calculatedTaxSummary: {
+        numberOfLines: 2,
+        subtotal: 160,
+        totalTax: 14.05 + 15.66,
+        grandTotal: 160 + 14.05 + 15.66,
+        taxByType: {
+            iec: {
+                tax: 14.05,
+                jurisdictions: [{
+                        jurisdictionType: 'Country',
+                        jurisdictionName: 'Brasil',
+                        tax: 14.05
+                    }]
+            },
+            ist: {
+                tax: 15.66,
+                jurisdictions: [{
+                        jurisdictionType: 'State',
+                        jurisdictionName: 'AM',
+                        tax: 15.66
+                    }]
+            },
+            isc: {
+                tax: 0,
+                jurisdictions: [{
+                        jurisdictionType: 'City',
+                        jurisdictionName: 'Parintins',
+                        tax: 0
                     }]
             }
         }

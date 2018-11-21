@@ -23,8 +23,9 @@ export interface Entity {
   cityTaxId?: string;
   /**
    * Suframa Code
+   * format [0-9]{8,9}
    */
-  suframa?: string; // format [0-9]{8,9}
+  suframa?: string;
   /**
    * Tax Regime
    */

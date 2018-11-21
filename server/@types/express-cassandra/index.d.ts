@@ -46,6 +46,17 @@ declare module 'express-cassandra' {
 
     namespace datatypes {
       type Uuid = Object;
+      class LocalDate {
+        public day: number;
+        public month: number;
+        public year: number;
+        /**
+         * Creates a new instance of LocalDate using the year, month and day
+         * provided in the form: yyyy-mm-dd or days since epoch
+         * (i.e. -1 for Dec 31, 1969).
+         */
+        public static fromString(value: string): LocalDate;
+      }
     }
 
     function uuid(): datatypes.Uuid;

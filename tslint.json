@@ -138,7 +138,7 @@
     ],
     "export-name": true,
     "file-name-casing": true,
-    "function-name": true,
+    "function-name": false,
     "import-name": true,
     "informative-docs": true,
     "interface-name": false,
