@@ -73,7 +73,9 @@ it(`case 7
   }
   receiver.address.state != emitter.address.state
   line[0].item.productType == 'product'
-  line[0].useType == 'consumption'`, () => { verify(given07, expected07); });
+  line[0].useType == 'consumption'
+  line[0].item.productType == 'product'
+  line[0].useType == 'production'`, () => { verify(given07, expected07); });
 it(`case 8
   transactionDate == '2018-05-15'
   emitter.taxRegime == 'estimatedProfit'
@@ -898,6 +900,21 @@ const given07 = {
                     ISC: {}
                 }
             }
+        },
+        {
+            numberOfItems: 2,
+            itemPrice: 45,
+            otherCostAmount: 20,
+            lineDiscount: 10,
+            useType: 'production',
+            item: {
+                productType: 'product',
+                federalTax: {
+                    IEC: { fact: 0.1 },
+                    IST: { fact: 0.05 },
+                    ISC: {}
+                }
+            }
         }
     ]
 };
@@ -939,36 +956,72 @@ const expected07 = {
                     }
                 },
                 tax: 21.37
+            } }),
+        Object.assign({}, given07.lines[1], { calculatedTax: {
+                CST: '50',
+                taxDetails: {
+                    iec: {
+                        jurisdictionType: 'Country',
+                        jurisdictionName: 'Brasil',
+                        taxType: 'IEC',
+                        scenario: 'Calculation Table',
+                        calcBase: 100,
+                        rate: 0.0584,
+                        fact: 0.1,
+                        tax: 5.26
+                    },
+                    ist: {
+                        jurisdictionType: 'State',
+                        jurisdictionName: 'SP',
+                        taxType: 'IST',
+                        scenario: 'Calculation Table',
+                        calcBase: 105.26,
+                        rate: 0.08,
+                        fact: 0.05,
+                        tax: 8
+                    },
+                    isc: {
+                        jurisdictionType: 'City',
+                        jurisdictionName: 'Brasília',
+                        taxType: 'ISC',
+                        scenario: 'Calculation Fixed',
+                        calcBase: 110,
+                        rate: 0.02,
+                        fact: 0.12,
+                        tax: 1.94
+                    }
+                },
+                tax: 15.2
             } })
     ],
     calculatedTaxSummary: {
-        numberOfLines: 1,
-        subtotal: 80,
-        totalTax: 21.37,
-        grandTotal: 101.37,
+        numberOfLines: 2,
+        subtotal: 160,
+        totalTax: 36.57,
+        grandTotal: 196.57,
         taxByType: {
             iec: {
-                tax: 5.26,
+                tax: 10.52,
                 jurisdictions: [{
                         jurisdictionType: 'Country',
                         jurisdictionName: 'Brasil',
-                        tax: 5.26
+                        tax: 10.52
                     }]
             },
             ist: {
-                tax: 14.17,
+                tax: 22.17,
                 jurisdictions: [{
                         jurisdictionType: 'State',
                         jurisdictionName: 'SP',
-                        tax: 14.17
+                        tax: 22.17
                     }]
             },
             isc: {
-                tax: 1.94,
+                tax: 3.88,
                 jurisdictions: [{
                         jurisdictionType: 'City',
                         jurisdictionName: 'Brasília',
-                        tax: 1.94
+                        tax: 3.88
                     }]
             }
         }
