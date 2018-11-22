@@ -63,7 +63,7 @@ it(`case 6
   line[0].item.productType == 'product'
   line[0].useType == 'production'
   line[1].item.productType == 'merchandise'
-  line[1].useType == 'production'`, () => { verify(given06, expected06); });
+  line[1].useType == 'use'`, () => { verify(given06, expected06); });
 it(`case 7
   emitter.taxRegime == 'estimatedProfit'
   receiver.type not in {
@@ -751,7 +751,7 @@ const given06 = {
             itemPrice: 45,
             otherCostAmount: 20,
             lineDiscount: 10,
-            useType: 'production',
+            useType: 'use',
             item: {
                 productType: 'merchandise',
                 federalTax: {

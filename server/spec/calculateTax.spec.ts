@@ -90,7 +90,7 @@ it(
   line[0].item.productType == 'product'
   line[0].useType == 'production'
   line[1].item.productType == 'merchandise'
-  line[1].useType == 'production'`,
+  line[1].useType == 'use'`,
   () => { verify(given06, expected06); }
 );
 
@@ -840,7 +840,7 @@ const expected05: Transaction = {
   line[0].item.productType == 'product'
   line[0].useType == 'production'
   line[0].item.productType == 'merchandise'
-  line[0].useType == 'production'
+  line[0].useType == 'use'
  */
 const given06: Transaction = {
   header: {
@@ -874,7 +874,7 @@ const given06: Transaction = {
       itemPrice: 45,
       otherCostAmount: 20,
       lineDiscount: 10,
-      useType: 'production',
+      useType: 'use',
       item: {
         productType: 'merchandise',
         federalTax: {
