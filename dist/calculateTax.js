@@ -67,9 +67,9 @@ function calculateTax(t) {
         calculatedTaxSummary.numberOfLines += 1;
         calculatedTaxSummary.subtotal = currencySum(calculatedTaxSummary.subtotal, amount, -discount);
         calculateCST();
-        calculateIEC();
-        calculateIST();
-        calculateISC();
+        calculateIec();
+        calculateIst();
+        calculateIsc();
         calculatedTaxSummary.totalTax = currencySum(calculatedTaxSummary.totalTax, calculatedTax.tax);
         delete line.item;
     }
@@ -158,7 +158,7 @@ function cst50or99() {
         calculatedTax.CST = '99';
     }
 }
-function calculateIEC() {
+function calculateIec() {
     const taxDetail = line.calculatedTax.taxDetails.iec;
     const taxSummary = transaction.calculatedTaxSummary.taxByType.iec;
     taxDetail.jurisdictionType = 'Country';
@@ -176,11 +176,11 @@ function calculateIEC() {
                 calculationSimple(taxDetail, item.federalTax.IEC.rate);
             }
             else {
-                throw new Error('Not implemented.');
+                tableOrSimpleIec();
             }
         }
         else if (useType === 'resale' || useType === 'production') {
-            tableOrSimple();
+            tableOrSimpleIec();
         }
         else {
             if (item.productType === 'merchandise') {
@@ -193,16 +193,16 @@ function calculateIEC() {
     }
     calculateSums(taxDetail.tax, taxSummary);
 }
-function tableOrSimple() {
+function tableOrSimpleIec() {
     const item = line.item;
     if (item.productType === 'product') {
-        calculationTableIEC();
+        calculationTableIec();
     }
     else {
         calculationSimple(line.calculatedTax.taxDetails.iec, item.federalTax.IEC.rate);
     }
 }
-function calculationTableIEC() {
+function calculationTableIec() {
     const taxDetail = line.calculatedTax.taxDetails.iec;
     taxDetail.scenario = 'Calculation Table';
     const calcBase = currencySum(amount, otherCosts, -discount);
@@ -213,7 +213,7 @@ function calculationTableIEC() {
     taxDetail.fact = fact;
     taxDetail.tax = currencyRound(calcBase * (1 - fact) * rate);
 }
-function calculateIST() {
+function calculateIst() {
     const taxDetail = line.calculatedTax.taxDetails.ist;
     const taxSummary = transaction.calculatedTaxSummary.taxByType.ist;
     taxDetail.jurisdictionType = 'State';
@@ -227,10 +227,10 @@ function calculateIST() {
         const item = line.item;
         if (line.useType === 'resale') {
             if (item.productType === 'product') {
-                calculationTableIST();
+                calculationTableIst();
             }
             else {
-                calculationPeriodIST();
+                calculationPeriodIst();
             }
         }
         else if (line.useType === 'production') {
@@ -238,7 +238,7 @@ function calculateIST() {
                 calculationSimple(taxDetail, item.federalTax.IST.rate);
             }
             else {
-                calculationTableIST();
+                calculationTableIst();
             }
         }
         else {
@@ -254,7 +254,7 @@ function calculateIST() {
     }
     calculateSums(taxDetail.tax, taxSummary);
 }
-function calculationTableIST() {
+function calculationTableIst() {
     const taxDetails = line.calculatedTax.taxDetails;
     const taxDetail = taxDetails.ist;
     taxDetail.scenario = 'Calculation Table';
@@ -266,7 +266,7 @@ function calculationTableIST() {
     taxDetail.fact = fact;
     taxDetail.tax = currencyRound(calcBase * (1 - fact) * rate);
 }
-function calculationPeriodIST() {
+function calculationPeriodIst() {
     const taxDetails = line.calculatedTax.taxDetails;
     const taxDetail = taxDetails.ist;
     taxDetail.scenario = 'Calculation Period';
@@ -299,7 +299,7 @@ function rateTableIst() {
     }
     return rate;
 }
-function calculateISC() {
+function calculateIsc() {
     const taxDetail = line.calculatedTax.taxDetails.isc;
     const taxSummary = transaction.calculatedTaxSummary.taxByType.isc;
     taxDetail.jurisdictionType = 'City';

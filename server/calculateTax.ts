@@ -93,9 +93,9 @@ export function calculateTax(t: Transaction): void {
       - discount
     );
     calculateCST();
-    calculateIEC();
-    calculateIST();
-    calculateISC();
+    calculateIec();
+    calculateIst();
+    calculateIsc();
     calculatedTaxSummary.totalTax = currencySum(
       calculatedTaxSummary.totalTax,
       calculatedTax.tax
@@ -189,7 +189,7 @@ function cst50or99(): void {
   }
 }
 
-function calculateIEC(): void {
+function calculateIec(): void {
   const taxDetail = line.calculatedTax.taxDetails.iec;
   const taxSummary = transaction.calculatedTaxSummary.taxByType.iec;
   taxDetail.jurisdictionType = 'Country';
@@ -205,10 +205,10 @@ function calculateIEC(): void {
       if (receiver.address.state === emitter.address.state) {
         calculationSimple(taxDetail, item.federalTax.IEC.rate);
       } else {
-        throw new Error('Not implemented.');
+        tableOrSimpleIec();
       }
     } else if (useType === 'resale' || useType === 'production') {
-      tableOrSimple();
+      tableOrSimpleIec();
     } else {
       if (item.productType === 'merchandise') {
         calculationSimple(taxDetail, item.federalTax.IEC.rate);
@@ -220,10 +220,10 @@ function calculateIEC(): void {
   calculateSums(taxDetail.tax, taxSummary);
 }
 
-function tableOrSimple(): void {
+function tableOrSimpleIec(): void {
   const item = line.item;
   if (item.productType === 'product') {
-    calculationTableIEC();
+    calculationTableIec();
   } else {
     calculationSimple(
       line.calculatedTax.taxDetails.iec,
@@ -232,7 +232,7 @@ function tableOrSimple(): void {
   }
 }
 
-function calculationTableIEC(): void {
+function calculationTableIec(): void {
   const taxDetail = line.calculatedTax.taxDetails.iec;
   taxDetail.scenario = 'Calculation Table';
   const calcBase = currencySum(amount, otherCosts, -discount);
@@ -246,7 +246,7 @@ function calculationTableIEC(): void {
   taxDetail.tax = currencyRound(calcBase * (1 - fact) * rate);
 }
 
-function calculateIST(): void {
+function calculateIst(): void {
   const taxDetail = line.calculatedTax.taxDetails.ist;
   const taxSummary = transaction.calculatedTaxSummary.taxByType.ist;
   taxDetail.jurisdictionType = 'State';
@@ -260,15 +260,15 @@ function calculateIST(): void {
     const item = line.item;
     if (line.useType === 'resale') {
       if (item.productType === 'product') {
-        calculationTableIST();
+        calculationTableIst();
       } else {
-        calculationPeriodIST();
+        calculationPeriodIst();
       }
     } else if (line.useType === 'production') {
       if (receiver.address.state === emitter.address.state) {
         calculationSimple(taxDetail, item.federalTax.IST.rate);
       } else {
-        calculationTableIST();
+        calculationTableIst();
       }
     } else {
       // line.useType not in {'resale', 'production'}
@@ -285,7 +285,7 @@ function calculateIST(): void {
   calculateSums(taxDetail.tax, taxSummary);
 }
 
-function calculationTableIST(): void {
+function calculationTableIst(): void {
   const taxDetails = line.calculatedTax.taxDetails;
   const taxDetail = taxDetails.ist;
   taxDetail.scenario = 'Calculation Table';
@@ -302,7 +302,7 @@ function calculationTableIST(): void {
   taxDetail.tax = currencyRound(calcBase * (1 - fact) * rate);
 }
 
-function calculationPeriodIST(): void {
+function calculationPeriodIst(): void {
   const taxDetails = line.calculatedTax.taxDetails;
   const taxDetail = taxDetails.ist;
   taxDetail.scenario = 'Calculation Period';
@@ -338,7 +338,7 @@ function rateTableIst(): number {
   return rate;
 }
 
-function calculateISC(): void {
+function calculateIsc(): void {
   const taxDetail = line.calculatedTax.taxDetails.isc;
   const taxSummary = transaction.calculatedTaxSummary.taxByType.isc;
   taxDetail.jurisdictionType = 'City';

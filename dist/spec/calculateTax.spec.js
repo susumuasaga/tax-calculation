@@ -73,7 +73,7 @@ it(`case 7
   }
   receiver.address.state != emitter.address.state
   line[0].item.productType == 'product'
-  line[0].useType == 'production'`, () => { verify(given07, expected07); });
+  line[0].useType == 'consumption'`, () => { verify(given07, expected07); });
 it(`case 8
   transactionDate == '2018-05-15'
   emitter.taxRegime == 'estimatedProfit'
@@ -889,7 +889,7 @@ const given07 = {
             itemPrice: 45,
             otherCostAmount: 20,
             lineDiscount: 10,
-            useType: 'production',
+            useType: 'consumption',
             item: {
                 productType: 'product',
                 federalTax: {
@@ -921,11 +921,11 @@ const expected07 = {
                         jurisdictionType: 'State',
                         jurisdictionName: 'SP',
                         taxType: 'IST',
-                        scenario: 'Calculation Table',
-                        calcBase: 105.26,
-                        rate: 0.08,
-                        fact: 0.05,
-                        tax: 8
+                        scenario: 'Calculation Fixed',
+                        calcBase: 110,
+                        rate: 0.14,
+                        fact: 0.08,
+                        tax: 14.17
                     },
                     isc: {
                         jurisdictionType: 'City',
@@ -938,14 +938,14 @@ const expected07 = {
                         tax: 1.94
                     }
                 },
-                tax: 15.2
+                tax: 21.37
             } })
     ],
     calculatedTaxSummary: {
         numberOfLines: 1,
         subtotal: 80,
-        totalTax: 15.2,
-        grandTotal: 95.2,
+        totalTax: 21.37,
+        grandTotal: 101.37,
         taxByType: {
             iec: {
                 tax: 5.26,
@@ -956,11 +956,11 @@ const expected07 = {
                     }]
             },
             ist: {
-                tax: 8,
+                tax: 14.17,
                 jurisdictions: [{
                         jurisdictionType: 'State',
                         jurisdictionName: 'SP',
-                        tax: 8
+                        tax: 14.17
                     }]
             },
             isc: {
