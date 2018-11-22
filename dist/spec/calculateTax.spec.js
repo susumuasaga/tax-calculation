@@ -40,7 +40,7 @@ it(`case 4
   item[1].item.productType == 'merchandise'
   line[1].useType not in {'use', 'consumption', 'resale', 'production'}`, () => { verify(given04, expected04); });
 it(`case 5
-  transactionDate == '2018-01-15'
+  transactionDate.month == 1
   emitter.taxRegime == 'simplified'
   receiver.type not in {
     'cityGovernment',
@@ -53,6 +53,7 @@ it(`case 5
   line[1].item.productType == 'merchandise'
   line[1].useType == 'resale'`, () => { verify(given05, expected05); });
 it(`case 6
+  transactionDate.month == 5
   emitter.taxRegime == 'realProfit'
   receiver.type not in {
     'cityGovernment',
@@ -63,7 +64,9 @@ it(`case 6
   line[0].item.productType == 'product'
   line[0].useType == 'production'
   line[1].item.productType == 'merchandise'
-  line[1].useType == 'use'`, () => { verify(given06, expected06); });
+  line[1].useType == 'use'
+  line[2].item.productType == 'merchandise'
+  line[2].useType == 'resale'`, () => { verify(given06, expected06); });
 it(`case 7
   emitter.taxRegime == 'estimatedProfit'
   receiver.type not in {
@@ -74,8 +77,8 @@ it(`case 7
   receiver.address.state != emitter.address.state
   line[0].item.productType == 'product'
   line[0].useType == 'consumption'
-  line[0].item.productType == 'product'
-  line[0].useType == 'production'`, () => { verify(given07, expected07); });
+  line[1].item.productType == 'product'
+  line[1].useType == 'production'`, () => { verify(given07, expected07); });
 it(`case 8
   transactionDate == '2018-05-15'
   emitter.taxRegime == 'estimatedProfit'
@@ -724,7 +727,7 @@ const expected05 = {
 const given06 = {
     header: {
         transactionType: 'Sale',
-        transactionDate: '2018-01-15',
+        transactionDate: '2018-05-15',
         location: {
             taxRegime: 'realProfit',
             address: { cityName: 'São Paulo', state: 'SP' }
@@ -754,6 +757,20 @@ const given06 = {
             otherCostAmount: 20,
             lineDiscount: 10,
             useType: 'use',
+            item: {
+                productType: 'merchandise',
+                federalTax: {
+                    IEC: { rate: 0.1 },
+                    IST: { rate: 0.1 },
+                    ISC: { rate: 0.05 }
+                }
+            }
+        }, {
+            numberOfItems: 2,
+            itemPrice: 45,
+            otherCostAmount: 20,
+            lineDiscount: 10,
+            useType: 'resale',
             item: {
                 productType: 'merchandise',
                 federalTax: {
@@ -839,36 +856,73 @@ const expected06 = {
                     }
                 },
                 tax: 25
+            } }),
+        Object.assign({}, given06.lines[2], { calculatedTax: {
+                CST: '50',
+                taxDetails: {
+                    iec: {
+                        jurisdictionType: 'Country',
+                        jurisdictionName: 'Brasil',
+                        taxType: 'IEC',
+                        scenario: 'Calculation Simple',
+                        calcBase: 100,
+                        rate: 0.1,
+                        fact: 0,
+                        tax: 10
+                    },
+                    ist: {
+                        jurisdictionType: 'State',
+                        jurisdictionName: 'SP',
+                        taxType: 'IST',
+                        scenario: 'Calculation Period',
+                        month: '05',
+                        calcBase: 90,
+                        rate: 0.12,
+                        fact: 0.4,
+                        tax: 6.48
+                    },
+                    isc: {
+                        jurisdictionType: 'City',
+                        jurisdictionName: 'São Paulo',
+                        taxType: 'ISC',
+                        scenario: 'Calculation Simple',
+                        calcBase: 100,
+                        rate: 0.05,
+                        fact: 0,
+                        tax: 5
+                    }
+                },
+                tax: 21.48
             } })
     ],
     calculatedTaxSummary: {
-        numberOfLines: 2,
-        subtotal: 160,
-        totalTax: 42.79,
-        grandTotal: 202.79,
+        numberOfLines: 3,
+        subtotal: 240,
+        totalTax: 64.27,
+        grandTotal: 304.27,
         taxByType: {
             iec: {
-                tax: 15.85,
+                tax: 25.85,
                 jurisdictions: [{
                         jurisdictionType: 'Country',
                         jurisdictionName: 'Brasil',
-                        tax: 15.85
+                        tax: 25.85
                     }]
             },
             ist: {
-                tax: 20,
+                tax: 26.48,
                 jurisdictions: [{
                         jurisdictionType: 'State',
                         jurisdictionName: 'SP',
-                        tax: 20
+                        tax: 26.48
                     }]
             },
             isc: {
-                tax: 6.94,
+                tax: 11.94,
                 jurisdictions: [{
                         jurisdictionType: 'City',
                         jurisdictionName: 'São Paulo',
-                        tax: 6.94
+                        tax: 11.94
                     }]
             }
         }
