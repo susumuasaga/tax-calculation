@@ -118,16 +118,17 @@ it(
 
 it(
   `case 8
-  transactionDate == '2018-05-15'
-  emitter.taxRegime == 'estimatedProfit'
+  emitter.taxRegime is undefined
   receiver.type not in {
     'cityGovernment',
     'stateGovernment',
     'federalGovernment'
   }
-  line[0].item.productType == 'merchandise'
-  line[0].useType == 'resale'`,
-  () => { verify(given08, expected08); }
+  lines.length > 0`,
+  () => {
+    expect(() => { calculateTax(given08); })
+      .toThrow('Invalid Tax Regime');
+  }
 );
 
 /*
@@ -1300,22 +1301,19 @@ const expected07: Transaction = {
 
 /*
   case 8
-  transactionDate == '2018-05-15'
-  emitter.taxRegime == 'estimatedProfit'
+  emitter.taxRegime is undefined
   receiver.type not in {
     'cityGovernment',
     'stateGovernment',
     'federalGovernment'
   }
-  line[0].item.productType == 'merchandise'
-  line[0].useType == 'resale'
+  lines.length > 0
  */
 const given08: Transaction = {
   header: {
     transactionType: 'Sale',
     transactionDate: '2018-05-15',
     location: {
-      taxRegime: 'estimatedProfit',
       address: { cityName: 'São Paulo', state: 'SP' }
     },
     entity: {
@@ -1326,94 +1324,9 @@ const given08: Transaction = {
     {
       numberOfItems: 2,
       itemPrice: 45,
-      otherCostAmount: 20,
+      otherCostAmount: 10,
       lineDiscount: 10,
-      useType: 'resale',
-      item: {
-        productType: 'merchandise',
-        federalTax: {
-          IEC: { rate: 0.1 },
-          IST: {},
-          ISC: { rate: 0.05 }
-        }
-      }
+      item: { productType: 'product' }
     }
   ]
-};
-const expected08: Transaction = {
-  header: { ...given08.header },
-  lines: [
-    {
-      ...given08.lines[0],
-      calculatedTax: {
-        CST: '50',
-        taxDetails: {
-          iec: {
-            jurisdictionType: 'Country',
-            jurisdictionName: 'Brasil',
-            taxType: 'IEC',
-            scenario: 'Calculation Simple',
-            calcBase: 100,
-            rate: 0.1,
-            fact: 0,
-            tax: 10
-          },
-          ist: {
-            jurisdictionType: 'State',
-            jurisdictionName: 'SP',
-            taxType: 'IST',
-            scenario: 'Calculation Period',
-            month: '05',
-            calcBase: 90,
-            rate: 0.12,
-            fact: 0.4,
-            tax: 6.48
-          },
-          isc: {
-            jurisdictionType: 'City',
-            jurisdictionName: 'São Paulo',
-            taxType: 'ISC',
-            scenario: 'Calculation Simple',
-            calcBase: 100,
-            rate: 0.05,
-            fact: 0,
-            tax: 5
-          }
-        },
-        tax: 21.48
-      }
-    }
-  ],
-  calculatedTaxSummary: {
-    numberOfLines: 1,
-    subtotal: 80,
-    totalTax: 21.48,
-    grandTotal: 101.48,
-    taxByType: {
-      iec: {
-        tax: 10,
-        jurisdictions: [{
-          jurisdictionType: 'Country',
-          jurisdictionName: 'Brasil',
-          tax: 10
-        }]
-      },
-      ist: {
-        tax: 6.48,
-        jurisdictions: [{
-          jurisdictionType: 'State',
-          jurisdictionName: 'SP',
-          tax: 6.48
-        }]
-      },
-      isc: {
-        tax: 5,
-        jurisdictions: [{
-          jurisdictionType: 'City',
-          jurisdictionName: 'São Paulo',
-          tax: 5
-        }]
-      }
-    }
-  }
 };

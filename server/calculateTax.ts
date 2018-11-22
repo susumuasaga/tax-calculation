@@ -14,6 +14,7 @@ import {
 import { performance } from 'perf_hooks';
 import { Entity } from './models/Entity';
 import { iecTable, regions, istTable } from './taxTables';
+import { BadRequest } from './httpErrors';
 
 export const VERSION_ID = '1.0';
 let transaction: Transaction;
@@ -173,7 +174,7 @@ function calculateCST(): void {
       ) {
         calculatedTax.CST = '50';
       } else {
-        throw new Error('Not implemented.');
+        throw new BadRequest('Invalid Tax Regime.');
       }
     }
   }

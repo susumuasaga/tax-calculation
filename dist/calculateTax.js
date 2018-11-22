@@ -3,6 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 const express_cassandra_1 = require("express-cassandra");
 const perf_hooks_1 = require("perf_hooks");
 const taxTables_1 = require("./taxTables");
+const httpErrors_1 = require("./httpErrors");
 exports.VERSION_ID = '1.0';
 let transaction;
 let emitter;
@@ -143,7 +144,7 @@ function calculateCST() {
                 calculatedTax.CST = '50';
             }
             else {
-                throw new Error('Not implemented.');
+                throw new httpErrors_1.BadRequest('Invalid Tax Regime.');
             }
         }
     }
