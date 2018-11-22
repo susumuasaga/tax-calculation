@@ -294,11 +294,7 @@ function calculationTableIST(): void {
     otherCosts,
     -discount,
     taxDetails.iec.tax);
-  const originTable = istTable[emitter.address.state];
-  let rate = 0.08; // default rate
-  if (originTable !== undefined) {
-    rate = originTable[receiver.address.state];
-  }
+  const rate = rateTableIst();
   const fact = line.item.federalTax.IST.fact;
   taxDetail.calcBase = calcBase;
   taxDetail.rate = rate;
@@ -307,7 +303,8 @@ function calculationTableIST(): void {
 }
 
 function calculationPeriodIST(): void {
-  const taxDetail = line.calculatedTax.taxDetails.ist;
+  const taxDetails = line.calculatedTax.taxDetails;
+  const taxDetail = taxDetails.ist;
   taxDetail.scenario = 'Calculation Period';
   let calcBase: number;
   let rate: number;
@@ -315,7 +312,9 @@ function calculationPeriodIST(): void {
   const month =
     datatypes.LocalDate.fromString(transaction.header.transactionDate).month;
   if (month >= 5 && month <= 8) {
-    throw new Error('Not implemented.');
+    calcBase = currencySum(amount, -discount, taxDetails.iec.tax);
+    rate = rateTableIst();
+    fact = 0.4;
   } else {
     calcBase = currencySum(amount, -discount);
     const taxType = line.item.federalTax.IST;
@@ -327,6 +326,16 @@ function calculationPeriodIST(): void {
   taxDetail.rate = rate;
   taxDetail.fact = fact;
   taxDetail.tax = currencyRound(calcBase * (1 - fact) * rate);
+}
+
+function rateTableIst(): number {
+  const originTable = istTable[emitter.address.state];
+  let rate = 0.08; // default rate
+  if (originTable !== undefined) {
+    rate = originTable[receiver.address.state];
+  }
+
+  return rate;
 }
 
 function calculateISC(): void {
