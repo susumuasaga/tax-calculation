@@ -138,7 +138,8 @@ function calculateCST() {
             if (emitter.taxRegime === 'simplified') {
                 cst50or99();
             }
-            else if (emitter.taxRegime === 'realProfit') {
+            else if (emitter.taxRegime === 'realProfit' ||
+                emitter.taxRegime === 'estimatedProfit') {
                 calculatedTax.CST = '50';
             }
             else {
@@ -237,7 +238,7 @@ function calculateIST() {
                 calculationSimple(taxDetail, item.federalTax.IST.rate);
             }
             else {
-                throw new Error('Not implemented');
+                calculationTableIST();
             }
         }
         else {
