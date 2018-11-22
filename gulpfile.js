@@ -18,21 +18,7 @@ function compile() {
 }
 exports.compile = compile;
 
-function preCoverage() {
-  return gulp
-    .src('dist/!(spec)/**/*.js')
-    .pipe(istanbul({ instrumenter: isparta.Instrumenter }))
-    .pipe(istanbul.hookRequire());
-}
-
-function doCoverage() {
-  return gulp
-    .src('dist/spec/**/*.spec.js')
-    .pipe(jest())
-    .pipe(istanbul.writeReports());
-}
-
-function test(done) {
+function test() {
   return gulp
     .src('dist/spec/**/*.spec.js')
     .pipe(plumber())
@@ -40,7 +26,15 @@ function test(done) {
 }
 exports.test = test;
 
-const coverage = gulp.series(preCoverage, doCoverage);
+function coverage() {
+  return gulp
+    .src('dist/spec/**/*.spec.js')
+    .pipe(
+      jest(
+        { collectCoverage: true, collectCoverageFrom: ['dist/calculateTax.js'] }
+      )
+    );
+}
 exports.coverage = coverage;
 
 function watch() {
