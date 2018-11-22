@@ -3,8 +3,6 @@
 const gulp = require('gulp4');
 const ts = require('gulp-typescript');
 const jest = require('gulp-jest').default;
-const istanbul = require('gulp-istanbul');
-const isparta = require('isparta');
 const plumber = require('gulp-plumber');
 
 let tsProject = ts.createProject('server/tsconfig.json');

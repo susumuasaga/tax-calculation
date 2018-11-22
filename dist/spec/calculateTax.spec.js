@@ -4,9 +4,13 @@ const calculateTax_1 = require("../calculateTax");
 const TIME_LIMIT = 200;
 function verify(given, expected) {
     calculateTax_1.calculateTax(given);
+    expect(given.header.location)
+        .toBe(undefined);
     expect(given.lines.length)
         .toBe(expected.lines.length);
     for (let i = 0; i < given.lines.length; i += 1) {
+        expect(given.lines[i].item)
+            .toBe(undefined);
         expect(given.lines[i].calculatedTax)
             .toEqual(expected.lines[i].calculatedTax);
     }
