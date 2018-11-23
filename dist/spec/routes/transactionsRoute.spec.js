@@ -19,9 +19,10 @@ const getTransactionsRouter_1 = require("../../routes/getTransactionsRouter");
 const testDB_1 = require("../testDB");
 const body_parser_1 = __importDefault(require("body-parser"));
 const morgan_1 = __importDefault(require("morgan"));
+const getErrorHandler_1 = require("../../routes/getErrorHandler");
 const URL_ROOT = 'http://localhost:3000';
 let server;
-let logger;
+let fakeLogger;
 let transactionModel;
 let locationModel;
 let itemModel;
@@ -43,9 +44,9 @@ describe('Transactions route', () => {
         transactionModel = modelInstances['Transaction'];
         locationModel = modelInstances['Location'];
         itemModel = modelInstances['Item'];
-        logger = new FakeLogger_1.FakeLogger();
-        const transactionsRouter = getTransactionsRouter_1.getTransactionsRouter(logger, transactionModel, locationModel, itemModel);
-        app.use('/transactions', transactionsRouter);
+        app.use('/transactions', getTransactionsRouter_1.getTransactionsRouter(transactionModel, locationModel, itemModel));
+        fakeLogger = new FakeLogger_1.FakeLogger();
+        app.use(getErrorHandler_1.getErrorHandler(fakeLogger));
         server = await getServer(app, 3000);
     });
     afterAll(() => {
@@ -101,5 +102,22 @@ describe('Transactions route', () => {
         });
         expect(transactionDocument.calculatedTaxSummary.totalTax)
             .toBe(12.88);
+    });
+    it('should raise BAD_REQUEST when no transaction specified', async () => {
+        fakeLogger.clearErrorLog();
+        await (async () => {
+            try {
+                await superagent.post(`${URL_ROOT}/transactions`);
+                fail('No transaction, but error not caught.');
+            }
+            catch (err) {
+                const lastError = fakeLogger.lastError;
+                expect(lastError.message)
+                    .toBe('No transaction specified.');
+                const error = err.response.body;
+                expect(error.message)
+                    .toBe('No transaction specified.');
+            }
+        })();
     });
 });

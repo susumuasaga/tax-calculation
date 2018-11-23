@@ -12,10 +12,13 @@ import { getTransactionsRouter } from '../../routes/getTransactionsRouter';
 import { locations, items } from '../testDB';
 import bodyParser from 'body-parser';
 import morgan from 'morgan';
+import { HttpError } from '../../httpErrors';
+import { getErrorHandler } from '../../routes/getErrorHandler';
+import { Logger } from '../../logger';
 
 const URL_ROOT = 'http://localhost:3000';
 let server: http.Server;
-let logger: FakeLogger;
+let fakeLogger: FakeLogger;
 let transactionModel: Model<TransactionDoc>;
 let locationModel: Model<LocationDoc>;
 let itemModel: Model<ItemDoc>;
@@ -43,14 +46,12 @@ describe('Transactions route', () => {
     transactionModel = modelInstances['Transaction'] as Model<TransactionDoc>;
     locationModel = modelInstances['Location'] as Model<LocationDoc>;
     itemModel = modelInstances['Item'] as Model<ItemDoc>;
-    logger = new FakeLogger();
-    const transactionsRouter = getTransactionsRouter(
-      logger,
-      transactionModel,
-      locationModel,
-      itemModel
+    app.use(
+      '/transactions',
+      getTransactionsRouter(transactionModel, locationModel, itemModel)
     );
-    app.use('/transactions', transactionsRouter);
+    fakeLogger = new FakeLogger();
+    app.use(getErrorHandler(fakeLogger));
     server = await getServer(app, 3000);
   });
 
@@ -109,5 +110,25 @@ describe('Transactions route', () => {
     });
     expect(transactionDocument.calculatedTaxSummary.totalTax)
       .toBe(12.88);
+  });
+
+  it('should raise BAD_REQUEST when no transaction specified', async () => {
+    fakeLogger.clearErrorLog();
+    await (async () => {
+      try {
+        await superagent.post(`${URL_ROOT}/transactions`);
+        fail('No transaction, but error not caught.');
+      } catch (err) {
+        // Error should have been logged on server side
+        const lastError = fakeLogger.lastError;
+        expect(lastError.message)
+          .toBe('No transaction specified.');
+        // Error should have been received on client side
+        const error = (err as superagent.ResponseError).response.body as
+          HttpError;
+        expect(error.message)
+          .toBe('No transaction specified.');
+      }
+    })();
   });
 });

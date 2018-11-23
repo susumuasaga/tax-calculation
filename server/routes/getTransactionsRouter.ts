@@ -13,7 +13,6 @@ import { calculateTax } from '../calculateTax';
  * @param logger Error logger to defect diagnostics.
  */
 export function getTransactionsRouter(
-  logger: Logger,
   transactionModel: Model<TransactionDoc>,
   locationModel: Model<LocationDoc>,
   itemModel: Model<ItemDoc>
@@ -21,25 +20,24 @@ export function getTransactionsRouter(
   const router = Router();
   router.post('/', async (req, res, next) => {
     const transaction = req.body as Transaction;
-    if (transaction === undefined) {
+    if (Object.keys(transaction).length === 0) {
       next(new BadRequest('No transaction specified.'));
-    }
-    const header = transaction.header;
-    try {
+    } else {
+      const header = transaction.header;
       header.location = await locationModel.findOneAsync(
-        { code: header.companyLocation }, { raw: true }
+        { code: header.companyLocation },
+        { raw: true }
       );
       for (const line of transaction.lines) {
         line.item = await itemModel.findOneAsync(
-          { code: line.itemCode }, { raw: true }
+          { code: line.itemCode },
+          { raw: true }
         );
       }
       calculateTax(transaction);
       const transactionDoc = new transactionModel(transaction);
       await transactionDoc.saveAsync();
       res.json(transaction);
-    } catch (error) {
-      next(error);
     }
   });
 
