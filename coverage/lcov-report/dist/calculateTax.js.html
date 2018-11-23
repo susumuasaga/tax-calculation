@@ -1,0 +1,1154 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <title>Code coverage report for dist/calculateTax.js</title>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="../prettify.css" />
+    <link rel="stylesheet" href="../base.css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style type='text/css'>
+        .coverage-summary .sorter {
+            background-image: url(../sort-arrow-sprite.png);
+        }
+    </style>
+</head>
+<body>
+<div class='wrapper'>
+  <div class='pad1'>
+    <h1>
+      <a href="../index.html">All files</a> / <a href="index.html">dist</a> calculateTax.js
+    </h1>
+    <div class='clearfix'>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">100% </span>
+        <span class="quiet">Statements</span>
+        <span class='fraction'>182/182</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">100% </span>
+        <span class="quiet">Branches</span>
+        <span class='fraction'>73/73</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">100% </span>
+        <span class="quiet">Functions</span>
+        <span class='fraction'>18/18</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">100% </span>
+        <span class="quiet">Lines</span>
+        <span class='fraction'>182/182</span>
+      </div>
+    </div>
+  </div>
+  <div class='status-line high'></div>
+<pre><table class="coverage">
+<tr><td class="line-count quiet">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75
+76
+77
+78
+79
+80
+81
+82
+83
+84
+85
+86
+87
+88
+89
+90
+91
+92
+93
+94
+95
+96
+97
+98
+99
+100
+101
+102
+103
+104
+105
+106
+107
+108
+109
+110
+111
+112
+113
+114
+115
+116
+117
+118
+119
+120
+121
+122
+123
+124
+125
+126
+127
+128
+129
+130
+131
+132
+133
+134
+135
+136
+137
+138
+139
+140
+141
+142
+143
+144
+145
+146
+147
+148
+149
+150
+151
+152
+153
+154
+155
+156
+157
+158
+159
+160
+161
+162
+163
+164
+165
+166
+167
+168
+169
+170
+171
+172
+173
+174
+175
+176
+177
+178
+179
+180
+181
+182
+183
+184
+185
+186
+187
+188
+189
+190
+191
+192
+193
+194
+195
+196
+197
+198
+199
+200
+201
+202
+203
+204
+205
+206
+207
+208
+209
+210
+211
+212
+213
+214
+215
+216
+217
+218
+219
+220
+221
+222
+223
+224
+225
+226
+227
+228
+229
+230
+231
+232
+233
+234
+235
+236
+237
+238
+239
+240
+241
+242
+243
+244
+245
+246
+247
+248
+249
+250
+251
+252
+253
+254
+255
+256
+257
+258
+259
+260
+261
+262
+263
+264
+265
+266
+267
+268
+269
+270
+271
+272
+273
+274
+275
+276
+277
+278
+279
+280
+281
+282
+283
+284
+285
+286
+287
+288
+289
+290
+291
+292
+293
+294
+295
+296
+297
+298
+299
+300
+301
+302
+303
+304
+305
+306
+307
+308
+309
+310
+311
+312
+313
+314
+315
+316
+317
+318
+319
+320
+321
+322
+323
+324
+325
+326
+327
+328
+329
+330
+331
+332
+333
+334
+335
+336
+337
+338
+339
+340
+341
+342
+343
+344
+345
+346
+347
+348
+349
+350
+351
+352
+353
+354
+355
+356
+357
+358
+359
+360
+361
+362
+363
+364</td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">11x</span>
+<span class="cline-any cline-yes">11x</span>
+<span class="cline-any cline-yes">11x</span>
+<span class="cline-any cline-yes">11x</span>
+<span class="cline-any cline-yes">11x</span>
+<span class="cline-any cline-yes">16x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">16x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">16x</span>
+<span class="cline-any cline-yes">16x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">16x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">16x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">16x</span>
+<span class="cline-any cline-yes">16x</span>
+<span class="cline-any cline-yes">16x</span>
+<span class="cline-any cline-yes">14x</span>
+<span class="cline-any cline-yes">14x</span>
+<span class="cline-any cline-yes">14x</span>
+<span class="cline-any cline-yes">14x</span>
+<span class="cline-any cline-yes">14x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">9x</span>
+<span class="cline-any cline-yes">9x</span>
+<span class="cline-any cline-yes">9x</span>
+<span class="cline-any cline-yes">9x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">11x</span>
+<span class="cline-any cline-yes">11x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">11x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">11x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">11x</span>
+<span class="cline-any cline-yes">11x</span>
+<span class="cline-any cline-yes">11x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">16x</span>
+<span class="cline-any cline-yes">16x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">14x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">12x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">11x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">10x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">8x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">6x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">14x</span>
+<span class="cline-any cline-yes">14x</span>
+<span class="cline-any cline-yes">14x</span>
+<span class="cline-any cline-yes">14x</span>
+<span class="cline-any cline-yes">14x</span>
+<span class="cline-any cline-yes">14x</span>
+<span class="cline-any cline-yes">14x</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">10x</span>
+<span class="cline-any cline-yes">10x</span>
+<span class="cline-any cline-yes">10x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">8x</span>
+<span class="cline-any cline-yes">6x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">14x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">7x</span>
+<span class="cline-any cline-yes">7x</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">14x</span>
+<span class="cline-any cline-yes">14x</span>
+<span class="cline-any cline-yes">14x</span>
+<span class="cline-any cline-yes">14x</span>
+<span class="cline-any cline-yes">14x</span>
+<span class="cline-any cline-yes">14x</span>
+<span class="cline-any cline-yes">14x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">12x</span>
+<span class="cline-any cline-yes">12x</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">8x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">6x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">14x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">14x</span>
+<span class="cline-any cline-yes">14x</span>
+<span class="cline-any cline-yes">14x</span>
+<span class="cline-any cline-yes">14x</span>
+<span class="cline-any cline-yes">14x</span>
+<span class="cline-any cline-yes">14x</span>
+<span class="cline-any cline-yes">14x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">8x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">6x</span>
+<span class="cline-any cline-yes">6x</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-yes">3x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">14x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">15x</span>
+<span class="cline-any cline-yes">15x</span>
+<span class="cline-any cline-yes">15x</span>
+<span class="cline-any cline-yes">15x</span>
+<span class="cline-any cline-yes">15x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">7x</span>
+<span class="cline-any cline-yes">7x</span>
+<span class="cline-any cline-yes">7x</span>
+<span class="cline-any cline-yes">7x</span>
+<span class="cline-any cline-yes">7x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">11x</span>
+<span class="cline-any cline-yes">11x</span>
+<span class="cline-any cline-yes">11x</span>
+<span class="cline-any cline-yes">11x</span>
+<span class="cline-any cline-yes">11x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">42x</span>
+<span class="cline-any cline-yes">42x</span>
+<span class="cline-any cline-yes">42x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">42x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">207x</span>
+<span class="cline-any cline-yes">207x</span>
+<span class="cline-any cline-yes">465x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">207x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+const express_cassandra_1 = require("express-cassandra");
+const perf_hooks_1 = require("perf_hooks");
+const taxTables_1 = require("./taxTables");
+const httpErrors_1 = require("./httpErrors");
+exports.VERSION_ID = '1.0';
+let transaction;
+let emitter;
+let receiver;
+let line;
+let amount;
+let otherCosts;
+let discount;
+function calculateTax(t) {
+    const ti = perf_hooks_1.performance.now();
+    transaction = t;
+    initialize();
+    const calculatedTaxSummary = transaction.calculatedTaxSummary;
+    for (line of transaction.lines) {
+        const taxDetails = {
+            iec: {
+                jurisdictionType: 'Country',
+                jurisdictionName: 'Brasil',
+                taxType: 'IEC',
+                scenario: 'To be determined',
+                calcBase: 0,
+                rate: 0,
+                fact: 0,
+                tax: 0
+            },
+            ist: {
+                jurisdictionType: 'State',
+                jurisdictionName: receiver.address.state,
+                taxType: 'IST',
+                scenario: 'To be determined',
+                calcBase: 0,
+                rate: 0,
+                fact: 0,
+                tax: 0
+            },
+            isc: {
+                jurisdictionType: 'City',
+                jurisdictionName: emitter.address.cityName,
+                taxType: 'ISC',
+                scenario: 'To be determined',
+                calcBase: 0,
+                rate: 0,
+                fact: 0,
+                tax: 0
+            }
+        };
+        const calculatedTax = {
+            tax: 0,
+            CST: '99',
+            taxDetails
+        };
+        line.calculatedTax = calculatedTax;
+        amount = (line.lineAmount !== undefined) ?
+            line.lineAmount :
+            currencyRound(line.itemPrice * line.numberOfItems);
+        otherCosts = (line.otherCostAmount !== undefined) ?
+            line.otherCostAmount :
+            0;
+        discount = (line.lineDiscount !== undefined) ?
+            line.lineDiscount :
+            0;
+        calculatedTaxSummary.numberOfLines += 1;
+        calculatedTaxSummary.subtotal = currencySum(calculatedTaxSummary.subtotal, amount, -discount);
+        calculateCST();
+        calculateIec();
+        calculateIst();
+        calculateIsc();
+        calculatedTaxSummary.totalTax = currencySum(calculatedTaxSummary.totalTax, calculatedTax.tax);
+        delete line.item;
+    }
+    calculatedTaxSummary.grandTotal = currencySum(calculatedTaxSummary.subtotal, calculatedTaxSummary.totalTax);
+    delete transaction.header.location;
+    const tf = perf_hooks_1.performance.now();
+    transaction.processingInfo.duration = tf - ti;
+}
+exports.calculateTax = calculateTax;
+function initialize() {
+    const header = transaction.header;
+    [emitter, receiver] = (header.transactionType === 'Sale') ?
+        [header.location, header.entity] :
+        [header.entity, header.location];
+    const taxByType = {
+        iec: {
+            tax: 0,
+            jurisdictions: [{
+                    jurisdictionType: 'Country',
+                    jurisdictionName: 'Brasil',
+                    tax: 0
+                }]
+        },
+        ist: {
+            tax: 0, jurisdictions: [{
+                    jurisdictionType: 'State',
+                    jurisdictionName: receiver.address.state,
+                    tax: 0
+                }]
+        },
+        isc: {
+            tax: 0, jurisdictions: [{
+                    jurisdictionType: 'City',
+                    jurisdictionName: emitter.address.cityName,
+                    tax: 0
+                }]
+        }
+    };
+    const calculatedTaxSummary = {
+        numberOfLines: 0,
+        subtotal: 0,
+        totalTax: 0,
+        grandTotal: 0,
+        taxByType
+    };
+    transaction.calculatedTaxSummary = calculatedTaxSummary;
+    const processingInfo = { versionId: exports.VERSION_ID, duration: 0 };
+    transaction.processingInfo = processingInfo;
+}
+function calculateCST() {
+    const calculatedTax = line.calculatedTax;
+    if (emitter.taxRegime === 'individual') {
+        cst50or99();
+    }
+    else {
+        if (receiver.type === 'cityGovernment') {
+            calculatedTax.CST = '34';
+        }
+        else if (receiver.type === 'stateGovernment') {
+            calculatedTax.CST = '35';
+        }
+        else if (receiver.type === 'federalGovernment') {
+            calculatedTax.CST = '36';
+        }
+        else {
+            if (emitter.taxRegime === 'simplified') {
+                cst50or99();
+            }
+            else if (emitter.taxRegime === 'realProfit' ||
+                emitter.taxRegime === 'estimatedProfit') {
+                calculatedTax.CST = '50';
+            }
+            else {
+                throw new httpErrors_1.BadRequest('Invalid Tax Regime.');
+            }
+        }
+    }
+}
+function cst50or99() {
+    const calculatedTax = line.calculatedTax;
+    const item = line.item;
+    if (item.productType === 'merchandise') {
+        calculatedTax.CST = '50';
+    }
+    else {
+        calculatedTax.CST = '99';
+    }
+}
+function calculateIec() {
+    const taxDetail = line.calculatedTax.taxDetails.iec;
+    const taxSummary = transaction.calculatedTaxSummary.taxByType.iec;
+    taxDetail.jurisdictionType = 'Country';
+    taxDetail.jurisdictionName = 'Brasil';
+    taxDetail.taxType = 'IEC';
+    const cst = line.calculatedTax.CST;
+    if (cst &gt;= '31' &amp;&amp; cst &lt;= '37') {
+        calculationExempt(taxDetail);
+    }
+    else {
+        const useType = line.useType;
+        const item = line.item;
+        if (useType === 'use' || useType === 'consumption') {
+            if (receiver.address.state === emitter.address.state) {
+                calculationSimple(taxDetail, item.federalTax.IEC.rate);
+            }
+            else {
+                tableOrSimpleIec();
+            }
+        }
+        else if (useType === 'resale' || useType === 'production') {
+            tableOrSimpleIec();
+        }
+        else {
+            if (item.productType === 'merchandise') {
+                calculationSimple(taxDetail, item.federalTax.IEC.rate);
+            }
+            else {
+                calculationExempt(taxDetail);
+            }
+        }
+    }
+    calculateSums(taxDetail.tax, taxSummary);
+}
+function tableOrSimpleIec() {
+    const item = line.item;
+    if (item.productType === 'product') {
+        calculationTableIec();
+    }
+    else {
+        calculationSimple(line.calculatedTax.taxDetails.iec, item.federalTax.IEC.rate);
+    }
+}
+function calculationTableIec() {
+    const taxDetail = line.calculatedTax.taxDetails.iec;
+    taxDetail.scenario = 'Calculation Table';
+    const calcBase = currencySum(amount, otherCosts, -discount);
+    const rate = taxTables_1.iecTable[taxTables_1.regions[receiver.address.state]][(receiver.address.state === emitter.address.state) ? 0 : 1];
+    const fact = line.item.federalTax.IEC.fact;
+    taxDetail.calcBase = calcBase;
+    taxDetail.rate = rate;
+    taxDetail.fact = fact;
+    taxDetail.tax = currencyRound(calcBase * (1 - fact) * rate);
+}
+function calculateIst() {
+    const taxDetail = line.calculatedTax.taxDetails.ist;
+    const taxSummary = transaction.calculatedTaxSummary.taxByType.ist;
+    taxDetail.jurisdictionType = 'State';
+    taxDetail.jurisdictionName = receiver.address.state;
+    taxDetail.taxType = 'IST';
+    const cst = line.calculatedTax.CST;
+    if (cst === '35' || cst === '36') {
+        calculationExempt(taxDetail);
+    }
+    else {
+        const item = line.item;
+        if (line.useType === 'resale') {
+            if (item.productType === 'product') {
+                calculationTableIst();
+            }
+            else {
+                calculationPeriodIst();
+            }
+        }
+        else if (line.useType === 'production') {
+            if (receiver.address.state === emitter.address.state) {
+                calculationSimple(taxDetail, item.federalTax.IST.rate);
+            }
+            else {
+                calculationTableIst();
+            }
+        }
+        else {
+            if (item.productType === 'merchandise') {
+                calculationSimple(taxDetail, item.federalTax.IST.rate);
+            }
+            else {
+                const rate = 0.14;
+                const fact = 0.08;
+                calculationFixed(taxDetail, rate, fact);
+            }
+        }
+    }
+    calculateSums(taxDetail.tax, taxSummary);
+}
+function calculationTableIst() {
+    const taxDetails = line.calculatedTax.taxDetails;
+    const taxDetail = taxDetails.ist;
+    taxDetail.scenario = 'Calculation Table';
+    const calcBase = currencySum(amount, otherCosts, -discount, taxDetails.iec.tax);
+    const rate = rateTableIst();
+    const fact = line.item.federalTax.IST.fact;
+    taxDetail.calcBase = calcBase;
+    taxDetail.rate = rate;
+    taxDetail.fact = fact;
+    taxDetail.tax = currencyRound(calcBase * (1 - fact) * rate);
+}
+function calculationPeriodIst() {
+    const taxDetails = line.calculatedTax.taxDetails;
+    const taxDetail = taxDetails.ist;
+    taxDetail.scenario = 'Calculation Period';
+    let calcBase;
+    let rate;
+    let fact;
+    const month = express_cassandra_1.datatypes.LocalDate.fromString(transaction.header.transactionDate).month;
+    if (month &gt;= 5 &amp;&amp; month &lt;= 8) {
+        calcBase = currencySum(amount, -discount, taxDetails.iec.tax);
+        rate = rateTableIst();
+        fact = 0.4;
+    }
+    else {
+        calcBase = currencySum(amount, -discount);
+        const taxType = line.item.federalTax.IST;
+        rate = taxType.rate;
+        fact = taxType.fact;
+    }
+    taxDetail.month = (month &lt; 10) ? `0${month}` : month.toString();
+    taxDetail.calcBase = calcBase;
+    taxDetail.rate = rate;
+    taxDetail.fact = fact;
+    taxDetail.tax = currencyRound(calcBase * (1 - fact) * rate);
+}
+function rateTableIst() {
+    const originTable = taxTables_1.istTable[emitter.address.state];
+    let rate = 0.08;
+    if (originTable !== undefined) {
+        rate = originTable[receiver.address.state];
+    }
+    return rate;
+}
+function calculateIsc() {
+    const taxDetail = line.calculatedTax.taxDetails.isc;
+    const taxSummary = transaction.calculatedTaxSummary.taxByType.isc;
+    taxDetail.jurisdictionType = 'City';
+    taxDetail.jurisdictionName = emitter.address.cityName;
+    taxDetail.taxType = 'ISC';
+    const cst = line.calculatedTax.CST;
+    if ((new Set(['99', '34', '35', '36'])).has(cst) ||
+        receiver.suframa !== undefined ||
+        receiver.address.cityCode === 1302603) {
+        calculationExempt(taxDetail);
+    }
+    else {
+        const item = line.item;
+        if (item.productType === 'merchandise') {
+            calculationSimple(taxDetail, item.federalTax.ISC.rate);
+        }
+        else {
+            const rate = 0.02;
+            const factor = 0.12;
+            calculationFixed(taxDetail, rate, factor);
+        }
+    }
+    calculateSums(taxDetail.tax, taxSummary);
+}
+function calculationExempt(taxDetail) {
+    taxDetail.scenario = 'Calculation Exempt';
+    taxDetail.calcBase = currencySum(amount, otherCosts, -discount);
+    taxDetail.rate = 0;
+    taxDetail.fact = 0;
+    taxDetail.tax = 0;
+}
+function calculationFixed(taxDetail, rate, fact) {
+    taxDetail.scenario = 'Calculation Fixed';
+    taxDetail.calcBase = currencySum(amount, otherCosts);
+    taxDetail.rate = rate;
+    taxDetail.fact = fact;
+    taxDetail.tax = currencyRound(taxDetail.calcBase * (1 - fact) * rate);
+}
+function calculationSimple(taxDetail, rate) {
+    taxDetail.scenario = 'Calculation Simple';
+    taxDetail.calcBase = currencySum(amount, otherCosts, -discount);
+    taxDetail.rate = rate;
+    taxDetail.fact = 0;
+    taxDetail.tax = currencyRound(taxDetail.calcBase * rate);
+}
+function calculateSums(tax, taxSummary) {
+    line.calculatedTax.tax = currencySum(line.calculatedTax.tax, tax);
+    taxSummary.tax = currencySum(taxSummary.tax, tax);
+    taxSummary.jurisdictions[0].tax = currencySum(taxSummary.jurisdictions[0].tax, tax);
+}
+function currencyRound(x) {
+    return Math.round(x * 100) / 100;
+}
+function currencySum(...args) {
+    let sum = 0;
+    for (const arg of args) {
+        sum += Math.round(arg * 100);
+    }
+    return sum / 100;
+}
+&nbsp;</pre></td></tr>
+</table></pre>
+<div class='push'></div><!-- for sticky footer -->
+</div><!-- /wrapper -->
+<div class='footer quiet pad2 space-top1 center small'>
+  Code coverage
+  generated by <a href="https://istanbul.js.org/" target="_blank">istanbul</a> at Fri Nov 23 2018 21:05:10 GMT-0200 (GMT-02:00)
+</div>
+</div>
+<script src="../prettify.js"></script>
+<script>
+window.onload = function () {
+        if (typeof prettyPrint === 'function') {
+            prettyPrint();
+        }
+};
+</script>
+<script src="../sorter.js"></script>
+</body>
+</html>

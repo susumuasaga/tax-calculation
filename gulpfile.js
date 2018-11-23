@@ -27,11 +27,7 @@ exports.test = test;
 function coverage() {
   return gulp
     .src('dist/spec/**/*.spec.js')
-    .pipe(
-      jest(
-        { collectCoverage: true, collectCoverageFrom: ['dist/calculateTax.js'] }
-      )
-    );
+    .pipe(jest({ collectCoverage: true }));
 }
 exports.coverage = coverage;
 
