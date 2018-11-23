@@ -15,7 +15,6 @@ exports.locations = [
         federalTaxId: '27.227.668/0001-22',
         stateTaxId: '12462557',
         taxRegime: 'realProfit',
-        type: 'nonGovernment',
         mainActivity: 'industry',
         address: {
             street: 'Rua Felipe Schmidt',

@@ -36,10 +36,8 @@ const location: models.SchemaDefinition = {
           (new Set([
             'cityGovernment',
             'stateGovernment',
-            'federalGovernment',
-            'nonGovernment'
-          ])).has(value),
-        required: true
+            'federalGovernment'
+          ])).has(value)
       }
     },
     mainActivity: {

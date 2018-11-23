@@ -1,9 +1,9 @@
 import * as models from 'express-cassandra';
 
 /**
- * Company Document Interface
+ * Company Interface
  */
-export interface CompanyDoc extends models.Document {
+export interface Company {
   /**
    * Company ID
    * Format UUID
@@ -18,3 +18,8 @@ export interface CompanyDoc extends models.Document {
    */
   name: string;
 }
+
+/**
+ * Company Document
+ */
+export interface CompanyDoc extends Company, models.Document {}

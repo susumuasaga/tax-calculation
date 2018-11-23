@@ -1,4 +1,8 @@
-export const companies = [
+import { Company } from '../models/Company';
+import { Location } from '../models/Entity';
+import { Item } from '../models/Item';
+
+export const companies: Company[] = [
   {
     id: '75106750-1ae4-4872-9d9b-562d94ea324f',
     code: 'CLIENT_J',
@@ -6,7 +10,7 @@ export const companies = [
   }
 ];
 
-export const locations = [
+export const locations: Location[] = [
     {
     companyId: '75106750-1ae4-4872-9d9b-562d94ea324f',
     code: '27227668000122', // pattern: CNPJ only number
@@ -14,7 +18,6 @@ export const locations = [
     federalTaxId: '27.227.668/0001-22', // CNPJ
     stateTaxId: '12462557',
     taxRegime: 'realProfit',
-    type: 'nonGovernment',
     mainActivity: 'industry',
     address: {
       street: 'Rua Felipe Schmidt',
@@ -32,16 +35,16 @@ export const locations = [
   }
 ];
 
-export const items = [
+export const items: Item[] = [
   {
     companyId: '75106750-1ae4-4872-9d9b-562d94ea324f',
     code: 'VENTILADOR-DIGITAL-001',
     description: 'Ventilador Digital Valitana',
     productType: 'product',
     federalTax: {
-      IEC: {rate: 0.0321, fact: 0.09}, // Rate 3.21% | Fact 9%
-      IST: {rate: 0.0412, fact: 0.1}, // Rate 4.12% | Fact 10%
-      ISC: {rate: 0.065, fact: 0.11} // Rate 6.50% | Fact 11%
+      IEC: {rate: 0.0321, fact: 0.09},
+      IST: {rate: 0.0412, fact: 0.1},
+      ISC: {rate: 0.065, fact: 0.11}
     }
   },
   {
@@ -50,9 +53,9 @@ export const items = [
     description: 'JJJ Tabajara',
     productType: 'merchandise',
     federalTax: {
-      IEC: {rate: 0.02, fact: 0}, // Rate 2.00% | Fact 0%
-      IST: {rate: 0.1525, fact: 0.08}, // Rate 15.25% | Fact 8%
-      ISC: {rate: 0.045, fact: 0.01} // Rate 4.50% | Fact 1%
+      IEC: {rate: 0.02, fact: 0},
+      IST: {rate: 0.1525, fact: 0.08},
+      ISC: {rate: 0.045, fact: 0.01}
     }
   }
 ];

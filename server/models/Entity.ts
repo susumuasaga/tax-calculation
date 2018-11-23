@@ -58,6 +58,10 @@ export interface Location extends Entity {
    * Location Code
    */
   code?: string;
+  /**
+   * Main Activity
+   */
+  mainActivity?: 'commerce' | 'industry' | 'service';
 }
 
 /**
