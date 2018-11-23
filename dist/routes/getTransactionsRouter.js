@@ -12,14 +12,19 @@ function getTransactionsRouter(transactionModel, locationModel, itemModel) {
         }
         else {
             const header = transaction.header;
-            header.location = await locationModel.findOneAsync({ code: header.companyLocation }, { raw: true });
-            for (const line of transaction.lines) {
-                line.item = await itemModel.findOneAsync({ code: line.itemCode }, { raw: true });
+            try {
+                header.location = await locationModel.findOneAsync({ code: header.companyLocation }, { raw: true });
+                for (const line of transaction.lines) {
+                    line.item = await itemModel.findOneAsync({ code: line.itemCode }, { raw: true });
+                }
+                calculateTax_1.calculateTax(transaction);
+                const transactionDoc = new transactionModel(transaction);
+                await transactionDoc.saveAsync();
+                res.json(transaction);
             }
-            calculateTax_1.calculateTax(transaction);
-            const transactionDoc = new transactionModel(transaction);
-            await transactionDoc.saveAsync();
-            res.json(transaction);
+            catch (error) {
+                next(error);
+            }
         }
     });
     return router;

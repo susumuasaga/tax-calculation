@@ -81,8 +81,7 @@ describe('Transactions route', () => {
             ]
         };
         const url = `${URL_ROOT}/transactions`;
-        const res = await superagent
-            .post(url)
+        const res = await superagent.post(url)
             .send(given);
         expect(res.status)
             .toBe(http_status_1.default.OK);
@@ -117,6 +116,42 @@ describe('Transactions route', () => {
                 const error = err.response.body;
                 expect(error.message)
                     .toBe('No transaction specified.');
+            }
+        })();
+    });
+    it('should raise BAD_REQUEST when transaction is invalid', async () => {
+        const given = {
+            header: {
+                transactionType: 'Purchase',
+                companyLocation: '27227668000122',
+                entity: {
+                    address: { cityName: 'Jundiaí', state: 'SP' }
+                }
+            },
+            lines: [
+                {
+                    numberOfItems: 2,
+                    itemPrice: 45,
+                    otherCostAmount: 10,
+                    lineDiscount: 10,
+                    itemCode: 'VENTILADOR-DIGITAL-001'
+                }
+            ]
+        };
+        fakeLogger.clearErrorLog();
+        await (async () => {
+            try {
+                await superagent.post(`${URL_ROOT}/transactions`)
+                    .send(given);
+                fail('Invalid transaction, but error not caught.');
+            }
+            catch (err) {
+                const lastError = fakeLogger.lastError;
+                expect(lastError.message)
+                    .toBe('Invalid Tax Regime.');
+                const error = err.response.body;
+                expect(error.message)
+                    .toBe('Invalid Tax Regime.');
             }
         })();
     });
