@@ -2,20 +2,39 @@
 var __importDefault = (this && this.__importDefault) || function (mod) {
     return (mod && mod.__esModule) ? mod : { "default": mod };
 };
-var __importStar = (this && this.__importStar) || function (mod) {
-    if (mod && mod.__esModule) return mod;
-    var result = {};
-    if (mod != null) for (var k in mod) if (Object.hasOwnProperty.call(mod, k)) result[k] = mod[k];
-    result["default"] = mod;
-    return result;
-};
 Object.defineProperty(exports, "__esModule", { value: true });
 const express_1 = __importDefault(require("express"));
-const path = __importStar(require("path"));
-const app = express_1.default();
-app.use('/node_modules', express_1.default.static('node_modules'));
-app.use(['/product', '/category', '/checkout', '/search', '/callback'], (req, res) => {
-    res.sendFile(path.resolve('build/index.html'));
-});
-app.use(express_1.default.static('dist'));
-app.listen(3000);
+const body_parser_1 = __importDefault(require("body-parser"));
+const winston_1 = __importDefault(require("winston"));
+const path_1 = __importDefault(require("path"));
+const getModelInstances_1 = require("./getModelInstances");
+const getTransactionsRouter_1 = require("./routes/getTransactionsRouter");
+const getErrorHandler_1 = require("./routes/getErrorHandler");
+start();
+console.log('Server listening at port 3000.');
+async function start() {
+    const app = express_1.default();
+    app.use(body_parser_1.default.json());
+    const modelInstances = await getModelInstances_1.getModelInstances();
+    const transactionModel = modelInstances['Transaction'];
+    const locationModel = modelInstances['Location'];
+    const itemModel = modelInstances['Item'];
+    app.use('/api/transactions', getTransactionsRouter_1.getTransactionsRouter(transactionModel, locationModel, itemModel));
+    app.use('/node_modules', express_1.default.static('./node_modules'));
+    app.use(['/transactions', '/transaction-detail'], (req, res) => { res.sendFile(path_1.default.resolve('build/index.html')); });
+    app.use(express_1.default.static('./build'));
+    const logger = winston_1.default.createLogger({
+        level: 'info',
+        format: winston_1.default.format.json(),
+        transports: [
+            new winston_1.default.transports.File({
+                filename: 'error.log', level: 'error'
+            }),
+            new winston_1.default.transports.Console({
+                format: winston_1.default.format.simple()
+            })
+        ]
+    });
+    app.use(getErrorHandler_1.getErrorHandler(logger));
+    app.listen(3000);
+}

@@ -26,9 +26,6 @@ let fakeLogger;
 let transactionModel;
 let locationModel;
 let itemModel;
-async function getServer(app, port) {
-    return new Promise(resolve => { server = app.listen(3000, () => { resolve(server); }); });
-}
 async function create(model, values) {
     for (const value of values) {
         const document = new model(value);
@@ -47,7 +44,7 @@ describe('Transactions route', () => {
         app.use('/transactions', getTransactionsRouter_1.getTransactionsRouter(transactionModel, locationModel, itemModel));
         fakeLogger = new FakeLogger_1.FakeLogger();
         app.use(getErrorHandler_1.getErrorHandler(fakeLogger));
-        server = await getServer(app, 3000);
+        server = app.listen(3000);
     });
     afterAll(() => {
         server.close();

@@ -14,7 +14,6 @@ import bodyParser from 'body-parser';
 import morgan from 'morgan';
 import { HttpError } from '../../httpErrors';
 import { getErrorHandler } from '../../routes/getErrorHandler';
-import { Logger } from '../../logger';
 
 const URL_ROOT = 'http://localhost:3000';
 let server: http.Server;
@@ -22,13 +21,6 @@ let fakeLogger: FakeLogger;
 let transactionModel: Model<TransactionDoc>;
 let locationModel: Model<LocationDoc>;
 let itemModel: Model<ItemDoc>;
-
-async function getServer(app: express.Express, port?: number):
-  Promise<http.Server> {
-  return new Promise<http.Server>(
-    resolve => { server = app.listen(3000, () => { resolve(server); }); }
-  );
-}
 
 async function create(model: Model<Document>, values: any[]): Promise<void> {
   for (const value of values) {
@@ -52,7 +44,7 @@ describe('Transactions route', () => {
     );
     fakeLogger = new FakeLogger();
     app.use(getErrorHandler(fakeLogger));
-    server = await getServer(app, 3000);
+    server = app.listen(3000);
   });
 
   afterAll(() => {

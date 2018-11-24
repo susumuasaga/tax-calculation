@@ -53,7 +53,6 @@
       "debug",
       "info",
       "error",
-      "log",
       "time",
       "timeEnd",
       "trace"
@@ -65,7 +64,7 @@
     "no-duplicate-switch-case": true,
     "no-duplicate-variable": true,
     "no-empty": true,
-    "no-floating-promises": true,
+    "no-floating-promises": false,
     "no-for-in-array": true,
     "no-implicit-dependencies": true,
     "no-import-side-effect": true,
