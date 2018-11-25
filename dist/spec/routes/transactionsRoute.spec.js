@@ -20,18 +20,13 @@ const testDB_1 = require("../testDB");
 const body_parser_1 = __importDefault(require("body-parser"));
 const morgan_1 = __importDefault(require("morgan"));
 const getErrorHandler_1 = require("../../routes/getErrorHandler");
+const create_1 = require("./create");
 const URL_ROOT = 'http://localhost:3000';
 let server;
 let fakeLogger;
 let transactionModel;
 let locationModel;
 let itemModel;
-async function create(model, values) {
-    for (const value of values) {
-        const document = new model(value);
-        await document.saveAsync();
-    }
-}
 describe('Transactions route', () => {
     beforeAll(async () => {
         const app = express_1.default();
@@ -53,8 +48,8 @@ describe('Transactions route', () => {
         await transactionModel.truncateAsync();
         await locationModel.truncateAsync();
         await itemModel.truncateAsync();
-        await create(locationModel, testDB_1.locations);
-        await create(itemModel, testDB_1.items);
+        await create_1.create(locationModel, testDB_1.locations);
+        await create_1.create(itemModel, testDB_1.items);
         for (const transaction of testDB_1.transactions) {
             const transactionDB = Object.assign({}, transaction, transaction.header);
             delete transactionDB.header;

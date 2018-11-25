@@ -1,4 +1,4 @@
-import { Model, Document } from 'express-cassandra';
+import { Model } from 'express-cassandra';
 import express from 'express';
 import * as http from 'http';
 import httpStatus from 'http-status';
@@ -14,6 +14,7 @@ import bodyParser from 'body-parser';
 import morgan from 'morgan';
 import { HttpError } from '../../httpErrors';
 import { getErrorHandler } from '../../routes/getErrorHandler';
+import { create } from './create';
 
 const URL_ROOT = 'http://localhost:3000';
 let server: http.Server;
@@ -21,13 +22,6 @@ let fakeLogger: FakeLogger;
 let transactionModel: Model<TransactionDoc>;
 let locationModel: Model<LocationDoc>;
 let itemModel: Model<ItemDoc>;
-
-async function create(model: Model<Document>, values: any[]): Promise<void> {
-  for (const value of values) {
-    const document = new model(value);
-    await document.saveAsync();
-  }
-}
 
 describe('Transactions route', () => {
   beforeAll(async () => {
