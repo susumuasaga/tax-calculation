@@ -39,7 +39,7 @@ const transaction = {
         },
         processingInfo: { type: 'frozen', typeDef: '<processing_info>' }
     },
-    key: ['companyLocation', 'documentCode'],
-    indexes: ['transactionDate']
+    key: [['companyLocation'], 'transactionDate', 'documentCode'],
+    clustering_order: { transactionDate: 'desc' }
 };
 module.exports = transaction;

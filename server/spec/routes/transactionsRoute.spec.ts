@@ -97,7 +97,12 @@ describe('Transactions route', () => {
     expect(response.calculatedTaxSummary.totalTax)
       .toBe(12.88);
     const transactionDocument = await transactionModel.findOneAsync(
-      { companyLocation: '27227668000122', documentCode: '123456' }
+      {
+        companyLocation: '27227668000122',
+        transactionDate: '2018-11-25',
+        documentCode: '123456'
+      },
+      { raw: true }
     );
     expect(transactionDocument.calculatedTaxSummary.totalTax)
       .toBe(12.88);
@@ -163,8 +168,8 @@ describe('Transactions route', () => {
     })();
   });
 
-/*  it('should retrieve transaction by location.code', async () => {
-    const locationCode = '27227668000203';
+  it('should retrieve transaction by location.code', async () => {
+    const locationCode = '27227668000122';
     const res = await superagent.get(
       `${URL_ROOT}/transactions?companyLocation=${locationCode}`
     );
@@ -175,7 +180,7 @@ describe('Transactions route', () => {
       transaction => transaction.header.companyLocation === locationCode
     );
     expected.sort(
-      (a, b) => a.header.transactionDate.localeCompare(b.header.transactionDate)
+      (a, b) => -a.header.transactionDate.localeCompare(b.header.transactionDate)
     );
     expect(actual.length)
       .toBe(expected.length);
@@ -183,5 +188,5 @@ describe('Transactions route', () => {
       expect(actual[i].header.documentCode)
         .toBe(expected[i].header.documentCode);
     }
-  });*/
+  });
 });

@@ -1,13 +1,10 @@
-import * as bodyParser from 'body-parser';
 import { Router } from 'express';
-import { Logger } from '../logger';
 import { Model } from 'express-cassandra';
 import { TransactionDoc, Transaction } from '../models/Transaction';
 import { LocationDoc } from '../models/Entity';
 import { ItemDoc } from '../models/Item';
 import { BadRequest } from '../httpErrors';
 import { calculateTax } from '../calculateTax';
-import { transactions } from '../spec/testDB';
 
 /**
  * Create Transactions route.
@@ -20,23 +17,27 @@ export function getTransactionsRouter(
 ): Router {
   const router = Router();
 
+  async function populateTransaction(transaction: Transaction): Promise<void> {
+    const header = transaction.header;
+    header.location = await locationModel.findOneAsync(
+      { code: header.companyLocation },
+      { raw: true }
+    );
+    for (const line of transaction.lines) {
+      line.item = await itemModel.findOneAsync(
+        { code: line.itemCode },
+        { raw: true }
+      );
+    }
+  }
+
   router.post('/', async (req, res, next) => {
     const transaction = req.body as Transaction;
     if (Object.keys(transaction).length === 0) {
       next(new BadRequest('No transaction specified.'));
     } else {
-      const header = transaction.header;
       try {
-        header.location = await locationModel.findOneAsync(
-          { code: header.companyLocation },
-          { raw: true }
-        );
-        for (const line of transaction.lines) {
-          line.item = await itemModel.findOneAsync(
-            { code: line.itemCode },
-            { raw: true }
-          );
-        }
+        await populateTransaction(transaction);
         calculateTax(transaction);
         const transactionDoc = new transactionModel(
           { ...transaction.header, ...transaction }
@@ -49,31 +50,32 @@ export function getTransactionsRouter(
     }
   });
 
-/*  router.get('/', async (req, res) => {
-    let transactionDocs: TransactionDoc[];
-    transactionDocs = await transactionModel.findAsync(
-      req.query as object,
-      { raw: true }
+  router.get('/', async (req, res) => {
+    const query = req.query as { [key: string]: any };
+    if (query['companyLocation'] !== undefined) {
+      query['$orderby'] = { $desc: 'transactionDate' };
+    }
+    const transactionDocs = await transactionModel.findAsync(
+      query, { raw: true, allow_filtering: true }
     );
-    let transactions: Transaction[];
+    const transactions: Transaction[] = [];
     for (const doc of transactionDocs) {
-      const location = await locationModel.findAsync(
-        { code: doc.companyLocation },
-        { raw: true }
-      );
-      const lines = doc.lines;
       const transaction: Transaction = {
         header: {
-          transactionType: doc.transactionType,
+          companyLocation: doc.companyLocation,
+          transactionDate: doc.transactionDate,
           documentCode: doc.documentCode,
-          transactionDate: doc.transactionDate
+          transactionType: doc.transactionType,
+          entity: doc.entity
         },
         calculatedTaxSummary: doc.calculatedTaxSummary,
         lines: doc.lines
       };
-      for (let i = 0; i < lines.length; )
+      await populateTransaction(transaction);
+      transactions.push(transaction);
     }
-  });*/
+    res.json(transactions);
+  });
 
   return router;
 }

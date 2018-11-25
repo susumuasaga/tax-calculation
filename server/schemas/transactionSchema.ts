@@ -37,8 +37,8 @@ const transaction: models.SchemaDefinition = {
     },
     processingInfo: { type: 'frozen', typeDef: '<processing_info>'}
   },
-  key: ['companyLocation', 'documentCode'],
-  indexes: ['transactionDate']
+  key: [['companyLocation'], 'transactionDate', 'documentCode'],
+  clustering_order: { transactionDate: 'desc' }
 };
 
 export = transaction;

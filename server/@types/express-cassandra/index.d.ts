@@ -12,7 +12,8 @@ declare module 'express-cassandra' {
 
     interface SchemaDefinition {
       fields: FieldsDefinition<any>;
-      key: string[];
+      key: (string[] | string)[];
+      clustering_order?: { [path: string]: string };
       indexes?: string[];
     }
 

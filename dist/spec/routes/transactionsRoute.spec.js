@@ -92,7 +92,11 @@ describe('Transactions route', () => {
         const response = res.body;
         expect(response.calculatedTaxSummary.totalTax)
             .toBe(12.88);
-        const transactionDocument = await transactionModel.findOneAsync({ companyLocation: '27227668000122', documentCode: '123456' });
+        const transactionDocument = await transactionModel.findOneAsync({
+            companyLocation: '27227668000122',
+            transactionDate: '2018-11-25',
+            documentCode: '123456'
+        }, { raw: true });
         expect(transactionDocument.calculatedTaxSummary.totalTax)
             .toBe(12.88);
     });
@@ -148,5 +152,20 @@ describe('Transactions route', () => {
                     .toBe('Invalid Tax Regime.');
             }
         })();
+    });
+    it('should retrieve transaction by location.code', async () => {
+        const locationCode = '27227668000122';
+        const res = await superagent.get(`${URL_ROOT}/transactions?companyLocation=${locationCode}`);
+        expect(res.status)
+            .toBe(http_status_1.default.OK);
+        const actual = res.body;
+        const expected = testDB_1.transactions.filter(transaction => transaction.header.companyLocation === locationCode);
+        expected.sort((a, b) => -a.header.transactionDate.localeCompare(b.header.transactionDate));
+        expect(actual.length)
+            .toBe(expected.length);
+        for (let i = 0; i < actual.length; i += 1) {
+            expect(actual[i].header.documentCode)
+                .toBe(expected[i].header.documentCode);
+        }
     });
 });
