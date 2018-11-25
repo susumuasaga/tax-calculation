@@ -11,14 +11,6 @@ exports.transactionUdts = {
         type: 'text',
         address: 'frozen<address>'
     },
-    header: {
-        transactionType: 'text',
-        documentCode: 'text',
-        currency: 'text',
-        transactionDate: 'text',
-        companyLocation: 'text',
-        entity: 'frozen<entity>'
-    },
     detail: {
         jurisdictionType: 'text',
         jurisdictionName: 'text',

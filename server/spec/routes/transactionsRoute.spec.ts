@@ -9,7 +9,7 @@ import { LocationDoc } from '../../models/Entity';
 import { ItemDoc } from '../../models/Item';
 import { getModelInstances } from '../../getModelInstances';
 import { getTransactionsRouter } from '../../routes/getTransactionsRouter';
-import { locations, items } from '../testDB';
+import { locations, items, transactions } from '../testDB';
 import bodyParser from 'body-parser';
 import morgan from 'morgan';
 import { HttpError } from '../../httpErrors';
@@ -57,13 +57,21 @@ describe('Transactions route', () => {
     await itemModel.truncateAsync();
     await create(locationModel, locations);
     await create(itemModel, items);
+
+    for (const transaction of transactions) {
+      const transactionDB = { ...transaction, ...transaction.header };
+      delete transactionDB.header;
+      const transactionDoc = new transactionModel(transactionDB);
+      await transactionDoc.saveAsync();
+    }
   });
 
-  it('should calculate transaction taxes', async () => {
+  it('should complete and save transaction', async () => {
     const given: Transaction = {
       header: {
         documentCode: '123456',
         transactionType: 'Sale',
+        transactionDate: '2018-11-25',
         companyLocation: '27227668000122',
         entity: {
           type: 'cityGovernment',
@@ -88,17 +96,9 @@ describe('Transactions route', () => {
     const response = res.body as Transaction;
     expect(response.calculatedTaxSummary.totalTax)
       .toBe(12.88);
-    const transactionDocument = await transactionModel.findOneAsync({
-      header: {
-        documentCode: '123456',
-        transactionType: 'Sale',
-        companyLocation: '27227668000122',
-        entity: {
-          type: 'cityGovernment',
-          address: { cityName: 'São Paulo', state: 'SP' }
-        }
-      }
-    });
+    const transactionDocument = await transactionModel.findOneAsync(
+      { companyLocation: '27227668000122', documentCode: '123456' }
+    );
     expect(transactionDocument.calculatedTaxSummary.totalTax)
       .toBe(12.88);
   });
@@ -162,4 +162,26 @@ describe('Transactions route', () => {
       }
     })();
   });
+
+/*  it('should retrieve transaction by location.code', async () => {
+    const locationCode = '27227668000203';
+    const res = await superagent.get(
+      `${URL_ROOT}/transactions?companyLocation=${locationCode}`
+    );
+    expect(res.status)
+      .toBe(httpStatus.OK);
+    const actual = res.body as Transaction[];
+    const expected = transactions.filter(
+      transaction => transaction.header.companyLocation === locationCode
+    );
+    expected.sort(
+      (a, b) => a.header.transactionDate.localeCompare(b.header.transactionDate)
+    );
+    expect(actual.length)
+      .toBe(expected.length);
+    for (let i = 0; i < actual.length; i += 1) {
+      expect(actual[i].header.documentCode)
+        .toBe(expected[i].header.documentCode);
+    }
+  });*/
 });

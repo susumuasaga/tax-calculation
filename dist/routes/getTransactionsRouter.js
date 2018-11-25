@@ -18,7 +18,7 @@ function getTransactionsRouter(transactionModel, locationModel, itemModel) {
                     line.item = await itemModel.findOneAsync({ code: line.itemCode }, { raw: true });
                 }
                 calculateTax_1.calculateTax(transaction);
-                const transactionDoc = new transactionModel(transaction);
+                const transactionDoc = new transactionModel(Object.assign({}, transaction.header, transaction));
                 await transactionDoc.saveAsync();
                 res.json(transaction);
             }

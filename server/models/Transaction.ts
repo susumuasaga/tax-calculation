@@ -27,7 +27,11 @@ export interface Transaction {
 /**
  * Transaction Document Interface
  */
-export interface TransactionDoc extends Transaction, models.Document {}
+export interface TransactionDoc extends Header, models.Document {
+  lines: Line[];
+  calculatedTaxSummary?: CalculatedTaxSummary;
+  processingInfo?: ProcessingInfo;
+}
 
 /**
  * Header Interface

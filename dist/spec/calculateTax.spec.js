@@ -1071,7 +1071,7 @@ const expected07 = {
                 },
                 tax: 15.2
             } }),
-        Object.assign({}, given07.lines[1], { calculatedTax: {
+        Object.assign({}, given07.lines[2], { calculatedTax: {
                 CST: '50',
                 taxDetails: {
                     iec: {

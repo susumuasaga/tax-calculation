@@ -1188,8 +1188,7 @@ const expected07: Transaction = {
         },
         tax: 21.37
       }
-    },
-    {
+    }, {
       ...given07.lines[1],
       calculatedTax: {
         CST: '50',
@@ -1227,9 +1226,8 @@ const expected07: Transaction = {
         },
         tax: 15.2
       }
-    },
-    {
-      ...given07.lines[1],
+    }, {
+      ...given07.lines[2],
       calculatedTax: {
         CST: '50',
         taxDetails: {

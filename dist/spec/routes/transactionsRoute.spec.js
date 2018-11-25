@@ -55,12 +55,19 @@ describe('Transactions route', () => {
         await itemModel.truncateAsync();
         await create(locationModel, testDB_1.locations);
         await create(itemModel, testDB_1.items);
+        for (const transaction of testDB_1.transactions) {
+            const transactionDB = Object.assign({}, transaction, transaction.header);
+            delete transactionDB.header;
+            const transactionDoc = new transactionModel(transactionDB);
+            await transactionDoc.saveAsync();
+        }
     });
-    it('should calculate transaction taxes', async () => {
+    it('should complete and save transaction', async () => {
         const given = {
             header: {
                 documentCode: '123456',
                 transactionType: 'Sale',
+                transactionDate: '2018-11-25',
                 companyLocation: '27227668000122',
                 entity: {
                     type: 'cityGovernment',
@@ -85,17 +92,7 @@ describe('Transactions route', () => {
         const response = res.body;
         expect(response.calculatedTaxSummary.totalTax)
             .toBe(12.88);
-        const transactionDocument = await transactionModel.findOneAsync({
-            header: {
-                documentCode: '123456',
-                transactionType: 'Sale',
-                companyLocation: '27227668000122',
-                entity: {
-                    type: 'cityGovernment',
-                    address: { cityName: 'São Paulo', state: 'SP' }
-                }
-            }
-        });
+        const transactionDocument = await transactionModel.findOneAsync({ companyLocation: '27227668000122', documentCode: '123456' });
         expect(transactionDocument.calculatedTaxSummary.totalTax)
             .toBe(12.88);
     });

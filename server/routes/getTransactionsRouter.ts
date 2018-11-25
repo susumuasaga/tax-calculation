@@ -7,6 +7,7 @@ import { LocationDoc } from '../models/Entity';
 import { ItemDoc } from '../models/Item';
 import { BadRequest } from '../httpErrors';
 import { calculateTax } from '../calculateTax';
+import { transactions } from '../spec/testDB';
 
 /**
  * Create Transactions route.
@@ -18,6 +19,7 @@ export function getTransactionsRouter(
   itemModel: Model<ItemDoc>
 ): Router {
   const router = Router();
+
   router.post('/', async (req, res, next) => {
     const transaction = req.body as Transaction;
     if (Object.keys(transaction).length === 0) {
@@ -36,7 +38,9 @@ export function getTransactionsRouter(
           );
         }
         calculateTax(transaction);
-        const transactionDoc = new transactionModel(transaction);
+        const transactionDoc = new transactionModel(
+          { ...transaction.header, ...transaction }
+        );
         await transactionDoc.saveAsync();
         res.json(transaction);
       } catch (error) {
@@ -44,6 +48,32 @@ export function getTransactionsRouter(
       }
     }
   });
+
+/*  router.get('/', async (req, res) => {
+    let transactionDocs: TransactionDoc[];
+    transactionDocs = await transactionModel.findAsync(
+      req.query as object,
+      { raw: true }
+    );
+    let transactions: Transaction[];
+    for (const doc of transactionDocs) {
+      const location = await locationModel.findAsync(
+        { code: doc.companyLocation },
+        { raw: true }
+      );
+      const lines = doc.lines;
+      const transaction: Transaction = {
+        header: {
+          transactionType: doc.transactionType,
+          documentCode: doc.documentCode,
+          transactionDate: doc.transactionDate
+        },
+        calculatedTaxSummary: doc.calculatedTaxSummary,
+        lines: doc.lines
+      };
+      for (let i = 0; i < lines.length; )
+    }
+  });*/
 
   return router;
 }
