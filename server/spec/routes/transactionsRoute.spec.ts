@@ -168,7 +168,7 @@ describe('Transactions route', () => {
     })();
   });
 
-  it('should retrieve transaction by location.code', async () => {
+  it('can retrieve transaction by location.code', async () => {
     const locationCode = '27227668000122';
     const res = await superagent.get(
       `${URL_ROOT}/transactions?companyLocation=${locationCode}`
@@ -188,5 +188,14 @@ describe('Transactions route', () => {
       expect(actual[i].header.documentCode)
         .toBe(expected[i].header.documentCode);
     }
+  });
+
+  it('can retrieve all transactions', async () => {
+    const res = await superagent.get(`${URL_ROOT}/transactions`);
+    expect(res.status)
+      .toBe(httpStatus.OK);
+    const actual = res.body as Transaction[];
+    expect(actual.length)
+      .toBe(transactions.length);
   });
 });
