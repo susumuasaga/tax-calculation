@@ -63,8 +63,7 @@ export function fetchLocations():
       const locations = res.body as Location[];
       dispatch(fetchLocationsSuccess(locations));
     } catch (error) {
-      dispatch(fetchLocationsFailure(
-        (error as superagent.ResponseError).response.body)
+      dispatch(fetchLocationsFailure(error)
       );
     }
   };

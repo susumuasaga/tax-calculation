@@ -9,6 +9,7 @@ import { TransactionDoc } from './models/Transaction';
 import { LocationDoc } from './models/Entity';
 import { ItemDoc } from './models/Item';
 import { getErrorHandler } from './routes/getErrorHandler';
+import { getLocationsRouter } from './routes/getLocationsRouter';
 
 start();
 console.log('Server listening at port 3000.');
@@ -22,10 +23,13 @@ async function start(): Promise<void> {
     modelInstances['Transaction'] as Model<TransactionDoc>;
   const locationModel = modelInstances['Location'] as Model<LocationDoc>;
   const itemModel = modelInstances['Item'] as Model<ItemDoc>;
+
   app.use(
     '/api/transactions',
     getTransactionsRouter(transactionModel, locationModel, itemModel)
   );
+
+  app.use('/api/locations', getLocationsRouter(locationModel));
 
   app.use('/node_modules', express.static('./node_modules'));
   app.use(

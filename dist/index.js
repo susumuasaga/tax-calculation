@@ -10,6 +10,7 @@ const path_1 = __importDefault(require("path"));
 const getModelInstances_1 = require("./getModelInstances");
 const getTransactionsRouter_1 = require("./routes/getTransactionsRouter");
 const getErrorHandler_1 = require("./routes/getErrorHandler");
+const getLocationsRouter_1 = require("./routes/getLocationsRouter");
 start();
 console.log('Server listening at port 3000.');
 async function start() {
@@ -20,6 +21,7 @@ async function start() {
     const locationModel = modelInstances['Location'];
     const itemModel = modelInstances['Item'];
     app.use('/api/transactions', getTransactionsRouter_1.getTransactionsRouter(transactionModel, locationModel, itemModel));
+    app.use('/api/locations', getLocationsRouter_1.getLocationsRouter(locationModel));
     app.use('/node_modules', express_1.default.static('./node_modules'));
     app.use(['/transactions', '/transaction-detail'], (req, res) => { res.sendFile(path_1.default.resolve('build/index.html')); });
     app.use(express_1.default.static('./build'));
