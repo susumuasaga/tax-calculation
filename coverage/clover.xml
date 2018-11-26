@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<coverage generated="1543014311882" clover="3.2.0">
-  <project timestamp="1543014311882" name="All files">
-    <metrics statements="297" coveredstatements="287" conditionals="126" coveredconditionals="114" methods="41" coveredmethods="36" elements="464" coveredelements="437" complexity="0" loc="297" ncloc="297" packages="4" files="14" classes="14">
+<coverage generated="1543257726047" clover="3.2.0">
+  <project timestamp="1543257726047" name="All files">
+    <metrics statements="330" coveredstatements="320" conditionals="135" coveredconditionals="122" methods="47" coveredmethods="42" elements="512" coveredelements="484" complexity="0" loc="330" ncloc="330" packages="5" files="16" classes="16">
       <package name="dist">
         <metrics statements="223" coveredstatements="217" conditionals="90" coveredconditionals="85" methods="24" coveredmethods="22"/>
         <file name="calculateTax.js" path="/Users/edsonasaga/tax-calculation/dist/calculateTax.js">
@@ -191,27 +191,27 @@
         </file>
         <file name="getModelInstances.js" path="/Users/edsonasaga/tax-calculation/dist/getModelInstances.js">
           <metrics statements="21" coveredstatements="21" conditionals="7" coveredconditionals="6" methods="2" coveredmethods="2"/>
-          <line num="2" count="1" type="cond" truecount="3" falsecount="0"/>
-          <line num="3" count="5" type="cond" truecount="3" falsecount="1"/>
-          <line num="5" count="1" type="stmt"/>
-          <line num="6" count="1" type="stmt"/>
-          <line num="7" count="1" type="stmt"/>
-          <line num="8" count="1" type="stmt"/>
-          <line num="9" count="1" type="stmt"/>
-          <line num="10" count="1" type="stmt"/>
-          <line num="11" count="1" type="stmt"/>
-          <line num="12" count="1" type="stmt"/>
-          <line num="14" count="1" type="stmt"/>
-          <line num="30" count="1" type="stmt"/>
-          <line num="31" count="1" type="stmt"/>
-          <line num="32" count="1" type="stmt"/>
-          <line num="33" count="1" type="stmt"/>
-          <line num="34" count="1" type="stmt"/>
-          <line num="35" count="1" type="stmt"/>
-          <line num="36" count="1" type="stmt"/>
-          <line num="37" count="1" type="stmt"/>
-          <line num="38" count="1" type="stmt"/>
-          <line num="40" count="1" type="stmt"/>
+          <line num="2" count="2" type="cond" truecount="3" falsecount="0"/>
+          <line num="3" count="10" type="cond" truecount="3" falsecount="1"/>
+          <line num="5" count="2" type="stmt"/>
+          <line num="6" count="2" type="stmt"/>
+          <line num="7" count="2" type="stmt"/>
+          <line num="8" count="2" type="stmt"/>
+          <line num="9" count="2" type="stmt"/>
+          <line num="10" count="2" type="stmt"/>
+          <line num="11" count="2" type="stmt"/>
+          <line num="12" count="2" type="stmt"/>
+          <line num="14" count="2" type="stmt"/>
+          <line num="30" count="2" type="stmt"/>
+          <line num="31" count="2" type="stmt"/>
+          <line num="32" count="2" type="stmt"/>
+          <line num="33" count="2" type="stmt"/>
+          <line num="34" count="2" type="stmt"/>
+          <line num="35" count="2" type="stmt"/>
+          <line num="36" count="2" type="stmt"/>
+          <line num="37" count="2" type="stmt"/>
+          <line num="38" count="2" type="stmt"/>
+          <line num="40" count="2" type="stmt"/>
         </file>
         <file name="httpErrors.js" path="/Users/edsonasaga/tax-calculation/dist/httpErrors.js">
           <metrics statements="16" coveredstatements="10" conditionals="10" coveredconditionals="6" methods="4" coveredmethods="2"/>
@@ -241,116 +241,158 @@
         </file>
       </package>
       <package name="dist.routes">
-        <metrics statements="31" coveredstatements="30" conditionals="4" coveredconditionals="3" methods="4" coveredmethods="4"/>
+        <metrics statements="52" coveredstatements="51" conditionals="6" coveredconditionals="5" methods="8" coveredmethods="8"/>
         <file name="getErrorHandler.js" path="/Users/edsonasaga/tax-calculation/dist/routes/getErrorHandler.js">
           <metrics statements="10" coveredstatements="9" conditionals="2" coveredconditionals="1" methods="2" coveredmethods="2"/>
-          <line num="2" count="1" type="stmt"/>
-          <line num="3" count="1" type="stmt"/>
-          <line num="5" count="1" type="stmt"/>
+          <line num="2" count="2" type="stmt"/>
+          <line num="3" count="2" type="stmt"/>
+          <line num="5" count="2" type="stmt"/>
           <line num="6" count="2" type="stmt"/>
           <line num="7" count="2" type="stmt"/>
           <line num="8" count="2" type="stmt"/>
           <line num="9" count="2" type="cond" truecount="1" falsecount="1"/>
           <line num="10" count="0" type="stmt"/>
           <line num="12" count="2" type="stmt"/>
-          <line num="16" count="1" type="stmt"/>
+          <line num="16" count="2" type="stmt"/>
+        </file>
+        <file name="getLocationsRouter.js" path="/Users/edsonasaga/tax-calculation/dist/routes/getLocationsRouter.js">
+          <metrics statements="9" coveredstatements="9" conditionals="0" coveredconditionals="0" methods="2" coveredmethods="2"/>
+          <line num="2" count="1" type="stmt"/>
+          <line num="3" count="1" type="stmt"/>
+          <line num="5" count="1" type="stmt"/>
+          <line num="6" count="1" type="stmt"/>
+          <line num="7" count="1" type="stmt"/>
+          <line num="8" count="1" type="stmt"/>
+          <line num="9" count="1" type="stmt"/>
+          <line num="11" count="1" type="stmt"/>
+          <line num="13" count="1" type="stmt"/>
         </file>
         <file name="getTransactionsRouter.js" path="/Users/edsonasaga/tax-calculation/dist/routes/getTransactionsRouter.js">
-          <metrics statements="21" coveredstatements="21" conditionals="2" coveredconditionals="2" methods="2" coveredmethods="2"/>
+          <metrics statements="33" coveredstatements="33" conditionals="4" coveredconditionals="4" methods="4" coveredmethods="4"/>
           <line num="2" count="1" type="stmt"/>
           <line num="3" count="1" type="stmt"/>
           <line num="4" count="1" type="stmt"/>
           <line num="5" count="1" type="stmt"/>
           <line num="7" count="1" type="stmt"/>
-          <line num="8" count="1" type="stmt"/>
-          <line num="9" count="3" type="stmt"/>
-          <line num="10" count="3" type="cond" truecount="2" falsecount="0"/>
-          <line num="11" count="1" type="stmt"/>
-          <line num="14" count="2" type="stmt"/>
-          <line num="15" count="2" type="stmt"/>
-          <line num="16" count="2" type="stmt"/>
-          <line num="17" count="2" type="stmt"/>
-          <line num="18" count="2" type="stmt"/>
-          <line num="20" count="2" type="stmt"/>
-          <line num="21" count="1" type="stmt"/>
-          <line num="22" count="1" type="stmt"/>
-          <line num="23" count="1" type="stmt"/>
+          <line num="9" count="10" type="stmt"/>
+          <line num="10" count="10" type="stmt"/>
+          <line num="11" count="10" type="stmt"/>
+          <line num="12" count="14" type="stmt"/>
+          <line num="15" count="1" type="stmt"/>
+          <line num="16" count="3" type="stmt"/>
+          <line num="17" count="3" type="cond" truecount="2" falsecount="0"/>
+          <line num="18" count="1" type="stmt"/>
+          <line num="21" count="2" type="stmt"/>
+          <line num="22" count="2" type="stmt"/>
+          <line num="23" count="2" type="stmt"/>
+          <line num="24" count="1" type="stmt"/>
+          <line num="25" count="1" type="stmt"/>
           <line num="26" count="1" type="stmt"/>
-          <line num="30" count="1" type="stmt"/>
-          <line num="32" count="1" type="stmt"/>
+          <line num="29" count="1" type="stmt"/>
+          <line num="33" count="1" type="stmt"/>
+          <line num="34" count="2" type="stmt"/>
+          <line num="35" count="2" type="cond" truecount="2" falsecount="0"/>
+          <line num="36" count="1" type="stmt"/>
+          <line num="38" count="2" type="stmt"/>
+          <line num="39" count="2" type="stmt"/>
+          <line num="40" count="2" type="stmt"/>
+          <line num="41" count="8" type="stmt"/>
+          <line num="52" count="8" type="stmt"/>
+          <line num="53" count="8" type="stmt"/>
+          <line num="55" count="2" type="stmt"/>
+          <line num="57" count="1" type="stmt"/>
+          <line num="59" count="1" type="stmt"/>
         </file>
       </package>
       <package name="dist.schemas">
-        <metrics statements="34" coveredstatements="31" conditionals="32" coveredconditionals="26" methods="10" coveredmethods="7"/>
+        <metrics statements="40" coveredstatements="37" conditionals="39" coveredconditionals="32" methods="11" coveredmethods="8"/>
         <file name="addressUdt.js" path="/Users/edsonasaga/tax-calculation/dist/schemas/addressUdt.js">
           <metrics statements="2" coveredstatements="2" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
-          <line num="2" count="1" type="stmt"/>
-          <line num="3" count="1" type="stmt"/>
+          <line num="2" count="2" type="stmt"/>
+          <line num="3" count="2" type="stmt"/>
         </file>
         <file name="companySchema.js" path="/Users/edsonasaga/tax-calculation/dist/schemas/companySchema.js">
           <metrics statements="13" coveredstatements="12" conditionals="18" coveredconditionals="14" methods="3" coveredmethods="2"/>
-          <line num="2" count="1" type="cond" truecount="3" falsecount="0"/>
-          <line num="3" count="1" type="cond" truecount="3" falsecount="1"/>
-          <line num="4" count="1" type="stmt"/>
-          <line num="5" count="23" type="cond" truecount="2" falsecount="2"/>
-          <line num="6" count="1" type="stmt"/>
-          <line num="7" count="1" type="stmt"/>
-          <line num="9" count="1" type="cond" truecount="3" falsecount="0"/>
-          <line num="10" count="1" type="cond" truecount="3" falsecount="1"/>
-          <line num="12" count="1" type="stmt"/>
-          <line num="13" count="1" type="stmt"/>
-          <line num="14" count="1" type="stmt"/>
+          <line num="2" count="2" type="cond" truecount="3" falsecount="0"/>
+          <line num="3" count="2" type="cond" truecount="3" falsecount="1"/>
+          <line num="4" count="2" type="stmt"/>
+          <line num="5" count="46" type="cond" truecount="2" falsecount="2"/>
+          <line num="6" count="2" type="stmt"/>
+          <line num="7" count="2" type="stmt"/>
+          <line num="9" count="2" type="cond" truecount="3" falsecount="0"/>
+          <line num="10" count="2" type="cond" truecount="3" falsecount="1"/>
+          <line num="12" count="2" type="stmt"/>
+          <line num="13" count="2" type="stmt"/>
+          <line num="14" count="2" type="stmt"/>
           <line num="18" count="0" type="stmt"/>
-          <line num="27" count="1" type="stmt"/>
+          <line num="27" count="2" type="stmt"/>
         </file>
         <file name="itemSchema.js" path="/Users/edsonasaga/tax-calculation/dist/schemas/itemSchema.js">
           <metrics statements="6" coveredstatements="6" conditionals="7" coveredconditionals="6" methods="2" coveredmethods="2"/>
-          <line num="2" count="1" type="cond" truecount="3" falsecount="0"/>
-          <line num="3" count="1" type="cond" truecount="3" falsecount="1"/>
-          <line num="5" count="1" type="stmt"/>
-          <line num="6" count="1" type="stmt"/>
-          <line num="17" count="6" type="stmt"/>
-          <line num="25" count="1" type="stmt"/>
+          <line num="2" count="2" type="cond" truecount="3" falsecount="0"/>
+          <line num="3" count="2" type="cond" truecount="3" falsecount="1"/>
+          <line num="5" count="2" type="stmt"/>
+          <line num="6" count="2" type="stmt"/>
+          <line num="17" count="10" type="stmt"/>
+          <line num="25" count="2" type="stmt"/>
         </file>
         <file name="locationSchema.js" path="/Users/edsonasaga/tax-calculation/dist/schemas/locationSchema.js">
           <metrics statements="9" coveredstatements="7" conditionals="7" coveredconditionals="6" methods="5" coveredmethods="3"/>
-          <line num="2" count="1" type="cond" truecount="3" falsecount="0"/>
-          <line num="3" count="1" type="cond" truecount="3" falsecount="1"/>
-          <line num="5" count="1" type="stmt"/>
-          <line num="6" count="1" type="stmt"/>
+          <line num="2" count="2" type="cond" truecount="3" falsecount="0"/>
+          <line num="3" count="2" type="cond" truecount="3" falsecount="1"/>
+          <line num="5" count="2" type="stmt"/>
+          <line num="6" count="2" type="stmt"/>
           <line num="19" count="0" type="stmt"/>
-          <line num="24" count="3" type="stmt"/>
+          <line num="24" count="18" type="stmt"/>
           <line num="36" count="0" type="stmt"/>
-          <line num="46" count="3" type="stmt"/>
-          <line num="53" count="1" type="stmt"/>
+          <line num="46" count="6" type="stmt"/>
+          <line num="53" count="2" type="stmt"/>
         </file>
         <file name="transactionSchema.js" path="/Users/edsonasaga/tax-calculation/dist/schemas/transactionSchema.js">
-          <metrics statements="2" coveredstatements="2" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
-          <line num="2" count="1" type="stmt"/>
-          <line num="14" count="1" type="stmt"/>
+          <metrics statements="8" coveredstatements="8" conditionals="7" coveredconditionals="6" methods="1" coveredmethods="1"/>
+          <line num="2" count="2" type="cond" truecount="3" falsecount="0"/>
+          <line num="3" count="2" type="cond" truecount="3" falsecount="1"/>
+          <line num="5" count="2" type="stmt"/>
+          <line num="6" count="2" type="stmt"/>
+          <line num="12" count="26" type="stmt"/>
+          <line num="21" count="52" type="stmt"/>
+          <line num="27" count="27" type="stmt"/>
+          <line num="45" count="2" type="stmt"/>
         </file>
         <file name="transactionUdts.js" path="/Users/edsonasaga/tax-calculation/dist/schemas/transactionUdts.js">
           <metrics statements="2" coveredstatements="2" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
-          <line num="2" count="1" type="stmt"/>
-          <line num="3" count="1" type="stmt"/>
+          <line num="2" count="2" type="stmt"/>
+          <line num="3" count="2" type="stmt"/>
         </file>
       </package>
       <package name="dist.spec">
-        <metrics statements="9" coveredstatements="9" conditionals="0" coveredconditionals="0" methods="3" coveredmethods="3"/>
+        <metrics statements="10" coveredstatements="10" conditionals="0" coveredconditionals="0" methods="3" coveredmethods="3"/>
         <file name="FakeLogger.js" path="/Users/edsonasaga/tax-calculation/dist/spec/FakeLogger.js">
           <metrics statements="5" coveredstatements="5" conditionals="0" coveredconditionals="0" methods="3" coveredmethods="3"/>
-          <line num="2" count="1" type="stmt"/>
+          <line num="2" count="2" type="stmt"/>
           <line num="5" count="2" type="stmt"/>
           <line num="8" count="2" type="stmt"/>
           <line num="11" count="2" type="stmt"/>
-          <line num="14" count="1" type="stmt"/>
+          <line num="14" count="2" type="stmt"/>
         </file>
         <file name="testDB.js" path="/Users/edsonasaga/tax-calculation/dist/spec/testDB.js">
-          <metrics statements="4" coveredstatements="4" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
-          <line num="2" count="1" type="stmt"/>
-          <line num="3" count="1" type="stmt"/>
-          <line num="10" count="1" type="stmt"/>
-          <line num="34" count="1" type="stmt"/>
+          <metrics statements="5" coveredstatements="5" conditionals="0" coveredconditionals="0" methods="0" coveredmethods="0"/>
+          <line num="2" count="2" type="stmt"/>
+          <line num="3" count="2" type="stmt"/>
+          <line num="10" count="2" type="stmt"/>
+          <line num="54" count="2" type="stmt"/>
+          <line num="78" count="2" type="stmt"/>
+        </file>
+      </package>
+      <package name="dist.spec.routes">
+        <metrics statements="5" coveredstatements="5" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="1"/>
+        <file name="create.js" path="/Users/edsonasaga/tax-calculation/dist/spec/routes/create.js">
+          <metrics statements="5" coveredstatements="5" conditionals="0" coveredconditionals="0" methods="1" coveredmethods="1"/>
+          <line num="2" count="2" type="stmt"/>
+          <line num="4" count="11" type="stmt"/>
+          <line num="5" count="28" type="stmt"/>
+          <line num="6" count="28" type="stmt"/>
+          <line num="9" count="2" type="stmt"/>
         </file>
       </package>
     </metrics>

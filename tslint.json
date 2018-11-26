@@ -74,7 +74,7 @@
     "no-invalid-this": true,
     "no-jquery-raw-elements": true,
     "no-misused-new": true,
-    "no-non-null-assertion": true,
+    "no-non-null-assertion": false,
     "no-object-literal-type-assertion": true,
     "no-parameter-reassignment": true,
     "no-reference-import": true,
@@ -96,9 +96,9 @@
     "promise-must-complete": true,
     "radix": true,
     "react-this-binding-issue": true,
-    "react-unused-props-and-state": true,
+    "react-unused-props-and-state": false,
     "restrict-plus-operands": true, // the plus operand should really only be used for strings and numbers
-    "strict-boolean-expressions": true,
+    "strict-boolean-expressions": false,
     "switch-default": true,
     "switch-final-break": true,
     "triple-equals": [
@@ -169,7 +169,7 @@
     "new-parens": true,
     "newline-per-chained-call": true,
     "no-construct": true,
-    "no-default-export": true,
+    "no-default-export": false,
     "no-duplicate-imports": true,
     "no-dynamic-delete": true,
     "no-empty-interface": true,
@@ -210,12 +210,7 @@
     "prefer-template": true,
     "prefer-while": true,
     "type-literal-delimiter": true,
-    "typedef": [
-      true,
-      "call-signature",
-      "parameter",
-      "member-variable-declaration"
-    ],
+    "typedef": false,
     "underscore-consistent-invocation": true,
     "unified-signatures": true,
     "use-default-type-parameter": true,
@@ -283,10 +278,7 @@
       "check-else",
       "check-whitespace"
     ],
-    "quotemark": [
-      true,
-      "single"
-    ],
+    "quotemark": false,
     "semicolon": [
       true,
       "always"
