@@ -19,11 +19,14 @@ export function Locations({ cache, onClick }: Props) {
       <h2>
         Empresas({cache.locations!.length})
       </h2>
+      <p>
+        Clique sobre uma linha para abrir as transações da empresa desejada.
+      </p>
       <ListGroup style={{ opacity: (cache.isFetching ? 0.5 : 1) }}>
         {
           cache.locations!.map((location, index) =>
             <ListGroupItem key={index}>
-              <Row>
+              <Row onClick={() => { onClick(index); }}>
                 <Col md="3">{location.email}</Col>
                 <Col md="3">{location.federalTaxId}</Col>
                 <Col md="3">{cityState(location)}</Col>
