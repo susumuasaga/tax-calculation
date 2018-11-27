@@ -54,8 +54,8 @@ export function fetchLocationsFailure(error: any): Action {
 /**
  * Return `ThunkAction` to fetch locations.
  */
-export function fetchLocations():
-  ThunkAction<Promise<void>, State, null, Action> {
+export function fetchLocations(
+): ThunkAction<Promise<void>, State, null, Action> {
   return async (dispatch, getState) => {
     let locations = getState().locationsCache.locations;
     if (locations === undefined) {
@@ -77,7 +77,9 @@ export function fetchLocations():
 export function fetchTransactionsStart(): Action {
   return {
     type: 'FetchTransactionsStart',
-    reducer: state => state
+    reducer(state) {
+      return { ...state, transactionsCache: { isFetching: true } };
+    }
   };
 }
 
@@ -89,7 +91,12 @@ export function fetchTransactionsSuccess(
 ): Action {
   return {
     type: 'FetchTransactionsSuccess',
-    reducer: state => state
+    reducer(state) {
+      return {
+        ...state,
+        transactionsCache: { isFetching: false, transactions }
+      };
+    }
   };
 }
 
@@ -99,14 +106,27 @@ export function fetchTransactionsSuccess(
 export function fetchTransactionsFailure(error: any): Action {
   return {
     type: 'FetchTransactionsFailure',
-    reducer: state => state
+    reducer(state) {
+      return { ...state, transactionsCache: { isFetching: false, error } };
+    }
   };
 }
 
 /**
  * Return `ThunkAction` to fetch Transactions.
  */
-export function fetchTransactions():
-  ThunkAction<Promise<void>, State, null, Action> {
-  return async dispatch => { throw new Error('Not implemented.'); };
+export function fetchTransactions(
+  query: { [key: string]: string }
+): ThunkAction<Promise<void>, State, null, Action> {
+  return async (dispatch, getState) => {
+    dispatch(fetchTransactionsStart());
+    try {
+      const res = await superagent.get(`${URL}/transactions`)
+        .query(query);
+      const transactions = res.body as Transaction[];
+      dispatch(fetchTransactionsSuccess(transactions));
+    } catch (error) {
+      dispatch(fetchTransactionsFailure(error));
+    }
+  };
 }

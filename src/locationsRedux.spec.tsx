@@ -8,11 +8,11 @@ describe('Locations Redux', () => {
   let storeCreator: MockStoreCreator<State, ThunkDispatch<State, null, Action>>;
   let store: MockStoreEnhanced<State, ThunkDispatch<State, null, Action>>;
 
-  beforeAll(() => {
+  beforeAll(async () => {
     storeCreator = reduxMockStore([reduxThunk]);
   });
 
-  beforeEach(() => {
+  beforeEach(async () => {
     store = storeCreator({
       locationsCache: { isFetching: false },
       transactionsCache: { isFetching: false }
