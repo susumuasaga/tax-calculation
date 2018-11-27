@@ -5,7 +5,6 @@ import { configure as enzymeConfigure, mount, ReactWrapper } from 'enzyme';
 import { Locations } from './Locations';
 
 let component: ReactWrapper;
-let onInitMock: jest.Mock;
 let onClickMock: jest.Mock;
 
 describe('Locations component', () => {
@@ -15,20 +14,16 @@ describe('Locations component', () => {
     });
 
     beforeEach(() => {
-      onInitMock = jest.fn();
       onClickMock = jest.fn();
       component = mount(
         <Locations {...{
           cache: { isFetching: false, locations },
-          onInit: onInitMock,
           onClick: onClickMock
         }} />
       );
     });
 
     it('should present given locations', () => {
-      expect(onInitMock.mock.calls.length)
-        .toBe(1);
       expect(component.find('.row').length)
         .toBe(locations.length);
     });

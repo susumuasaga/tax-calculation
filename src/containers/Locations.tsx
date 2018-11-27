@@ -5,20 +5,15 @@ import { Location } from '../../server/models/Entity';
 
 export type Props = {
   cache: LocationsCache;
-  onInit(): void;
   onClick(index: number): void;
 };
 
 /**
  * Locations component.
  * Input locations.
- * Output
- *   onInit()
- *   onClick(index).
+ * Output onClick(index).
  */
-export function Locations({ cache, onInit, onClick }: Props) {
-  onInit();
-
+export function Locations({ cache, onClick }: Props) {
   return (
     <Container>
       <h2>
