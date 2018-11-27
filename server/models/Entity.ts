@@ -42,7 +42,7 @@ export interface Entity {
   /**
    * Location Address
    */
-  address?: Address;
+  address: Address;
 }
 
 /**

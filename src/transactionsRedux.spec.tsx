@@ -32,6 +32,6 @@ describe('Transactions Redux', () => {
     expect(cache.isFetching)
       .toBe(false);
     expect(cache.transactions!.length)
-      .toBe(5);
+      .toBeGreaterThan(0);
   });
 });

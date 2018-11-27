@@ -32,7 +32,7 @@ describe('Locations Redux', () => {
     expect(cache.isFetching)
       .toBe(false);
     expect(cache.locations!.length)
-      .toBe(3);
+      .toBeGreaterThan(0);
   });
 
   it('does not fetch locations, when already cached', async () => {
