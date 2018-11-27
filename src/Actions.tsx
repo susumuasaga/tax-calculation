@@ -56,15 +56,17 @@ export function fetchLocationsFailure(error: any): Action {
  */
 export function fetchLocations():
   ThunkAction<Promise<void>, State, null, Action> {
-  return async dispatch => {
-    dispatch(fetchLocationsStart());
-    try {
-      const res = await superagent.get(`${URL}/locations`);
-      const locations = res.body as Location[];
-      dispatch(fetchLocationsSuccess(locations));
-    } catch (error) {
-      dispatch(fetchLocationsFailure(error)
-      );
+  return async (dispatch, getState) => {
+    let locations = getState().locationsCache.locations;
+    if (locations === undefined) {
+      dispatch(fetchLocationsStart());
+      try {
+        const res = await superagent.get(`${URL}/locations`);
+        locations = res.body as Location[];
+        dispatch(fetchLocationsSuccess(locations));
+      } catch (error) {
+        dispatch(fetchLocationsFailure(error));
+      }
     }
   };
 }
@@ -106,5 +108,5 @@ export function fetchTransactionsFailure(error: any): Action {
  */
 export function fetchTransactions():
   ThunkAction<Promise<void>, State, null, Action> {
-    return async dispatch => { throw new Error('Not implemented.'); };
-  }
+  return async dispatch => { throw new Error('Not implemented.'); };
+}

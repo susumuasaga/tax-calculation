@@ -7,21 +7,20 @@ import { reducer } from './reducer';
 describe('Locations Redux', () => {
   let storeCreator: MockStoreCreator<State, ThunkDispatch<State, null, Action>>;
   let store: MockStoreEnhanced<State, ThunkDispatch<State, null, Action>>;
-  let state: State;
 
   beforeAll(() => {
     storeCreator = reduxMockStore([reduxThunk]);
   });
 
   beforeEach(() => {
-    state = {
+    store = storeCreator({
       locationsCache: { isFetching: false },
       transactionsCache: { isFetching: false }
-    };
-    store = storeCreator(state);
+    });
   });
 
   it('can fetch locations', async () => {
+    let state = store.getState();
     await store.dispatch(fetchLocations());
     const actions = store.getActions() as Action[];
     state = reducer(state, actions[0]);
@@ -34,5 +33,29 @@ describe('Locations Redux', () => {
       .toBe(false);
     expect(cache.locations!.length)
       .toBe(3);
+  });
+
+  it('does not fetch locations, when already cached', async () => {
+    store = storeCreator({
+      locationsCache: {
+        isFetching: false,
+        locations: [{
+          companyId: '75106750-1ae4-4872-9d9b-562d94ea324f',
+          code: '27227668000203',
+          federalTaxId: '27.227.668/0002-03',
+          taxRegime: 'realProfit',
+          address: {
+            cityCode: 3550308,
+            cityName: 'São Paulo',
+            state: 'SP'
+          }
+        }]
+      },
+      transactionsCache: { isFetching: false }
+    });
+    await store.dispatch(fetchLocations());
+    const actions = store.getActions() as Action[];
+    expect(actions.length)
+      .toBe(0);
   });
 });
