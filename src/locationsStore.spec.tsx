@@ -3,6 +3,7 @@ import reduxThunk, { ThunkDispatch } from 'redux-thunk';
 import { State } from './State';
 import { Action, fetchLocations } from './Actions';
 import { reducer } from './reducer';
+import { locations } from './spec/testDB';
 
 let storeCreator: MockStoreCreator<State, ThunkDispatch<State, null, Action>>;
 let store: MockStoreEnhanced<State, ThunkDispatch<State, null, Action>>;
@@ -40,20 +41,7 @@ describe('Locations Store', () => {
   describe('when cache is present', () => {
     beforeEach(async () => {
       store = storeCreator({
-        locationsCache: {
-          isFetching: false,
-          locations: [{
-            companyId: '75106750-1ae4-4872-9d9b-562d94ea324f',
-            code: '27227668000203',
-            federalTaxId: '27.227.668/0002-03',
-            taxRegime: 'realProfit',
-            address: {
-              cityCode: 3550308,
-              cityName: 'São Paulo',
-              state: 'SP'
-            }
-          }]
-        },
+        locationsCache: { isFetching: false, locations },
         transactionsCache: { isFetching: false }
       });
     });

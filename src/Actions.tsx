@@ -1,9 +1,10 @@
 import * as Redux from 'redux';
 import * as superagent from 'superagent';
+import * as _ from 'lodash';
 import { State } from './State';
 import { Location } from './models/Entity';
 import { ThunkAction } from 'redux-thunk';
-import { Transaction } from './models/Transaction';
+import { Transaction, Header } from './models/Transaction';
 
 export const URL = 'http://localhost:3000/api';
 
@@ -58,12 +59,11 @@ export function fetchLocations(
 ): ThunkAction<Promise<void>, State, any, Action> {
   return async (dispatch, getState) => {
     const locationsCache = getState().locationsCache;
-    let locations = locationsCache.locations;
-    if (!locationsCache.isFetching && !locations) {
+    if (!locationsCache.isFetching && !locationsCache.locations) {
       dispatch(fetchLocationsStart());
       try {
         const res = await superagent.get(`${URL}/locations`);
-        locations = res.body as Location[];
+        const locations = res.body as Location[];
         dispatch(fetchLocationsSuccess(locations));
       } catch (error) {
         dispatch(fetchLocationsFailure(error));
@@ -117,17 +117,26 @@ export function fetchTransactionsFailure(error: any): Action {
  * Return `ThunkAction` to fetch Transactions.
  */
 export function fetchTransactions(
-  query: { [key: string]: string }
+  query: Partial<Header>
 ): ThunkAction<Promise<void>, State, null, Action> {
   return async (dispatch, getState) => {
-    dispatch(fetchTransactionsStart());
-    try {
-      const res = await superagent.get(`${URL}/transactions`)
-        .query(query);
-      const transactions = res.body as Transaction[];
-      dispatch(fetchTransactionsSuccess(transactions));
-    } catch (error) {
-      dispatch(fetchTransactionsFailure(error));
+    const transactionsCache = getState().transactionsCache;
+    if (
+      !transactionsCache.isFetching &&
+      (
+        !transactionsCache.transactions ||
+        !_.isEqual(transactionsCache.query, query)
+      )
+    ) {
+      dispatch(fetchTransactionsStart());
+      try {
+        const res = await superagent.get(`${URL}/transactions`)
+          .query(query);
+        const transactions = res.body as Transaction[];
+        dispatch(fetchTransactionsSuccess(transactions));
+      } catch (error) {
+        dispatch(fetchTransactionsFailure(error));
+      }
     }
   };
 }

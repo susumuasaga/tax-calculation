@@ -30,23 +30,23 @@ export interface Header {
   /**
    * Transaction Type
    */
-  transactionType?: 'Sale' | 'Purchase';
+  transactionType: 'Sale' | 'Purchase';
   /**
    * Document Code
    */
-  documentCode?: string;
+  documentCode: string;
   /**
    * Currency
    */
-  currency?: 'BRL';
+  currency: 'BRL';
   /**
    * Transaction Date
    */
-  transactionDate?: string; // format ISO 8601
+  transactionDate: string; // format ISO 8601
   /**
    * Company Location Code
    */
-  companyLocation?: string;
+  companyLocation: string;
   /**
    * Company Location
    * Inserted field

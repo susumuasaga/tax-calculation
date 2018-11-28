@@ -1,5 +1,5 @@
 import { Location } from './models/Entity';
-import { Transaction } from './models/Transaction';
+import { Transaction, Header } from './models/Transaction';
 
 /**
  * Central State
@@ -22,5 +22,6 @@ export interface LocationsCache {
  */
 export interface TransactionsCache {
   isFetching: boolean;
+  query?: Partial<Header>;
   transactions?: Transaction[];
 }
