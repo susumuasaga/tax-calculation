@@ -2,6 +2,7 @@ import * as React from 'react';
 import { Container, ListGroup, ListGroupItem, Row, Col } from 'reactstrap';
 import { LocationsCache } from '../State';
 import { Location } from '../../server/models/Entity';
+import { Link } from 'react-router-dom';
 
 export type Props = {
   cache: LocationsCache;
@@ -23,16 +24,12 @@ export function Locations({ cache, onInit, onClick }: Props) {
 
   if (!locations) {
     return (
-      <h2>
-        Carregando...
-      </h2>
+      <h2>Carregando...</h2>
     );
   } else {
     return (
       <Container>
-        <h2>
-          Empresas({locations.length})
-        </h2>
+        <h2>Empresas({locations.length})</h2>
         <p>
           Clique sobre uma linha para abrir as transações da empresa desejada.
         </p>
@@ -40,12 +37,14 @@ export function Locations({ cache, onInit, onClick }: Props) {
           {
             locations.map((location, index) =>
               <ListGroupItem key={index}>
-                <Row onClick={() => { onClick(index); }}>
-                  <Col md="3">{location.email}</Col>
-                  <Col md="3">{location.federalTaxId}</Col>
-                  <Col md="3">{cityState(location)}</Col>
-                  <Col md="3">{location.address.phone}</Col>
-                </Row>
+                <Link to={`/transactions?companyLocation=${location.code}`}>
+                  <Row onClick={() => { onClick(index); }}>
+                    <Col md="3">{location.email}</Col>
+                    <Col md="3">{location.federalTaxId}</Col>
+                    <Col md="3">{cityState(location)}</Col>
+                    <Col md="3">{location.address.phone}</Col>
+                  </Row>
+                </Link>
               </ListGroupItem>
             )
           }
