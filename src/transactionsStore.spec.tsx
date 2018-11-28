@@ -54,6 +54,24 @@ describe('Transactions Store', () => {
       expect(actions.length)
         .toBe(0);
     });
+
+    it('if not same query, should fetch transactions', async () => {
+      await store.dispatch(
+        fetchTransactions({companyLocation: '27227668000122'})
+      );
+      let state = store.getState();
+      const actions = store.getActions() as Action[];
+      state = reducer(state, actions[0]);
+      let cache = state.transactionsCache;
+      expect(cache.isFetching)
+        .toBe(true);
+      state = reducer(state, actions[1]);
+      cache = state.transactionsCache;
+      expect(cache.isFetching)
+        .toBe(false);
+      expect(cache.transactions!.length)
+        .toBeGreaterThan(0);
+    });
   });
 
 /*  describe('when cache is fetching', () => {
