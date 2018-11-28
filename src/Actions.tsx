@@ -1,9 +1,9 @@
 import * as Redux from 'redux';
 import * as superagent from 'superagent';
 import { State } from './State';
-import { Location } from '../server/models/Entity';
+import { Location } from './models/Entity';
 import { ThunkAction } from 'redux-thunk';
-import { Transaction } from '../server/models/Transaction';
+import { Transaction } from './models/Transaction';
 
 export const URL = 'http://localhost:3000/api';
 
@@ -57,8 +57,9 @@ export function fetchLocationsFailure(error: any): Action {
 export function fetchLocations(
 ): ThunkAction<Promise<void>, State, any, Action> {
   return async (dispatch, getState) => {
-    let locations = getState().locationsCache.locations;
-    if (locations === undefined) {
+    const locationsCache = getState().locationsCache;
+    let locations = locationsCache.locations;
+    if (!locationsCache.isFetching && !locations) {
       dispatch(fetchLocationsStart());
       try {
         const res = await superagent.get(`${URL}/locations`);

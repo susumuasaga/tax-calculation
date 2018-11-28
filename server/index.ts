@@ -33,7 +33,7 @@ async function start(): Promise<void> {
 
   app.use('/node_modules', express.static('./node_modules'));
   app.use(
-    ['/transactions', '/transaction-detail'],
+    ['/locations', '/transactions', '/transaction', '/line'],
     (req, res) => { res.sendFile(path.resolve('build/index.html')); }
   );
   app.use(express.static('./build'));

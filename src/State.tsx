@@ -1,5 +1,5 @@
-import { Location } from '../server/models/Entity';
-import { Transaction } from '../server/models/Transaction';
+import { Location } from './models/Entity';
+import { Transaction } from './models/Transaction';
 
 /**
  * Central State

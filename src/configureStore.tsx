@@ -8,7 +8,12 @@ import { Action } from './Actions';
  * configureStore
  * Configure `Store` and returns it.
  */
-export function configureStore(preloadedState: State) {
+export function configureStore(
+  preloadedState: State = {
+    locationsCache: { isFetching: false },
+    transactionsCache: { isFetching: false }
+  }
+) {
   return createStore<
     State,
     Action,

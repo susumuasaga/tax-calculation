@@ -23,7 +23,7 @@ async function start() {
     app.use('/api/transactions', getTransactionsRouter_1.getTransactionsRouter(transactionModel, locationModel, itemModel));
     app.use('/api/locations', getLocationsRouter_1.getLocationsRouter(locationModel));
     app.use('/node_modules', express_1.default.static('./node_modules'));
-    app.use(['/transactions', '/transaction-detail'], (req, res) => { res.sendFile(path_1.default.resolve('build/index.html')); });
+    app.use(['/locations', '/transactions', '/transaction', '/line'], (req, res) => { res.sendFile(path_1.default.resolve('build/index.html')); });
     app.use(express_1.default.static('./build'));
     const logger = winston_1.default.createLogger({
         level: 'info',

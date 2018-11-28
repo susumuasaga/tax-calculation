@@ -1,13 +1,12 @@
 import * as React from 'react';
 import { Container, ListGroup, ListGroupItem, Row, Col } from 'reactstrap';
 import { LocationsCache } from '../State';
-import { Location } from '../../server/models/Entity';
+import { Location } from '../models/Entity';
 import { Link } from 'react-router-dom';
 
 export type Props = {
   cache: LocationsCache;
   onInit(): void;
-  onClick(index: number): void;
 };
 
 /**
@@ -17,7 +16,7 @@ export type Props = {
  *   onInit()
  *   onClick(index).
  */
-export function Locations({ cache, onInit, onClick }: Props) {
+export function Locations({ cache, onInit }: Props) {
   onInit();
   const isFetching = cache.isFetching;
   const locations = cache.locations;
@@ -38,7 +37,7 @@ export function Locations({ cache, onInit, onClick }: Props) {
             locations.map((location, index) =>
               <ListGroupItem key={index}>
                 <Link to={`/transactions?companyLocation=${location.code}`}>
-                  <Row onClick={() => { onClick(index); }}>
+                  <Row>
                     <Col md="3">{location.email}</Col>
                     <Col md="3">{location.federalTaxId}</Col>
                     <Col md="3">{cityState(location)}</Col>

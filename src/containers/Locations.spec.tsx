@@ -8,7 +8,7 @@ import { State } from '../State';
 import { Action } from '../Actions';
 import reduxThunk, { ThunkDispatch } from 'redux-thunk';
 import { Provider } from 'react-redux';
-import { locations } from '../../server/spec/testDB';
+import { locations } from '../spec/testDB';
 import { MemoryRouter } from 'react-router-dom';
 import { Row } from 'reactstrap';
 
