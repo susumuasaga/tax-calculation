@@ -74,19 +74,19 @@ describe('Transactions Store', () => {
     });
   });
 
-/*  describe('when cache is fetching', () => {
+  describe('when cache is fetching', () => {
     beforeEach(async () => {
       store = storeCreator({
-        locationsCache: { isFetching: true },
-        transactionsCache: { isFetching: false }
+        locationsCache: { isFetching: false },
+        transactionsCache: { isFetching: true }
       });
     });
 
     it('should not fetch transactions', async () => {
-      await store.dispatch(fetchTransactions());
+      await store.dispatch(fetchTransactions({}));
       const actions = store.getActions() as Action[];
       expect(actions.length)
         .toBe(0);
     });
-  }); */
+  });
 });
