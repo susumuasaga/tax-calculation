@@ -55,7 +55,7 @@ export function fetchLocationsFailure(error: any): Action {
  * Return `ThunkAction` to fetch locations.
  */
 export function fetchLocations(
-): ThunkAction<Promise<void>, State, null, Action> {
+): ThunkAction<Promise<void>, State, any, Action> {
   return async (dispatch, getState) => {
     let locations = getState().locationsCache.locations;
     if (locations === undefined) {

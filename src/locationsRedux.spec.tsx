@@ -4,10 +4,10 @@ import { State } from './State';
 import { Action, fetchLocations } from './Actions';
 import { reducer } from './reducer';
 
-describe('Locations Redux', () => {
-  let storeCreator: MockStoreCreator<State, ThunkDispatch<State, null, Action>>;
-  let store: MockStoreEnhanced<State, ThunkDispatch<State, null, Action>>;
+let storeCreator: MockStoreCreator<State, ThunkDispatch<State, null, Action>>;
+let store: MockStoreEnhanced<State, ThunkDispatch<State, null, Action>>;
 
+describe('Locations Redux', () => {
   beforeAll(async () => {
     storeCreator = reduxMockStore([reduxThunk]);
   });

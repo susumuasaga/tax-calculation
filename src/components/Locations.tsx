@@ -18,31 +18,41 @@ export type Props = {
  */
 export function Locations({ cache, onInit, onClick }: Props) {
   onInit();
+  const isFetching = cache.isFetching;
+  const locations = cache.locations;
 
-  return (
-    <Container>
+  if (!locations) {
+    return (
       <h2>
-        Empresas({cache.locations!.length})
+        Carregando...
       </h2>
-      <p>
-        Clique sobre uma linha para abrir as transações da empresa desejada.
-      </p>
-      <ListGroup style={{ opacity: (cache.isFetching ? 0.5 : 1) }}>
-        {
-          cache.locations!.map((location, index) =>
-            <ListGroupItem key={index}>
-              <Row onClick={() => { onClick(index); }}>
-                <Col md="3">{location.email}</Col>
-                <Col md="3">{location.federalTaxId}</Col>
-                <Col md="3">{cityState(location)}</Col>
-                <Col md="3">{location.address.phone}</Col>
-              </Row>
-            </ListGroupItem>
-          )
-        }
-      </ListGroup>
-    </Container>
-  );
+    );
+  } else {
+    return (
+      <Container>
+        <h2>
+          Empresas({locations.length})
+        </h2>
+        <p>
+          Clique sobre uma linha para abrir as transações da empresa desejada.
+        </p>
+        <ListGroup style={{ opacity: (isFetching ? 0.5 : 1) }}>
+          {
+            locations.map((location, index) =>
+              <ListGroupItem key={index}>
+                <Row onClick={() => { onClick(index); }}>
+                  <Col md="3">{location.email}</Col>
+                  <Col md="3">{location.federalTaxId}</Col>
+                  <Col md="3">{cityState(location)}</Col>
+                  <Col md="3">{location.address.phone}</Col>
+                </Row>
+              </ListGroupItem>
+            )
+          }
+        </ListGroup>
+      </Container>
+    );
+  }
 }
 
 function cityState(location: Location): string {

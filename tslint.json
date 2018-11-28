@@ -216,9 +216,7 @@
     "use-default-type-parameter": true,
     "variable-name": [
       true,
-      "ban-keywords",
-      "check-format",
-      "allow-leading-underscore"
+      "ban-keywords"
     ],
     /**
      * Accessibility. The following rules should be turned on to guarantee the best user
