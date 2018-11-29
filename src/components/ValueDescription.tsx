@@ -7,11 +7,11 @@ export type Props = { name: string; value: number; currency: string };
  */
 export function ValueDescription({ name, value, currency = 'BRL' }: Props) {
   return (
-      <span style={{ textAlign: 'left' }}>
-        {name}
-        <span style={{ float: 'right' }}>
-          {value.toLocaleString('pt-BR', { style: 'currency', currency })}
-        </span>
+    <div>
+      <span style={{ float: 'left' }}>{name}</span>
+      <span style={{ float: 'right' }}>
+        {value.toLocaleString('pt-BR', { style: 'currency', currency })}
       </span>
+    </div>
   );
 }

@@ -17,46 +17,56 @@ export function TransactionHeader({ transaction }: Props) {
   const calculatedTaxSummary = transaction.calculatedTaxSummary;
 
   return (
-    <Row>
-      <Col lg="4">
-        <h3>{header.transactionType}</h3>
-        <Entity title="Empresa" entity={header.location} />
-      </Col>
-      <Col lg="4">
-        <p>{moment(header.transactionDate)
-          .format('DD/MM/YYYY')}</p>
-        <Entity title="Contraparte" entity={header.entity} />
-      </Col>
-      <Col lg="4">
-        <p>Código: {header.documentCode}</p>
-        <h4>Resumo</h4>
-        <ValueDescription {...{
-          name: 'Subtotal:',
-          value: calculatedTaxSummary!.subtotal,
-          currency
-        }} /><br />
-        <ValueDescription {...{
-          name: 'IEC:',
-          value: calculatedTaxSummary!.taxByType.iec.tax,
-          currency
-        }} /><br />
-        <ValueDescription {...{
-          name: 'IST:',
-          value: calculatedTaxSummary!.taxByType.ist.tax,
-          currency
-        }} /><br />
-        <ValueDescription {...{
-          name: 'ISC:',
-          value: calculatedTaxSummary!.taxByType.isc.tax,
-          currency
-        }} /><br />
-        <hr />
-        <ValueDescription {...{
-          name: 'TOTAL GERAL:',
-          value: calculatedTaxSummary!.grandTotal,
-          currency
-        }} />
-      </Col>
-    </Row>
+    <div>
+      <Row>
+        <Col lg="4">
+          <h3>{header.transactionType}</h3>
+        </Col>
+        <Col lg="4">
+          Data: {moment(header.transactionDate)
+            .format('DD/MM/YYYY')}
+        </Col>
+        <Col lg="4">
+          Código: {header.documentCode}
+        </Col>
+      </Row>
+      <Row>
+        <Col lg="4">
+          <Entity title="Empresa" entity={header.location} />
+        </Col>
+        <Col lg="4">
+          <Entity title="Contraparte" entity={header.entity} />
+        </Col>
+        <Col lg="4">
+          <h4>Resumo</h4>
+          <ValueDescription {...{
+            name: 'Subtotal:',
+            value: calculatedTaxSummary!.subtotal,
+            currency
+          }} /><br />
+          <ValueDescription {...{
+            name: 'IEC:',
+            value: calculatedTaxSummary!.taxByType.iec.tax,
+            currency
+          }} /><br />
+          <ValueDescription {...{
+            name: 'IST:',
+            value: calculatedTaxSummary!.taxByType.ist.tax,
+            currency
+          }} /><br />
+          <ValueDescription {...{
+            name: 'ISC:',
+            value: calculatedTaxSummary!.taxByType.isc.tax,
+            currency
+          }} /><br />
+          <hr />
+          <ValueDescription {...{
+            name: 'TOTAL GERAL:',
+            value: calculatedTaxSummary!.grandTotal,
+            currency
+          }} />
+        </Col>
+      </Row>
+    </div>
   );
 }
