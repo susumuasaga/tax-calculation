@@ -1,8 +1,8 @@
 import * as React from 'react';
 import { Container, ListGroup, ListGroupItem, Row, Col } from 'reactstrap';
 import { LocationsCache } from '../State';
-import { Location } from '../models/Entity';
 import { Link } from 'react-router-dom';
+import { cityState } from './cityState';
 
 export type Props = {
   cache: LocationsCache;
@@ -48,15 +48,5 @@ export function Locations({ cache, onInit }: Props) {
         </ListGroup>
       </Container>
     );
-  }
-}
-
-function cityState(location: Location): string {
-  const cityName = location.address.cityName;
-  const state = location.address.state;
-  if (cityName) {
-    return `${cityName} - ${state}`;
-  } else {
-    return state;
   }
 }

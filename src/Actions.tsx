@@ -75,11 +75,11 @@ export function fetchLocations(
 /**
  * Returns `Action` to start fetching Transactions.
  */
-export function fetchTransactionsStart(): Action {
+export function fetchTransactionsStart(query: Partial<Header>): Action {
   return {
     type: 'FetchTransactionsStart',
     reducer(state) {
-      return { ...state, transactionsCache: { isFetching: true } };
+      return { ...state, transactionsCache: { isFetching: true, query } };
     }
   };
 }
@@ -128,7 +128,7 @@ export function fetchTransactions(
         !_.isEqual(transactionsCache.query, query)
       )
     ) {
-      dispatch(fetchTransactionsStart());
+      dispatch(fetchTransactionsStart(query));
       try {
         const res = await superagent.get(`${URL}/transactions`)
           .query(query);

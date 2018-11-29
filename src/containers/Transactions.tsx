@@ -3,6 +3,7 @@ import * as Component from '../components/Transactions';
 import { Action, fetchTransactions } from '../Actions';
 import { ThunkDispatch } from 'redux-thunk';
 import { connect } from 'react-redux';
+import * as queryString from 'query-string';
 
 type Props = { location: { search: string } };
 
@@ -10,18 +11,20 @@ function mapStateToProps(
   { transactionsCache }: State,
   { location: { search } }: Props
 ): Partial<Component.Props> {
-  return {
-    cache: transactionsCache
-  };
+  const query = queryString.parse(search);
+  const page = Number(query.page || '1');
+
+  return { cache: transactionsCache, page };
 }
 
 function mapDispatchToProps(
   dispatch: ThunkDispatch<State, any, Action>,
   { location: { search } }: Props
 ): Partial<Component.Props> {
-  return {
-    onInit: async () => dispatch(fetchTransactions({}))
-  };
+  const query = queryString.parse(search);
+  delete query.page;
+
+  return { onInit: async () => dispatch(fetchTransactions(query))};
 }
 
 /**

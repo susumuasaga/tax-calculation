@@ -4,6 +4,7 @@ import { State } from './State';
 import { Action, fetchTransactions } from './Actions';
 import { reducer } from './reducer';
 import { transactions } from './spec/testDB';
+import { Header } from './models/Transaction';
 
 let storeCreator: MockStoreCreator<State, ThunkDispatch<State, null, Action>>;
 let store: MockStoreEnhanced<State, ThunkDispatch<State, null, Action>>;
@@ -22,15 +23,16 @@ describe('Transactions Store', () => {
     });
 
     it('should fetch transactions', async () => {
-      await store.dispatch(
-        fetchTransactions({companyLocation: '27227668000122'})
-      );
+      const query: Partial<Header> = { companyLocation: '27227668000122' };
+      await store.dispatch(fetchTransactions(query));
       let state = store.getState();
       const actions = store.getActions() as Action[];
       state = reducer(state, actions[0]);
       let cache = state.transactionsCache;
       expect(cache.isFetching)
         .toBe(true);
+      expect(cache.query)
+        .toEqual(query);
       state = reducer(state, actions[1]);
       cache = state.transactionsCache;
       expect(cache.isFetching)
@@ -56,15 +58,16 @@ describe('Transactions Store', () => {
     });
 
     it('if not same query, should fetch transactions', async () => {
-      await store.dispatch(
-        fetchTransactions({companyLocation: '27227668000122'})
-      );
+      const query: Partial<Header> = { companyLocation: '27227668000122' };
+      await store.dispatch(fetchTransactions(query));
       let state = store.getState();
       const actions = store.getActions() as Action[];
       state = reducer(state, actions[0]);
       let cache = state.transactionsCache;
       expect(cache.isFetching)
         .toBe(true);
+      expect(cache.query)
+        .toEqual(query);
       state = reducer(state, actions[1]);
       cache = state.transactionsCache;
       expect(cache.isFetching)

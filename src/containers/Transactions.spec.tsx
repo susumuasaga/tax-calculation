@@ -50,28 +50,34 @@ describe('Transactions container', () => {
         .toBe(true);
     });
   });
-/*
+
   describe('when transactions is loaded', () => {
     beforeEach(() => {
       store = storeCreator({
         locationsCache: { isFetching: false },
-        transactionsCache: { isFetching: false, transactions }
+        transactionsCache: {
+          isFetching: false,
+          transactions,
+          query: { companyLocation: '27227668000122' }
+        }
       });
       wrapper = mount(
         <Provider {...{ store }}>
           <MemoryRouter>
-            <Transactions />
+          <Transactions {...{
+            location: { search: '?companyLocation=27227668000122' }
+          }}/>
           </MemoryRouter>
         </Provider>
       );
     });
 
-    it('should present transactions', () => {
+    it('should present first page of 10 transactions', () => {
       const actions = store.getActions() as Action[];
       expect(actions.length)
         .toBe(0);
       expect(wrapper.find(Row).length)
-        .toBe(transactions.length);
+        .toBe(10);
     });
-  });*/
+  });
 });
