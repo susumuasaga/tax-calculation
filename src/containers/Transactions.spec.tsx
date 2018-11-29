@@ -10,7 +10,7 @@ import reduxThunk, { ThunkDispatch } from 'redux-thunk';
 import { Provider } from 'react-redux';
 import { transactions } from '../spec/testDB';
 import { MemoryRouter } from 'react-router-dom';
-import { Row } from 'reactstrap';
+import { ListGroupItem } from 'reactstrap';
 
 let storeCreator: MockStoreCreator<State, ThunkDispatch<State, {}, Action>>;
 let store: MockStoreEnhanced<State, ThunkDispatch<State, {}, Action>>;
@@ -76,7 +76,7 @@ describe('Transactions container', () => {
       const actions = store.getActions() as Action[];
       expect(actions.length)
         .toBe(0);
-      expect(wrapper.find(Row).length)
+      expect(wrapper.find(ListGroupItem).length)
         .toBeGreaterThan(0);
     });
   });
