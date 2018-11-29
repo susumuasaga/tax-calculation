@@ -1,7 +1,7 @@
 import { Entity } from '../models/Entity';
 
 /**
- * Returns formated city and state.
+ * Returns formated city and state of an `Entity`.
  * If city is undefined returns just state.
  * If city is defined formats ${cityName} - ${state}
  */
