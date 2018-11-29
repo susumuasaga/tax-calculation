@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Container, ListGroup, ListGroupItem, Row, Col } from 'reactstrap';
+import { Container, ListGroup, ListGroupItem, Row, Col, Breadcrumb, BreadcrumbItem } from 'reactstrap';
 import { LocationsCache } from '../State';
 import { Link } from 'react-router-dom';
 import { cityState } from './cityState';
@@ -26,6 +26,9 @@ export function Locations({ cache, onInit }: Props) {
   } else {
     return (
       <Container>
+        <Breadcrumb>
+          <BreadcrumbItem active>Empresas</BreadcrumbItem>
+        </Breadcrumb>
         <h2>Empresas({locations.length})</h2>
         <p>
           Clique sobre uma linha para abrir as transações da empresa desejada.

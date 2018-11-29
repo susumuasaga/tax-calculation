@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Container, ListGroup, ListGroupItem, Pagination, PaginationItem } from 'reactstrap';
+import { Container, ListGroup, ListGroupItem, Pagination, PaginationItem, Breadcrumb, BreadcrumbItem } from 'reactstrap';
 import * as queryString from 'query-string';
 import { TransactionsCache } from '../State';
 import { Link } from 'react-router-dom';
@@ -37,6 +37,12 @@ export function Transactions({ page, cache, onInit }: Props) {
 
     return (
       <Container>
+        <Breadcrumb>
+          <BreadcrumbItem>
+            <Link to="/locations">Empresas</Link>
+          </BreadcrumbItem>
+          <BreadcrumbItem>Transações</BreadcrumbItem>
+        </Breadcrumb>
         <h2>Transações {start + 1} a {end} de {transactions.length}</h2>
         <p>
           Clique sobre uma linha para abrir a transação desejada.
@@ -46,7 +52,12 @@ export function Transactions({ page, cache, onInit }: Props) {
             transactions.slice(start, end)
               .map((transaction, index) =>
                 <ListGroupItem key={index}>
-                  <Link to={`/transactions?companyTransaction=${transaction}`}>
+                  <Link to={
+                    `/transaction\
+?companyLocation=${transaction.header.companyLocation}\
+&transactionDate=${transaction.header.transactionDate}\
+&documentCode=${transaction.header.documentCode}`
+                    }>
                     <TransactionHeader {...{ transaction }} />
                   </Link>
                 </ListGroupItem>
