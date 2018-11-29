@@ -11,10 +11,8 @@ export type Props = {
 
 /**
  * Locations component.
- * Input locations.
- * Output
- *   onInit()
- *   onClick(index).
+ * Input locations cache.
+ * Output onInit() called at the start.
  */
 export function Locations({ cache, onInit }: Props) {
   onInit();
