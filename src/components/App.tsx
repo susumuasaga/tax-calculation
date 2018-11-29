@@ -1,8 +1,9 @@
 import * as React from 'react';
-import { BrowserRouter, Redirect, Route } from 'react-router-dom';
+import { BrowserRouter, Redirect, Route, Switch } from 'react-router-dom';
 import { Locations } from '../containers/Locations';
 import { configureStore } from '../configureStore';
 import { Provider } from 'react-redux';
+import { Transactions } from '../containers/Transactions';
 
 const store = configureStore();
 
@@ -13,10 +14,11 @@ export function App() {
   return (
     <Provider {...{ store }}>
       <BrowserRouter>
-        <div>
+        <Switch>
           <Route exact path="/" render={redirect('/locations')} />
           <Route path="/locations" component={Locations} />
-        </div>
+          <Route path="/transactions" component={Transactions} />
+        </Switch>
       </BrowserRouter>
     </Provider>
   );

@@ -88,6 +88,8 @@ export const transactions: Transaction[] = [
       transactionType: 'Sale',
       transactionDate: '2018-03-15',
       companyLocation: '27227668000122',
+      location: locations[0],
+      currency: 'BRL',
       entity: {
         federalTaxId: '26.994.558/0001-23',
         type: 'federalGovernment',
@@ -99,6 +101,7 @@ export const transactions: Transaction[] = [
         numberOfItems: 1,
         itemPrice: 100,
         itemCode: 'VENTILADOR-DIGITAL-001',
+        item: items[0],
         calculatedTax: {
           tax: 0,
           CST: '36',
@@ -181,7 +184,9 @@ export const transactions: Transaction[] = [
       documentCode: '000001',
       transactionType: 'Sale',
       transactionDate: '2018-01-15',
+      currency: 'BRL',
       companyLocation: '27227668000122',
+      location: locations[0],
       entity: {
         federalTaxId: '46.395.000/0001-39',
         type: 'cityGovernment',
@@ -195,6 +200,7 @@ export const transactions: Transaction[] = [
         otherCostAmount: 10,
         lineDiscount: 10,
         itemCode: 'VENTILADOR-DIGITAL-001',
+        item: items[0],
         calculatedTax: {
           tax: 12.88,
           CST: '34',
@@ -272,6 +278,8 @@ export const transactions: Transaction[] = [
       transactionType: 'Sale',
       transactionDate: '2018-02-15',
       companyLocation: '27227668000122',
+      location: locations[0],
+      currency: 'BRL',
       entity: {
         federalTaxId: '46.377.222/0001-29',
         type: 'stateGovernment',
@@ -286,6 +294,7 @@ export const transactions: Transaction[] = [
         otherCostAmount: 10,
         lineDiscount: 20,
         itemCode: 'VENTILADOR-DIGITAL-001',
+        item: items[0],
         calculatedTax: {
           tax: 0,
           CST: '35',
@@ -369,6 +378,8 @@ export const transactions: Transaction[] = [
       transactionType: 'Sale',
       transactionDate: '2018-10-15',
       companyLocation: '27227668000203',
+      location: locations[1],
+      currency: 'BRL',
       entity: {
         federalTaxId: '00.000.000/0001-91',
         address: { cityName: 'Brasília', state: 'DF' }
@@ -382,6 +393,7 @@ export const transactions: Transaction[] = [
         lineDiscount: 10,
         useType: 'consumption',
         itemCode: 'VENTILADOR-DIGITAL-001',
+        item: items[0],
         calculatedTax: {
           CST: '50',
           taxDetails: {
@@ -425,6 +437,7 @@ export const transactions: Transaction[] = [
         lineDiscount: 10,
         useType: 'production',
         itemCode: 'VENTILADOR-DIGITAL-001',
+        item: items[0],
         calculatedTax: {
           CST: '50',
           taxDetails: {
@@ -468,6 +481,7 @@ export const transactions: Transaction[] = [
         lineDiscount: 10,
         useType: 'resale',
         itemCode: 'JJJ-LEGAL-032',
+        item: items[1],
         calculatedTax: {
           CST: '50',
           taxDetails: {
@@ -546,6 +560,8 @@ export const transactions: Transaction[] = [
       transactionType: 'Sale',
       transactionDate: '2018-05-15',
       companyLocation: '27227668000203',
+      location: locations[1],
+      currency: 'BRL',
       entity: {
         federalTaxId: '50.948.371-0001-78',
         address: { cityName: 'Jundiaí', state: 'SP' }
@@ -559,6 +575,7 @@ export const transactions: Transaction[] = [
         lineDiscount: 10,
         useType: 'production',
         itemCode: 'VENTILADOR-DIGITAL-001',
+        item: items[0],
         calculatedTax: {
           CST: '50',
           taxDetails: {
@@ -602,6 +619,7 @@ export const transactions: Transaction[] = [
         lineDiscount: 10,
         useType: 'use',
         itemCode: 'JJJ-LEGAL-032',
+        item: items[1],
         calculatedTax: {
           CST: '50',
           taxDetails: {
@@ -645,6 +663,7 @@ export const transactions: Transaction[] = [
         lineDiscount: 10,
         useType: 'resale',
         itemCode: 'JJJ-LEGAL-032',
+        item: items[1],
         calculatedTax: {
           CST: '50',
           taxDetails: {
@@ -712,6 +731,936 @@ export const transactions: Transaction[] = [
             jurisdictionType: 'City',
             jurisdictionName: 'São Paulo',
             tax: 11.94
+          }]
+        }
+      }
+    }
+  },
+  {
+    header: {
+      documentCode: '000004',
+      transactionType: 'Sale',
+      transactionDate: '2018-04-15',
+      currency: 'BRL',
+      companyLocation: '27227668000122',
+      location: locations[0],
+      entity: {
+        federalTaxId: '46.395.000/0001-39',
+        type: 'cityGovernment',
+        address: { cityName: 'São Paulo', state: 'SP' }
+      }
+    },
+    lines: [
+      {
+        numberOfItems: 2,
+        itemPrice: 45,
+        otherCostAmount: 10,
+        lineDiscount: 10,
+        itemCode: 'VENTILADOR-DIGITAL-001',
+        item: items[0],
+        calculatedTax: {
+          tax: 12.88,
+          CST: '34',
+          taxDetails: {
+            iec: {
+              jurisdictionType: 'Country',
+              jurisdictionName: 'Brasil',
+              taxType: 'IEC',
+              scenario: 'Calculation Exempt',
+              calcBase: 90,
+              rate: 0,
+              fact: 0,
+              tax: 0
+            },
+            ist: {
+              jurisdictionType: 'State',
+              jurisdictionName: 'SP',
+              taxType: 'IST',
+              scenario: 'Calculation Fixed',
+              calcBase: 100,
+              rate: 0.14,
+              fact: 0.08,
+              tax: 12.88
+            },
+            isc: {
+              jurisdictionType: 'City',
+              jurisdictionName: 'Florianópolis',
+              taxType: 'ISC',
+              scenario: 'Calculation Exempt',
+              calcBase: 90,
+              rate: 0,
+              fact: 0,
+              tax: 0
+            }
+          }
+        }
+      }
+    ],
+    calculatedTaxSummary: {
+      numberOfLines: 1,
+      subtotal: 80,
+      totalTax: 12.88,
+      grandTotal: 92.88,
+      taxByType: {
+        iec: {
+          tax: 0,
+          jurisdictions: [{
+            jurisdictionType: 'Country',
+            jurisdictionName: 'Brasil',
+            tax: 0
+          }]
+        },
+        ist: {
+          tax: 12.88,
+          jurisdictions: [{
+            jurisdictionType: 'State',
+            jurisdictionName: 'SP',
+            tax: 12.88
+          }]
+        },
+        isc: {
+          tax: 0,
+          jurisdictions: [{
+            jurisdictionType: 'City',
+            jurisdictionName: 'Florianópolis',
+            tax: 0
+          }]
+        }
+      }
+    }
+  },
+  {
+    header: {
+      documentCode: '000005',
+      transactionType: 'Sale',
+      transactionDate: '2018-05-15',
+      currency: 'BRL',
+      companyLocation: '27227668000122',
+      location: locations[0],
+      entity: {
+        federalTaxId: '46.395.000/0001-39',
+        type: 'cityGovernment',
+        address: { cityName: 'São Paulo', state: 'SP' }
+      }
+    },
+    lines: [
+      {
+        numberOfItems: 2,
+        itemPrice: 45,
+        otherCostAmount: 10,
+        lineDiscount: 10,
+        itemCode: 'VENTILADOR-DIGITAL-001',
+        item: items[0],
+        calculatedTax: {
+          tax: 12.88,
+          CST: '34',
+          taxDetails: {
+            iec: {
+              jurisdictionType: 'Country',
+              jurisdictionName: 'Brasil',
+              taxType: 'IEC',
+              scenario: 'Calculation Exempt',
+              calcBase: 90,
+              rate: 0,
+              fact: 0,
+              tax: 0
+            },
+            ist: {
+              jurisdictionType: 'State',
+              jurisdictionName: 'SP',
+              taxType: 'IST',
+              scenario: 'Calculation Fixed',
+              calcBase: 100,
+              rate: 0.14,
+              fact: 0.08,
+              tax: 12.88
+            },
+            isc: {
+              jurisdictionType: 'City',
+              jurisdictionName: 'Florianópolis',
+              taxType: 'ISC',
+              scenario: 'Calculation Exempt',
+              calcBase: 90,
+              rate: 0,
+              fact: 0,
+              tax: 0
+            }
+          }
+        }
+      }
+    ],
+    calculatedTaxSummary: {
+      numberOfLines: 1,
+      subtotal: 80,
+      totalTax: 12.88,
+      grandTotal: 92.88,
+      taxByType: {
+        iec: {
+          tax: 0,
+          jurisdictions: [{
+            jurisdictionType: 'Country',
+            jurisdictionName: 'Brasil',
+            tax: 0
+          }]
+        },
+        ist: {
+          tax: 12.88,
+          jurisdictions: [{
+            jurisdictionType: 'State',
+            jurisdictionName: 'SP',
+            tax: 12.88
+          }]
+        },
+        isc: {
+          tax: 0,
+          jurisdictions: [{
+            jurisdictionType: 'City',
+            jurisdictionName: 'Florianópolis',
+            tax: 0
+          }]
+        }
+      }
+    }
+  },
+  {
+    header: {
+      documentCode: '000006',
+      transactionType: 'Sale',
+      transactionDate: '2018-06-15',
+      currency: 'BRL',
+      companyLocation: '27227668000122',
+      location: locations[0],
+      entity: {
+        federalTaxId: '46.395.000/0001-39',
+        type: 'cityGovernment',
+        address: { cityName: 'São Paulo', state: 'SP' }
+      }
+    },
+    lines: [
+      {
+        numberOfItems: 2,
+        itemPrice: 45,
+        otherCostAmount: 10,
+        lineDiscount: 10,
+        itemCode: 'VENTILADOR-DIGITAL-001',
+        item: items[0],
+        calculatedTax: {
+          tax: 12.88,
+          CST: '34',
+          taxDetails: {
+            iec: {
+              jurisdictionType: 'Country',
+              jurisdictionName: 'Brasil',
+              taxType: 'IEC',
+              scenario: 'Calculation Exempt',
+              calcBase: 90,
+              rate: 0,
+              fact: 0,
+              tax: 0
+            },
+            ist: {
+              jurisdictionType: 'State',
+              jurisdictionName: 'SP',
+              taxType: 'IST',
+              scenario: 'Calculation Fixed',
+              calcBase: 100,
+              rate: 0.14,
+              fact: 0.08,
+              tax: 12.88
+            },
+            isc: {
+              jurisdictionType: 'City',
+              jurisdictionName: 'Florianópolis',
+              taxType: 'ISC',
+              scenario: 'Calculation Exempt',
+              calcBase: 90,
+              rate: 0,
+              fact: 0,
+              tax: 0
+            }
+          }
+        }
+      }
+    ],
+    calculatedTaxSummary: {
+      numberOfLines: 1,
+      subtotal: 80,
+      totalTax: 12.88,
+      grandTotal: 92.88,
+      taxByType: {
+        iec: {
+          tax: 0,
+          jurisdictions: [{
+            jurisdictionType: 'Country',
+            jurisdictionName: 'Brasil',
+            tax: 0
+          }]
+        },
+        ist: {
+          tax: 12.88,
+          jurisdictions: [{
+            jurisdictionType: 'State',
+            jurisdictionName: 'SP',
+            tax: 12.88
+          }]
+        },
+        isc: {
+          tax: 0,
+          jurisdictions: [{
+            jurisdictionType: 'City',
+            jurisdictionName: 'Florianópolis',
+            tax: 0
+          }]
+        }
+      }
+    }
+  },
+  {
+    header: {
+      documentCode: '000007',
+      transactionType: 'Sale',
+      transactionDate: '2018-07-15',
+      currency: 'BRL',
+      companyLocation: '27227668000122',
+      location: locations[0],
+      entity: {
+        federalTaxId: '46.395.000/0001-39',
+        type: 'cityGovernment',
+        address: { cityName: 'São Paulo', state: 'SP' }
+      }
+    },
+    lines: [
+      {
+        numberOfItems: 2,
+        itemPrice: 45,
+        otherCostAmount: 10,
+        lineDiscount: 10,
+        itemCode: 'VENTILADOR-DIGITAL-001',
+        item: items[0],
+        calculatedTax: {
+          tax: 12.88,
+          CST: '34',
+          taxDetails: {
+            iec: {
+              jurisdictionType: 'Country',
+              jurisdictionName: 'Brasil',
+              taxType: 'IEC',
+              scenario: 'Calculation Exempt',
+              calcBase: 90,
+              rate: 0,
+              fact: 0,
+              tax: 0
+            },
+            ist: {
+              jurisdictionType: 'State',
+              jurisdictionName: 'SP',
+              taxType: 'IST',
+              scenario: 'Calculation Fixed',
+              calcBase: 100,
+              rate: 0.14,
+              fact: 0.08,
+              tax: 12.88
+            },
+            isc: {
+              jurisdictionType: 'City',
+              jurisdictionName: 'Florianópolis',
+              taxType: 'ISC',
+              scenario: 'Calculation Exempt',
+              calcBase: 90,
+              rate: 0,
+              fact: 0,
+              tax: 0
+            }
+          }
+        }
+      }
+    ],
+    calculatedTaxSummary: {
+      numberOfLines: 1,
+      subtotal: 80,
+      totalTax: 12.88,
+      grandTotal: 92.88,
+      taxByType: {
+        iec: {
+          tax: 0,
+          jurisdictions: [{
+            jurisdictionType: 'Country',
+            jurisdictionName: 'Brasil',
+            tax: 0
+          }]
+        },
+        ist: {
+          tax: 12.88,
+          jurisdictions: [{
+            jurisdictionType: 'State',
+            jurisdictionName: 'SP',
+            tax: 12.88
+          }]
+        },
+        isc: {
+          tax: 0,
+          jurisdictions: [{
+            jurisdictionType: 'City',
+            jurisdictionName: 'Florianópolis',
+            tax: 0
+          }]
+        }
+      }
+    }
+  },
+  {
+    header: {
+      documentCode: '000008',
+      transactionType: 'Sale',
+      transactionDate: '2018-08-15',
+      currency: 'BRL',
+      companyLocation: '27227668000122',
+      location: locations[0],
+      entity: {
+        federalTaxId: '46.395.000/0001-39',
+        type: 'cityGovernment',
+        address: { cityName: 'São Paulo', state: 'SP' }
+      }
+    },
+    lines: [
+      {
+        numberOfItems: 2,
+        itemPrice: 45,
+        otherCostAmount: 10,
+        lineDiscount: 10,
+        itemCode: 'VENTILADOR-DIGITAL-001',
+        item: items[0],
+        calculatedTax: {
+          tax: 12.88,
+          CST: '34',
+          taxDetails: {
+            iec: {
+              jurisdictionType: 'Country',
+              jurisdictionName: 'Brasil',
+              taxType: 'IEC',
+              scenario: 'Calculation Exempt',
+              calcBase: 90,
+              rate: 0,
+              fact: 0,
+              tax: 0
+            },
+            ist: {
+              jurisdictionType: 'State',
+              jurisdictionName: 'SP',
+              taxType: 'IST',
+              scenario: 'Calculation Fixed',
+              calcBase: 100,
+              rate: 0.14,
+              fact: 0.08,
+              tax: 12.88
+            },
+            isc: {
+              jurisdictionType: 'City',
+              jurisdictionName: 'Florianópolis',
+              taxType: 'ISC',
+              scenario: 'Calculation Exempt',
+              calcBase: 90,
+              rate: 0,
+              fact: 0,
+              tax: 0
+            }
+          }
+        }
+      }
+    ],
+    calculatedTaxSummary: {
+      numberOfLines: 1,
+      subtotal: 80,
+      totalTax: 12.88,
+      grandTotal: 92.88,
+      taxByType: {
+        iec: {
+          tax: 0,
+          jurisdictions: [{
+            jurisdictionType: 'Country',
+            jurisdictionName: 'Brasil',
+            tax: 0
+          }]
+        },
+        ist: {
+          tax: 12.88,
+          jurisdictions: [{
+            jurisdictionType: 'State',
+            jurisdictionName: 'SP',
+            tax: 12.88
+          }]
+        },
+        isc: {
+          tax: 0,
+          jurisdictions: [{
+            jurisdictionType: 'City',
+            jurisdictionName: 'Florianópolis',
+            tax: 0
+          }]
+        }
+      }
+    }
+  },
+  {
+    header: {
+      documentCode: '000009',
+      transactionType: 'Sale',
+      transactionDate: '2018-09-15',
+      currency: 'BRL',
+      companyLocation: '27227668000122',
+      location: locations[0],
+      entity: {
+        federalTaxId: '46.395.000/0001-39',
+        type: 'cityGovernment',
+        address: { cityName: 'São Paulo', state: 'SP' }
+      }
+    },
+    lines: [
+      {
+        numberOfItems: 2,
+        itemPrice: 45,
+        otherCostAmount: 10,
+        lineDiscount: 10,
+        itemCode: 'VENTILADOR-DIGITAL-001',
+        item: items[0],
+        calculatedTax: {
+          tax: 12.88,
+          CST: '34',
+          taxDetails: {
+            iec: {
+              jurisdictionType: 'Country',
+              jurisdictionName: 'Brasil',
+              taxType: 'IEC',
+              scenario: 'Calculation Exempt',
+              calcBase: 90,
+              rate: 0,
+              fact: 0,
+              tax: 0
+            },
+            ist: {
+              jurisdictionType: 'State',
+              jurisdictionName: 'SP',
+              taxType: 'IST',
+              scenario: 'Calculation Fixed',
+              calcBase: 100,
+              rate: 0.14,
+              fact: 0.08,
+              tax: 12.88
+            },
+            isc: {
+              jurisdictionType: 'City',
+              jurisdictionName: 'Florianópolis',
+              taxType: 'ISC',
+              scenario: 'Calculation Exempt',
+              calcBase: 90,
+              rate: 0,
+              fact: 0,
+              tax: 0
+            }
+          }
+        }
+      }
+    ],
+    calculatedTaxSummary: {
+      numberOfLines: 1,
+      subtotal: 80,
+      totalTax: 12.88,
+      grandTotal: 92.88,
+      taxByType: {
+        iec: {
+          tax: 0,
+          jurisdictions: [{
+            jurisdictionType: 'Country',
+            jurisdictionName: 'Brasil',
+            tax: 0
+          }]
+        },
+        ist: {
+          tax: 12.88,
+          jurisdictions: [{
+            jurisdictionType: 'State',
+            jurisdictionName: 'SP',
+            tax: 12.88
+          }]
+        },
+        isc: {
+          tax: 0,
+          jurisdictions: [{
+            jurisdictionType: 'City',
+            jurisdictionName: 'Florianópolis',
+            tax: 0
+          }]
+        }
+      }
+    }
+  },
+  {
+    header: {
+      documentCode: '000010',
+      transactionType: 'Sale',
+      transactionDate: '2018-10-15',
+      currency: 'BRL',
+      companyLocation: '27227668000122',
+      location: locations[0],
+      entity: {
+        federalTaxId: '46.395.000/0001-39',
+        type: 'cityGovernment',
+        address: { cityName: 'São Paulo', state: 'SP' }
+      }
+    },
+    lines: [
+      {
+        numberOfItems: 2,
+        itemPrice: 45,
+        otherCostAmount: 10,
+        lineDiscount: 10,
+        itemCode: 'VENTILADOR-DIGITAL-001',
+        item: items[0],
+        calculatedTax: {
+          tax: 12.88,
+          CST: '34',
+          taxDetails: {
+            iec: {
+              jurisdictionType: 'Country',
+              jurisdictionName: 'Brasil',
+              taxType: 'IEC',
+              scenario: 'Calculation Exempt',
+              calcBase: 90,
+              rate: 0,
+              fact: 0,
+              tax: 0
+            },
+            ist: {
+              jurisdictionType: 'State',
+              jurisdictionName: 'SP',
+              taxType: 'IST',
+              scenario: 'Calculation Fixed',
+              calcBase: 100,
+              rate: 0.14,
+              fact: 0.08,
+              tax: 12.88
+            },
+            isc: {
+              jurisdictionType: 'City',
+              jurisdictionName: 'Florianópolis',
+              taxType: 'ISC',
+              scenario: 'Calculation Exempt',
+              calcBase: 90,
+              rate: 0,
+              fact: 0,
+              tax: 0
+            }
+          }
+        }
+      }
+    ],
+    calculatedTaxSummary: {
+      numberOfLines: 1,
+      subtotal: 80,
+      totalTax: 12.88,
+      grandTotal: 92.88,
+      taxByType: {
+        iec: {
+          tax: 0,
+          jurisdictions: [{
+            jurisdictionType: 'Country',
+            jurisdictionName: 'Brasil',
+            tax: 0
+          }]
+        },
+        ist: {
+          tax: 12.88,
+          jurisdictions: [{
+            jurisdictionType: 'State',
+            jurisdictionName: 'SP',
+            tax: 12.88
+          }]
+        },
+        isc: {
+          tax: 0,
+          jurisdictions: [{
+            jurisdictionType: 'City',
+            jurisdictionName: 'Florianópolis',
+            tax: 0
+          }]
+        }
+      }
+    }
+  },
+  {
+    header: {
+      documentCode: '000011',
+      transactionType: 'Sale',
+      transactionDate: '2018-11-15',
+      currency: 'BRL',
+      companyLocation: '27227668000122',
+      location: locations[0],
+      entity: {
+        federalTaxId: '46.395.000/0001-39',
+        type: 'cityGovernment',
+        address: { cityName: 'São Paulo', state: 'SP' }
+      }
+    },
+    lines: [
+      {
+        numberOfItems: 2,
+        itemPrice: 45,
+        otherCostAmount: 10,
+        lineDiscount: 10,
+        itemCode: 'VENTILADOR-DIGITAL-001',
+        item: items[0],
+        calculatedTax: {
+          tax: 12.88,
+          CST: '34',
+          taxDetails: {
+            iec: {
+              jurisdictionType: 'Country',
+              jurisdictionName: 'Brasil',
+              taxType: 'IEC',
+              scenario: 'Calculation Exempt',
+              calcBase: 90,
+              rate: 0,
+              fact: 0,
+              tax: 0
+            },
+            ist: {
+              jurisdictionType: 'State',
+              jurisdictionName: 'SP',
+              taxType: 'IST',
+              scenario: 'Calculation Fixed',
+              calcBase: 100,
+              rate: 0.14,
+              fact: 0.08,
+              tax: 12.88
+            },
+            isc: {
+              jurisdictionType: 'City',
+              jurisdictionName: 'Florianópolis',
+              taxType: 'ISC',
+              scenario: 'Calculation Exempt',
+              calcBase: 90,
+              rate: 0,
+              fact: 0,
+              tax: 0
+            }
+          }
+        }
+      }
+    ],
+    calculatedTaxSummary: {
+      numberOfLines: 1,
+      subtotal: 80,
+      totalTax: 12.88,
+      grandTotal: 92.88,
+      taxByType: {
+        iec: {
+          tax: 0,
+          jurisdictions: [{
+            jurisdictionType: 'Country',
+            jurisdictionName: 'Brasil',
+            tax: 0
+          }]
+        },
+        ist: {
+          tax: 12.88,
+          jurisdictions: [{
+            jurisdictionType: 'State',
+            jurisdictionName: 'SP',
+            tax: 12.88
+          }]
+        },
+        isc: {
+          tax: 0,
+          jurisdictions: [{
+            jurisdictionType: 'City',
+            jurisdictionName: 'Florianópolis',
+            tax: 0
+          }]
+        }
+      }
+    }
+  },
+  {
+    header: {
+      documentCode: '000012',
+      transactionType: 'Sale',
+      transactionDate: '2017-12-15',
+      currency: 'BRL',
+      companyLocation: '27227668000122',
+      location: locations[0],
+      entity: {
+        federalTaxId: '46.395.000/0001-39',
+        type: 'cityGovernment',
+        address: { cityName: 'São Paulo', state: 'SP' }
+      }
+    },
+    lines: [
+      {
+        numberOfItems: 2,
+        itemPrice: 45,
+        otherCostAmount: 10,
+        lineDiscount: 10,
+        itemCode: 'VENTILADOR-DIGITAL-001',
+        item: items[0],
+        calculatedTax: {
+          tax: 12.88,
+          CST: '34',
+          taxDetails: {
+            iec: {
+              jurisdictionType: 'Country',
+              jurisdictionName: 'Brasil',
+              taxType: 'IEC',
+              scenario: 'Calculation Exempt',
+              calcBase: 90,
+              rate: 0,
+              fact: 0,
+              tax: 0
+            },
+            ist: {
+              jurisdictionType: 'State',
+              jurisdictionName: 'SP',
+              taxType: 'IST',
+              scenario: 'Calculation Fixed',
+              calcBase: 100,
+              rate: 0.14,
+              fact: 0.08,
+              tax: 12.88
+            },
+            isc: {
+              jurisdictionType: 'City',
+              jurisdictionName: 'Florianópolis',
+              taxType: 'ISC',
+              scenario: 'Calculation Exempt',
+              calcBase: 90,
+              rate: 0,
+              fact: 0,
+              tax: 0
+            }
+          }
+        }
+      }
+    ],
+    calculatedTaxSummary: {
+      numberOfLines: 1,
+      subtotal: 80,
+      totalTax: 12.88,
+      grandTotal: 92.88,
+      taxByType: {
+        iec: {
+          tax: 0,
+          jurisdictions: [{
+            jurisdictionType: 'Country',
+            jurisdictionName: 'Brasil',
+            tax: 0
+          }]
+        },
+        ist: {
+          tax: 12.88,
+          jurisdictions: [{
+            jurisdictionType: 'State',
+            jurisdictionName: 'SP',
+            tax: 12.88
+          }]
+        },
+        isc: {
+          tax: 0,
+          jurisdictions: [{
+            jurisdictionType: 'City',
+            jurisdictionName: 'Florianópolis',
+            tax: 0
+          }]
+        }
+      }
+    }
+  },
+  {
+    header: {
+      documentCode: '000013',
+      transactionType: 'Sale',
+      transactionDate: '2017-01-15',
+      currency: 'BRL',
+      companyLocation: '27227668000122',
+      location: locations[0],
+      entity: {
+        federalTaxId: '46.395.000/0001-39',
+        type: 'cityGovernment',
+        address: { cityName: 'São Paulo', state: 'SP' }
+      }
+    },
+    lines: [
+      {
+        numberOfItems: 2,
+        itemPrice: 45,
+        otherCostAmount: 10,
+        lineDiscount: 10,
+        itemCode: 'VENTILADOR-DIGITAL-001',
+        item: items[0],
+        calculatedTax: {
+          tax: 12.88,
+          CST: '34',
+          taxDetails: {
+            iec: {
+              jurisdictionType: 'Country',
+              jurisdictionName: 'Brasil',
+              taxType: 'IEC',
+              scenario: 'Calculation Exempt',
+              calcBase: 90,
+              rate: 0,
+              fact: 0,
+              tax: 0
+            },
+            ist: {
+              jurisdictionType: 'State',
+              jurisdictionName: 'SP',
+              taxType: 'IST',
+              scenario: 'Calculation Fixed',
+              calcBase: 100,
+              rate: 0.14,
+              fact: 0.08,
+              tax: 12.88
+            },
+            isc: {
+              jurisdictionType: 'City',
+              jurisdictionName: 'Florianópolis',
+              taxType: 'ISC',
+              scenario: 'Calculation Exempt',
+              calcBase: 90,
+              rate: 0,
+              fact: 0,
+              tax: 0
+            }
+          }
+        }
+      }
+    ],
+    calculatedTaxSummary: {
+      numberOfLines: 1,
+      subtotal: 80,
+      totalTax: 12.88,
+      grandTotal: 92.88,
+      taxByType: {
+        iec: {
+          tax: 0,
+          jurisdictions: [{
+            jurisdictionType: 'Country',
+            jurisdictionName: 'Brasil',
+            tax: 0
+          }]
+        },
+        ist: {
+          tax: 12.88,
+          jurisdictions: [{
+            jurisdictionType: 'State',
+            jurisdictionName: 'SP',
+            tax: 12.88
+          }]
+        },
+        isc: {
+          tax: 0,
+          jurisdictions: [{
+            jurisdictionType: 'City',
+            jurisdictionName: 'Florianópolis',
+            tax: 0
           }]
         }
       }

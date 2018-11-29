@@ -95,7 +95,10 @@ export function fetchTransactionsSuccess(
     reducer(state) {
       return {
         ...state,
-        transactionsCache: { isFetching: false, transactions }
+        transactionsCache: {
+          query: state.transactionsCache.query,
+          isFetching: false,
+          transactions }
       };
     }
   };

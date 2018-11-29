@@ -59,23 +59,23 @@ export function Transactions({ page, cache, onInit }: Props) {
                       </Col>
                       <Col lg="4">
                         CÓDIGO: {transaction.header.documentCode}<br />
-                        <b>RESUMO</b>
+                        <b>RESUMO</b><br />
                         {keyValueCurrency(
                           'SUBTOTAL:',
                           transaction.calculatedTaxSummary!.subtotal, transaction.header.currency
-                        )}
+                        )}<br />
                         {keyValueCurrency(
                           'IEC:',
                           transaction.calculatedTaxSummary!.taxByType.iec.tax, transaction.header.currency
-                        )}
+                        )}<br />
                         {keyValueCurrency(
                           'IST:',
                           transaction.calculatedTaxSummary!.taxByType.ist.tax, transaction.header.currency
-                        )}
+                        )}<br />
                         {keyValueCurrency(
                           'ISC:',
                           transaction.calculatedTaxSummary!.taxByType.isc.tax, transaction.header.currency
-                        )}
+                        )}<br />
                         {keyValueCurrency(
                           'TOTAL GERAL:',
                           transaction.calculatedTaxSummary!.grandTotal, transaction.header.currency
@@ -97,7 +97,7 @@ function keyValueCurrency(key: string, value: number, currency: string) {
     <span style={{ textAlign: 'left' }}>
       {key}
       <span style={{ float: 'right' }}>
-        {value.toLocaleString('pt-BR', { style: 'currency', currency })}
+        {value.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}
       </span>
     </span>
   );

@@ -37,6 +37,8 @@ describe('Transactions Store', () => {
       cache = state.transactionsCache;
       expect(cache.isFetching)
         .toBe(false);
+      expect(cache.query)
+        .toEqual(query);
       expect(cache.transactions!.length)
         .toBeGreaterThan(0);
     });
@@ -72,6 +74,8 @@ describe('Transactions Store', () => {
       cache = state.transactionsCache;
       expect(cache.isFetching)
         .toBe(false);
+      expect(cache.query)
+        .toEqual(query);
       expect(cache.transactions!.length)
         .toBeGreaterThan(0);
     });
