@@ -75,10 +75,14 @@ describe('Transaction Store', () => {
       expect(actions.length)
         .toBe(0);
     });
-/*
+
     it('if not same query, should fetch transaction', async () => {
-      const query: Partial<Header> = { companyLocation: '27227668000122' };
-      await store.dispatch(fetchTransactions(query));
+      query = {
+        companyLocation: transactions[1].header.companyLocation,
+        transactionDate: transactions[1].header.transactionDate,
+        documentCode: transactions[1].header.documentCode
+      };
+      await store.dispatch(fetchTransaction(query));
       let state = store.getState();
       const actions = store.getActions() as Action[];
       state = reducer(state, actions[0]);
@@ -93,9 +97,9 @@ describe('Transaction Store', () => {
         .toBe(false);
       expect(cache.query)
         .toEqual(query);
-      expect(cache.transaction!.length)
-        .toBeGreaterThan(0);
-    }); */
+      expect(cache.transaction)
+        .toBeTruthy();
+    });
   });
 /*
   describe('when cache is fetching', () => {
