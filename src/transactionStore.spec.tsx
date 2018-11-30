@@ -159,7 +159,7 @@ describe('Transaction Store', () => {
       expect(actions.length)
         .toBe(0);
     });
-/*
+
     it('if not same query, should fetch transaction', async () => {
       const query2 = {
         companyLocation: transactions[1].header.companyLocation,
@@ -183,6 +183,6 @@ describe('Transaction Store', () => {
         .toEqual(query2);
       expect(cache.transaction)
         .toBeTruthy();
-    });*/
+    });
   });
 });
