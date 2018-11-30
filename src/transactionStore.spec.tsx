@@ -4,9 +4,11 @@ import { State } from './State';
 import { Action, fetchTransaction } from './Actions';
 import { reducer } from './reducer';
 import { TransactionKey } from './models/Transaction';
+import { transactions } from './spec/testDB';
 
 let storeCreator: MockStoreCreator<State, ThunkDispatch<State, null, Action>>;
 let store: MockStoreEnhanced<State, ThunkDispatch<State, null, Action>>;
+let query: TransactionKey;
 
 describe('Transaction Store', () => {
   beforeAll(async () => {
@@ -23,7 +25,7 @@ describe('Transaction Store', () => {
     });
 
     it('should fetch transaction', async () => {
-      const query: TransactionKey = {
+      query = {
         companyLocation: '27227668000122',
         transactionDate: '2018-11-15',
         documentCode: '000011'
@@ -47,23 +49,33 @@ describe('Transaction Store', () => {
         .toBeTruthy();
     });
   });
-/*
+
   describe('when cache is present', () => {
     beforeEach(async () => {
+      const transaction = transactions[0];
+      query = {
+        companyLocation: transaction.header.companyLocation,
+        transactionDate: transaction.header.transactionDate,
+        documentCode: transaction.header.documentCode
+      };
       store = storeCreator({
         locationsCache: { isFetching: false },
-        transactionsCache: { isFetching: false, transactions, query: {} },
-        transactionCache: { isFetching: false }
+        transactionsCache: { isFetching: false },
+        transactionCache: {
+          isFetching: false,
+          transaction,
+          query
+        }
       });
     });
 
     it('if same query, should not fetch transaction', async () => {
-      await store.dispatch(fetchTransactions({}));
+      await store.dispatch(fetchTransaction(query));
       const actions = store.getActions() as Action[];
       expect(actions.length)
         .toBe(0);
     });
-
+/*
     it('if not same query, should fetch transaction', async () => {
       const query: Partial<Header> = { companyLocation: '27227668000122' };
       await store.dispatch(fetchTransactions(query));
@@ -83,9 +95,9 @@ describe('Transaction Store', () => {
         .toEqual(query);
       expect(cache.transaction!.length)
         .toBeGreaterThan(0);
-    });
+    }); */
   });
-
+/*
   describe('when cache is fetching', () => {
     beforeEach(async () => {
       store = storeCreator({
