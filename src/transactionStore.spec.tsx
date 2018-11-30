@@ -139,4 +139,50 @@ describe('Transaction Store', () => {
         .toBe(0);
     });
   });
+
+  describe('when error', () => {
+    beforeEach(async () => {
+      store = storeCreator({
+        locationsCache: { isFetching: false },
+        transactionsCache: { isFetching: false },
+        transactionCache: {
+          isFetching: false,
+          error: new Error('message'),
+          query
+        }
+      });
+    });
+
+    it('if same query, should not fetch transaction', async () => {
+      await store.dispatch(fetchTransaction(query));
+      const actions = store.getActions() as Action[];
+      expect(actions.length)
+        .toBe(0);
+    });
+/*
+    it('if not same query, should fetch transaction', async () => {
+      const query2 = {
+        companyLocation: transactions[1].header.companyLocation,
+        transactionDate: transactions[1].header.transactionDate,
+        documentCode: transactions[1].header.documentCode
+      };
+      await store.dispatch(fetchTransaction(query2));
+      let state = store.getState();
+      const actions = store.getActions() as Action[];
+      state = reducer(state, actions[0]);
+      let cache = state.transactionCache;
+      expect(cache.isFetching)
+        .toBe(true);
+      expect(cache.query)
+        .toEqual(query2);
+      state = reducer(state, actions[1]);
+      cache = state.transactionCache;
+      expect(cache.isFetching)
+        .toBe(false);
+      expect(cache.query)
+        .toEqual(query2);
+      expect(cache.transaction)
+        .toBeTruthy();
+    });*/
+  });
 });

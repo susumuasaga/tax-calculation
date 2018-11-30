@@ -66,7 +66,11 @@ export function fetchLocations(
 ): ThunkAction<Promise<void>, State, any, Action> {
   return async (dispatch, getState) => {
     const locationsCache = getState().locationsCache;
-    if (!locationsCache.isFetching && !locationsCache.locations) {
+    if (
+      !locationsCache.isFetching &&
+      !locationsCache.locations &&
+      !locationsCache.error
+    ) {
       dispatch(fetchLocationsStart());
       try {
         const res = await superagent.get(`${URL}/locations`);
@@ -141,7 +145,7 @@ export function fetchTransactions(
     if (
       !transactionsCache.isFetching &&
       (
-        !transactionsCache.transactions ||
+        (!transactionsCache.transactions && !transactionsCache.error) ||
         !_.isEqual(transactionsCache.query, query)
       )
     ) {
@@ -221,7 +225,7 @@ export function fetchTransaction(
     if (
       !transactionCache.isFetching &&
       (
-        !transactionCache.transaction ||
+        (!transactionCache.transaction && !transactionCache.error) ||
         !_.isEqual(transactionCache.query, query)
       )
     ) {
