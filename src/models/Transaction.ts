@@ -24,6 +24,15 @@ export interface Transaction {
 }
 
 /**
+ * Transaction key Interface.
+ */
+export interface TransactionKey {
+  companyLocation: string;
+  transactionDate: string;
+  documentCode: string;
+}
+
+/**
  * Header Interface
  */
 export interface Header {

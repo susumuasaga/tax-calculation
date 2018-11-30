@@ -26,7 +26,8 @@ describe('Transactions container', () => {
     beforeEach(() => {
       store = storeCreator({
         locationsCache: { isFetching: false },
-        transactionsCache: { isFetching: false }
+        transactionsCache: { isFetching: false },
+        transactionCache: { isFetching: false }
       });
       wrapper = mount(
         <Provider {...{ store }}>
@@ -59,7 +60,8 @@ describe('Transactions container', () => {
           isFetching: false,
           transactions,
           query: { companyLocation: '27227668000122' }
-        }
+        },
+        transactionCache: { isFetching: false }
       });
       wrapper = mount(
         <Provider {...{ store }}>

@@ -4,7 +4,7 @@ import * as _ from 'lodash';
 import { State } from './State';
 import { Location } from './models/Entity';
 import { ThunkAction } from 'redux-thunk';
-import { Transaction, Header } from './models/Transaction';
+import { Transaction, Header, TransactionKey } from './models/Transaction';
 
 export const URL = 'http://localhost:3000/api';
 
@@ -139,6 +139,86 @@ export function fetchTransactions(
         dispatch(fetchTransactionsSuccess(transactions));
       } catch (error) {
         dispatch(fetchTransactionsFailure(error));
+      }
+    }
+  };
+}
+
+/**
+ * Returns `Action` to start fetching a Transaction.
+ */
+export function fetchTransactionStart(query: TransactionKey): Action {
+  return {
+    type: 'FetchTransactionStart',
+    reducer(state) {
+      return { ...state, transactionCache: { isFetching: true, query } };
+    }
+  };
+}
+
+/**
+ * Return `Action` after successfully fetching Transaction.
+ */
+export function fetchTransactionSuccess(
+  transaction: Transaction
+): Action {
+  return {
+    type: 'FetchTransactionSuccess',
+    reducer(state) {
+      return {
+        ...state,
+        transactionCache: {
+          query: state.transactionCache.query,
+          isFetching: false,
+          transaction }
+      };
+    }
+  };
+}
+
+/**
+ * Return `Action` after failing to fetching Transaction.
+ */
+export function fetchTransactionFailure(error: any): Action {
+  return {
+    type: 'FetchTransactionFailure',
+    reducer(state) {
+      return { ...state, transactionCache: { isFetching: false, error } };
+    }
+  };
+}
+
+/**
+ * Return `ThunkAction` to fetch Transaction.
+ */
+export function fetchTransaction(
+  query: TransactionKey
+): ThunkAction<Promise<void>, State, null, Action> {
+  return async (dispatch, getState) => {
+    const transactionCache = getState().transactionCache;
+    if (
+      !transactionCache.isFetching &&
+      (
+        !transactionCache.transaction ||
+        !_.isEqual(transactionCache.query, query)
+      )
+    ) {
+      dispatch(fetchTransactionStart(query));
+      try {
+        const res = await superagent.get(`${URL}/transactions`)
+          .query(query);
+        const transactions = res.body as Transaction[];
+        if (transactions.length === 0) {
+          throw new Error(
+            `Transação não encontrada com
+companyLocation = ${query.companyLocation}
+transactionDate = ${query.transactionDate}
+documentCode = ${query.documentCode}`
+          );
+        }
+        dispatch(fetchTransactionSuccess(transactions[0]));
+      } catch (error) {
+        dispatch(fetchTransactionFailure(error));
       }
     }
   };
