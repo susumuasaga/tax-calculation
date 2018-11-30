@@ -101,21 +101,25 @@ describe('Transaction Store', () => {
         .toBeTruthy();
     });
   });
-/*
+
   describe('when cache is fetching', () => {
     beforeEach(async () => {
       store = storeCreator({
         locationsCache: { isFetching: false },
-        transactionsCache: { isFetching: true },
-        transactionCache: { isFetching: false }
+        transactionsCache: { isFetching: false },
+        transactionCache: { isFetching: true }
       });
     });
 
     it('should not fetch transaction', async () => {
-      await store.dispatch(fetchTransactions({}));
+      await store.dispatch(fetchTransaction({
+        companyLocation: transactions[1].header.companyLocation,
+        transactionDate: transactions[1].header.transactionDate,
+        documentCode: transactions[1].header.documentCode
+      }));
       const actions = store.getActions() as Action[];
       expect(actions.length)
         .toBe(0);
     });
-  });*/
+  });
 });
