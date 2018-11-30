@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Container, ListGroup, ListGroupItem, Row, Col, Breadcrumb, BreadcrumbItem } from 'reactstrap';
+import { Container, ListGroup, ListGroupItem, Row, Col, Breadcrumb, BreadcrumbItem, Alert } from 'reactstrap';
 import { LocationsCache } from '../State';
 import { Link } from 'react-router-dom';
 import { cityState } from './cityState';
@@ -16,14 +16,10 @@ export type Props = {
  */
 export function Locations({ cache, onInit }: Props) {
   onInit();
-  const isFetching = cache.isFetching;
   const locations = cache.locations;
+  const error = cache.error;
 
-  if (!locations) {
-    return (
-      <h2>Carregando...</h2>
-    );
-  } else {
+  if (locations) {
     return (
       <Container>
         <Breadcrumb>
@@ -33,7 +29,7 @@ export function Locations({ cache, onInit }: Props) {
         <p>
           Clique sobre uma linha para abrir as transações da empresa desejada.
         </p>
-        <ListGroup style={{ opacity: (isFetching ? 0.5 : 1) }}>
+        <ListGroup style={{ opacity: (cache.isFetching ? 0.5 : 1) }}>
           {
             locations.map((location, index) =>
               <ListGroupItem key={index}>
@@ -50,6 +46,19 @@ export function Locations({ cache, onInit }: Props) {
           }
         </ListGroup>
       </Container>
+    );
+  } else if (error) {
+    return (
+      <Alert color="danger">
+        <h2>Erro</h2>
+        <p>{error.message}</p>
+      </Alert>
+    );
+  } else {
+    return (
+      <Alert color="primary">
+        <h2>Carregando...</h2>;
+      </Alert>
     );
   }
 }

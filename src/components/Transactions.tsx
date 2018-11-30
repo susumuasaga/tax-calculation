@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Container, ListGroup, ListGroupItem, Pagination, PaginationItem, Breadcrumb, BreadcrumbItem } from 'reactstrap';
+import { Container, ListGroup, ListGroupItem, Pagination, PaginationItem, Breadcrumb, BreadcrumbItem, Alert } from 'reactstrap';
 import * as queryString from 'query-string';
 import { TransactionsCache } from '../State';
 import { Link } from 'react-router-dom';
@@ -20,15 +20,11 @@ let query: string;
  */
 export function Transactions({ page, cache, onInit }: Props) {
   onInit();
-  const isFetching = cache.isFetching;
   const transactions = cache.transactions;
+  const error = cache.error;
   query = queryString.stringify(cache.query!);
 
-  if (!transactions) {
-    return (
-      <h2>Carregando...</h2>
-    );
-  } else {
+  if (transactions) {
     const PAGE_SIZE = 10;
     const length = transactions.length;
     const start = (page - 1) * PAGE_SIZE;
@@ -47,7 +43,7 @@ export function Transactions({ page, cache, onInit }: Props) {
         <p>
           Clique sobre uma linha para abrir a transação desejada.
         </p>
-        <ListGroup style={{ opacity: (isFetching ? 0.5 : 1) }}>
+        <ListGroup style={{ opacity: (cache.isFetching ? 0.5 : 1) }}>
           {
             transactions.slice(start, end)
               .map((transaction, index) =>
@@ -81,6 +77,19 @@ export function Transactions({ page, cache, onInit }: Props) {
           </PaginationItem>
         </Pagination>
       </Container>
+    );
+  } else if (error) {
+    return (
+      <Alert color="danger">
+        <h2>Erro</h2>
+        <p>{error.message}</p>
+      </Alert>
+    );
+  } else {
+    return (
+      <Alert color="primary">
+        <h2>Carregando...</h2>;
+      </Alert>
     );
   }
 }

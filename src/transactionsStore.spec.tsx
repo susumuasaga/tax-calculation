@@ -18,7 +18,8 @@ describe('Transactions Store', () => {
     beforeEach(async () => {
       store = storeCreator({
         locationsCache: { isFetching: false },
-        transactionsCache: { isFetching: false }
+        transactionsCache: { isFetching: false },
+        transactionCache: { isFetching: false }
       });
     });
 
@@ -48,7 +49,8 @@ describe('Transactions Store', () => {
     beforeEach(async () => {
       store = storeCreator({
         locationsCache: { isFetching: false },
-        transactionsCache: { isFetching: false, transactions, query: {} }
+        transactionsCache: { isFetching: false, transactions, query: {} },
+        transactionCache: { isFetching: false }
       });
     });
 
@@ -85,7 +87,8 @@ describe('Transactions Store', () => {
     beforeEach(async () => {
       store = storeCreator({
         locationsCache: { isFetching: false },
-        transactionsCache: { isFetching: true }
+        transactionsCache: { isFetching: true },
+        transactionCache: { isFetching: false }
       });
     });
 

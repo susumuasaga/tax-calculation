@@ -7,7 +7,8 @@ import { Action } from './Actions';
 export function reducer(
   state: State = {
     locationsCache: { isFetching: false },
-    transactionsCache: { isFetching: false }
+    transactionsCache: { isFetching: false },
+    transactionCache: { isFetching: false }
   },
   action: Action
 ): State {
