@@ -16,6 +16,7 @@ export interface State {
 export interface LocationsCache {
   isFetching: boolean;
   locations?: Location[];
+  error?: Error;
 }
 
 /**
@@ -25,6 +26,7 @@ export interface TransactionsCache {
   isFetching: boolean;
   query?: Partial<Header>;
   transactions?: Transaction[];
+  error?: Error;
 }
 
 /**
@@ -34,4 +36,5 @@ export interface TransactionCache {
   isFetching: boolean;
   query?: TransactionKey;
   transaction?: Transaction;
+  error?: Error;
 }

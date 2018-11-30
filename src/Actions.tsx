@@ -43,11 +43,18 @@ export function fetchLocationsSuccess(locations: Location[]): Action {
 /**
  * Return `Action` after failing to fetching locations.
  */
-export function fetchLocationsFailure(error: any): Action {
+export function fetchLocationsFailure(error: Error): Action {
   return {
     type: 'FetchLocationsFailure',
     reducer(state) {
-      return { ...state, locationsCache: { isFetching: false, error } };
+      return {
+        ...state,
+        transactionCache: {
+          query: state.transactionCache.query,
+          isFetching: false,
+          error
+        }
+      };
     }
   };
 }
@@ -66,7 +73,7 @@ export function fetchLocations(
         const locations = res.body as Location[];
         dispatch(fetchLocationsSuccess(locations));
       } catch (error) {
-        dispatch(fetchLocationsFailure(error));
+        dispatch(fetchLocationsFailure(error as Error));
       }
     }
   };
@@ -107,11 +114,18 @@ export function fetchTransactionsSuccess(
 /**
  * Return `Action` after failing to fetching Transactions.
  */
-export function fetchTransactionsFailure(error: any): Action {
+export function fetchTransactionsFailure(error: Error): Action {
   return {
     type: 'FetchTransactionsFailure',
     reducer(state) {
-      return { ...state, transactionsCache: { isFetching: false, error } };
+      return {
+        ...state,
+        transactionCache: {
+          query: state.transactionCache.query,
+          isFetching: false,
+          error
+        }
+      };
     }
   };
 }
@@ -138,7 +152,7 @@ export function fetchTransactions(
         const transactions = res.body as Transaction[];
         dispatch(fetchTransactionsSuccess(transactions));
       } catch (error) {
-        dispatch(fetchTransactionsFailure(error));
+        dispatch(fetchTransactionsFailure(error as Error));
       }
     }
   };
@@ -170,7 +184,8 @@ export function fetchTransactionSuccess(
         transactionCache: {
           query: state.transactionCache.query,
           isFetching: false,
-          transaction }
+          transaction
+        }
       };
     }
   };
@@ -179,11 +194,18 @@ export function fetchTransactionSuccess(
 /**
  * Return `Action` after failing to fetching Transaction.
  */
-export function fetchTransactionFailure(error: any): Action {
+export function fetchTransactionFailure(error: Error): Action {
   return {
     type: 'FetchTransactionFailure',
     reducer(state) {
-      return { ...state, transactionCache: { isFetching: false, error } };
+      return {
+        ...state,
+        transactionCache: {
+          query: state.transactionCache.query,
+          isFetching: false,
+          error
+        }
+      };
     }
   };
 }
@@ -218,7 +240,7 @@ documentCode = ${query.documentCode}`
         }
         dispatch(fetchTransactionSuccess(transactions[0]));
       } catch (error) {
-        dispatch(fetchTransactionFailure(error));
+        dispatch(fetchTransactionFailure(error as Error));
       }
     }
   };
