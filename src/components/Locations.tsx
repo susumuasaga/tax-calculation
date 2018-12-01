@@ -5,7 +5,7 @@ import { Link } from 'react-router-dom';
 import { cityState } from './cityState';
 
 export type Props = {
-  cache: LocationsCache;
+  locationsCache: LocationsCache;
   onInit(): void;
 };
 
@@ -14,10 +14,10 @@ export type Props = {
  * Input locations cache.
  * Output onInit() called at the start.
  */
-export function Locations({ cache, onInit }: Props) {
+export function Locations({ locationsCache, onInit }: Props) {
   onInit();
-  const locations = cache.locations;
-  const error = cache.error;
+  const locations = locationsCache.locations;
+  const error = locationsCache.error;
 
   if (locations) {
     return (
@@ -29,15 +29,15 @@ export function Locations({ cache, onInit }: Props) {
         <p>
           Clique sobre uma linha para abrir as transações da empresa desejada.
         </p>
-        <ListGroup style={{ opacity: (cache.isFetching ? 0.5 : 1) }}>
+        <ListGroup style={{ opacity: (locationsCache.isFetching ? 0.5 : 1) }}>
           {
             locations.map((location, index) =>
               <ListGroupItem key={index}>
                 <Link to={`/transactions?companyLocation=${location.code}`}>
                   <Row>
-                    <Col md="3">{location.email}</Col>
                     <Col md="3">{location.federalTaxId}</Col>
                     <Col md="3">{cityState(location)}</Col>
+                    <Col md="3">{location.email}</Col>
                     <Col md="3">{location.address.phone}</Col>
                   </Row>
                 </Link>

@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "await-to-js": "^2.1.1",
     "body-parser": "^1.18.3",
     "bootstrap": "^4.1.3",
     "enzyme": "^3.7.0",
@@ -32,11 +33,12 @@
   "scripts": {
     "start": "react-scripts-ts start",
     "build": "react-scripts-ts build",
-    "test": "react-scripts-ts test --env=jsdom",
+    "test-front": "react-scripts-ts test --env=jsdom",
     "eject": "react-scripts-ts eject",
     "watch": "gulp4 watch",
     "compile": "gulp4 compile",
-    "coverage": "gulp4 coverage"
+    "coverage": "gulp4 coverage",
+    "test-back": "gulp4 test"
   },
   "devDependencies": {
     "@types/enzyme": "^3.1.15",

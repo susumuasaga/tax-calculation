@@ -91,7 +91,7 @@ export interface Line {
   /**
    * Item Price
    */
-  itemPrice?: number;
+  itemPrice: number;
   /**
    * Amount
    */

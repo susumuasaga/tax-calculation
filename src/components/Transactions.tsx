@@ -5,9 +5,11 @@ import { TransactionsCache } from '../State';
 import { Link } from 'react-router-dom';
 import { TransactionHeader } from './TransactionHeader';
 
+export const PAGE_SIZE = 10;
+
 export type Props = {
   page: number;
-  cache: TransactionsCache;
+  transactionsCache: TransactionsCache;
   onInit(): void;
 };
 
@@ -18,14 +20,13 @@ let query: string;
  * Input transactions cache.
  * Output onInit() Called at the start.
  */
-export function Transactions({ page, cache, onInit }: Props) {
+export function Transactions({ page, transactionsCache, onInit }: Props) {
   onInit();
-  const transactions = cache.transactions;
-  const error = cache.error;
-  query = queryString.stringify(cache.query!);
+  const transactions = transactionsCache.transactions;
+  const error = transactionsCache.error;
+  query = queryString.stringify(transactionsCache.query!);
 
   if (transactions) {
-    const PAGE_SIZE = 10;
     const length = transactions.length;
     const start = (page - 1) * PAGE_SIZE;
     const end = Math.min(page * PAGE_SIZE, length);
@@ -41,9 +42,9 @@ export function Transactions({ page, cache, onInit }: Props) {
         </Breadcrumb>
         <h2>Transações {start + 1} a {end} de {transactions.length}</h2>
         <p>
-          Clique sobre uma linha para abrir a transação desejada.
+          Clique sobre uma linha para abrir os detalhes da transação.
         </p>
-        <ListGroup style={{ opacity: (cache.isFetching ? 0.5 : 1) }}>
+        <ListGroup style={{ opacity: (transactionsCache.isFetching ? 0.5 : 1) }}>
           {
             transactions.slice(start, end)
               .map((transaction, index) =>

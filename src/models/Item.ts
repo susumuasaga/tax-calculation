@@ -6,11 +6,11 @@ export interface Item {
    * Company ID
    * Format UUID
    */
-  companyId?: string;
+  companyId: string;
   /**
    * ERP Code
    */
-  code?: string;
+  code: string;
   /**
    * Item Description
    */
@@ -22,7 +22,7 @@ export interface Item {
   /**
    * Federal Tax
    */
-  federalTax?: FederalTax;
+  federalTax: FederalTax;
 }
 
 /**

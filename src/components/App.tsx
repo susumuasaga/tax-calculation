@@ -15,7 +15,7 @@ export function App() {
     <Provider {...{ store }}>
       <BrowserRouter>
         <Switch>
-          <Route exact path="/" render={redirect('/locations')} />
+          <Route exact path="/" render={redirectTo('/locations')} />
           <Route path="/locations" component={Locations} />
           <Route path="/transactions" component={Transactions} />
         </Switch>
@@ -24,6 +24,6 @@ export function App() {
   );
 }
 
-function redirect(to: string) {
-  return () => <Redirect to={to} />;
+function redirectTo(url: string) {
+  return () => <Redirect to={url} />;
 }

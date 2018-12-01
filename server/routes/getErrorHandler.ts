@@ -12,7 +12,7 @@ export function getErrorHandler(logger: Logger): ErrorRequestHandler {
     logger.error(err);
     delete err.stack; // don't send error stack to client
     let statusCode = err.statusCode;
-    if (statusCode === undefined) {
+    if (!statusCode) {
       statusCode = INTERNAL_SERVER_ERROR;
     }
     res.status(statusCode)

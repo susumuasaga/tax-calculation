@@ -6,7 +6,7 @@ function getErrorHandler(logger) {
         logger.error(err);
         delete err.stack;
         let statusCode = err.statusCode;
-        if (statusCode === undefined) {
+        if (!statusCode) {
             statusCode = http_status_1.INTERNAL_SERVER_ERROR;
         }
         res.status(statusCode)

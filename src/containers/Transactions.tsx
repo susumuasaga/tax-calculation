@@ -14,7 +14,7 @@ function mapStateToProps(
   const query = queryString.parse(search);
   const page = Number(query.page || '1');
 
-  return { cache: transactionsCache, page };
+  return { transactionsCache, page };
 }
 
 function mapDispatchToProps(
@@ -28,9 +28,8 @@ function mapDispatchToProps(
 }
 
 /**
- * Transactions component.
- * Input locations.
- * Output onClick(index).
+ * Transactions container.
+ * Props = { location: { search: string } }
  */
 export const Transactions = connect(
   mapStateToProps,

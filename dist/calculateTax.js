@@ -56,15 +56,11 @@ function calculateTax(t) {
             taxDetails
         };
         line.calculatedTax = calculatedTax;
-        amount = (line.lineAmount !== undefined) ?
-            line.lineAmount :
-            currencyRound(line.itemPrice * line.numberOfItems);
-        otherCosts = (line.otherCostAmount !== undefined) ?
-            line.otherCostAmount :
-            0;
-        discount = (line.lineDiscount !== undefined) ?
-            line.lineDiscount :
-            0;
+        const numberOfItems = line.numberOfItems || 1;
+        amount = line.lineAmount ||
+            currencyRound(line.itemPrice * numberOfItems);
+        otherCosts = line.otherCostAmount || 0;
+        discount = line.lineDiscount || 0;
         calculatedTaxSummary.numberOfLines += 1;
         calculatedTaxSummary.subtotal = currencySum(calculatedTaxSummary.subtotal, amount, -discount);
         calculateCST();

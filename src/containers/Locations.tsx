@@ -5,9 +5,7 @@ import { ThunkDispatch } from 'redux-thunk';
 import { connect } from 'react-redux';
 
 function mapStateToProps({ locationsCache }: State): Partial<Component.Props> {
-  return {
-    cache: locationsCache
-  };
+  return { locationsCache };
 }
 
 function mapDispatchToProps(dispatch: ThunkDispatch<State, any, Action>):
@@ -18,9 +16,7 @@ function mapDispatchToProps(dispatch: ThunkDispatch<State, any, Action>):
 }
 
 /**
- * Locations component.
- * Input locations.
- * Output onClick(index).
+ * Locations container.
  */
 export const Locations = connect(
   mapStateToProps,
