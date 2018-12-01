@@ -237,9 +237,9 @@ export function fetchTransaction(
         if (transactions.length === 0) {
           throw new Error(
             `Transação não encontrada com
-companyLocation = ${query.companyLocation}
-transactionDate = ${query.transactionDate}
-documentCode = ${query.documentCode}`
+companyLocation = '${query.companyLocation}'
+transactionDate = '${query.transactionDate}'
+documentCode = '${query.documentCode}'`
           );
         }
         dispatch(fetchTransactionSuccess(transactions[0]));

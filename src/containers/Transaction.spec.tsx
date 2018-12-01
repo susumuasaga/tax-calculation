@@ -35,7 +35,7 @@ describe('Transaction container', () => {
     search = `?${queryString.stringify(query)}`;
   });
 
-  describe('when transaction cache is empty', () => {
+  describe('when the transaction is not in cache', () => {
     beforeEach(() => {
 
       store = storeCreator({
@@ -64,7 +64,7 @@ describe('Transaction container', () => {
     });
   });
 
-  describe('when transaction is loaded', () => {
+  describe('when the transaction is in cache', () => {
     beforeEach(() => {
       store = storeCreator({
         locationsCache: { isFetching: false },
@@ -84,12 +84,46 @@ describe('Transaction container', () => {
       );
     });
 
-    it('should present transaction', () => {
+    it('should present the transaction', () => {
       const actions = store.getActions() as Action[];
       expect(actions.length)
         .toBe(0);
       expect(wrapper.find(ListGroupItem).length)
         .toBe(transaction.lines.length + 1);
+    });
+  });
+
+  describe('when error is reported', () => {
+    beforeEach(() => {
+      store = storeCreator({
+        locationsCache: { isFetching: false },
+        transactionsCache: { isFetching: false },
+        transactionCache: {
+          isFetching: false,
+          error: new Error(
+            `Transação não encontrada com
+companyLocation = '12345678000123'
+transactionDate = '2018-11-15'
+documentCode = '000001'`
+          ),
+          query
+        }
+      });
+      wrapper = mount(
+        <Provider {...{ store }}>
+          <MemoryRouter>
+            <Transaction {...{ location: { search } }} />
+          </MemoryRouter>
+        </Provider>
+      );
+    });
+
+    it('should display error', () => {
+      const actions = store.getActions() as Action[];
+      expect(actions.length)
+        .toBe(0);
+      expect(wrapper.containsMatchingElement(<h2>Erro</h2>))
+        .toBe(true);
     });
   });
 });
