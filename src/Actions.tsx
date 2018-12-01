@@ -13,7 +13,7 @@ export const URL = 'http://localhost:3000/api';
  */
 export interface Action extends Redux.Action {
   type: string;
-  reducer(state: State): State;
+  reducer?(state: State): State;
 }
 
 /**
@@ -49,7 +49,7 @@ export function fetchLocationsFailure(error: Error): Action {
     reducer(state) {
       return {
         ...state,
-        transactionCache: {
+        locationsCache: {
           query: state.transactionCache.query,
           isFetching: false,
           error
@@ -124,7 +124,7 @@ export function fetchTransactionsFailure(error: Error): Action {
     reducer(state) {
       return {
         ...state,
-        transactionCache: {
+        transactionsCache: {
           query: state.transactionCache.query,
           isFetching: false,
           error

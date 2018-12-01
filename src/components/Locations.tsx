@@ -53,7 +53,7 @@ export function Locations({ locationsCache, onInit }: Props) {
                   <Link to={`/transactions?companyLocation=${location.code}`}>
                     <Row>
                       <Col md="3">{location.federalTaxId}</Col>
-                      <Col md="3">{cityState(location)}</Col>
+                      <Col md="3">{cityState(location.address)}</Col>
                       <Col md="3">{location.email}</Col>
                       <Col md="3">{location.address.phone}</Col>
                     </Row>

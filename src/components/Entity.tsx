@@ -15,7 +15,7 @@ export function Entity({ title, entity }: Props) {
       {entity &&
         <div>
           {entity.federalTaxId}<br />
-          {cityState(entity)}<br />
+          {cityState(entity.address)}<br />
           {entity.taxRegime && <span>{entity.taxRegime}<br /></span>}
           {entity.type && <span>{entity.type}<br /></span>}
           {entity.suframa && `Suframa: ${entity.suframa}`}
