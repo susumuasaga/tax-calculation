@@ -23,7 +23,10 @@ export function Line({ line, currency = 'BRL' }: Props) {
             <span>
               <b>Quantidade: </b>{line.numberOfItems}<br />
             </span>}
-          <b>Preço unitário: </b>{line.itemPrice}<br />
+          <b>Preço unitário: </b>{line.itemPrice.toLocaleString(
+            'pt-BR',
+            { style: 'currency', currency }
+          )}<br />
           <b>CST: </b>{line.calculatedTax!.CST}
         </Col>
         <Col lg="4">

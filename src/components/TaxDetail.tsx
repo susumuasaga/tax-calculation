@@ -12,10 +12,19 @@ export function TaxDetail({ taxDetail, currency = 'BRL' }: Props) {
       <th scope="row">{taxDetail.taxType}</th>
       <td>{taxDetail.jurisdictionName}</td>
       <td>{taxDetail.scenario}</td>
-      <td>{taxDetail.calcBase}</td>
-      <td>{`${taxDetail.rate * 100}%`}</td>
-      <td>{`${(taxDetail.fact || 0) * 100}%`}</td>
-      <td>{
+      <td align="right">{taxDetail.calcBase.toLocaleString(
+        'pt-BR',
+        { style: 'currency', currency }
+      )}</td>
+      <td align="right">{`${(taxDetail.rate * 100).toLocaleString(
+        'pt-BR',
+        {maximumFractionDigits: 2}
+      )}%`}</td>
+      <td align="right">{`${((taxDetail.fact || 0) * 100).toLocaleString(
+        'pt-BR',
+        {maximumFractionDigits: 2}
+      )}%`}</td>
+      <td align="right">{
         taxDetail.tax.toLocaleString('pt-BR', { style: 'currency', currency })
       }</td>
     </tr>

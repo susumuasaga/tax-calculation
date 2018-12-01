@@ -4,6 +4,7 @@ import { Locations } from '../containers/Locations';
 import { configureStore } from '../configureStore';
 import { Provider } from 'react-redux';
 import { Transactions } from '../containers/Transactions';
+import { Transaction } from '../containers/Transaction';
 
 const store = configureStore();
 
@@ -18,6 +19,7 @@ export function App() {
           <Route exact path="/" render={redirectTo('/locations')} />
           <Route path="/locations" component={Locations} />
           <Route path="/transactions" component={Transactions} />
+          <Route path="/transaction" component={Transaction} />
         </Switch>
       </BrowserRouter>
     </Provider>

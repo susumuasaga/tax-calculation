@@ -27,6 +27,7 @@ export const transactionUdts = {
   },
   calculated_tax: {
     taxDetails: 'frozen<tax_details>',
+    CST: 'text',
     tax: 'double'
   },
   line: {
