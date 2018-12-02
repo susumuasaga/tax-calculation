@@ -11,7 +11,7 @@ import { ItemDoc } from './models/Item';
 import { getErrorHandler } from './routes/getErrorHandler';
 import { getLocationsRouter } from './routes/getLocationsRouter';
 
-const PORT = 80;
+const PORT = 3000;
 
 start();
 console.log(`Server listening at port ${PORT}.`);

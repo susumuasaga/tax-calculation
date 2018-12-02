@@ -21,12 +21,14 @@ const morgan_1 = __importDefault(require("morgan"));
 const getErrorHandler_1 = require("../../routes/getErrorHandler");
 const getLocationsRouter_1 = require("../../routes/getLocationsRouter");
 const create_1 = require("./create");
-const URL_ROOT = 'http://localhost:3000';
+const PORT = 3000;
+let urlRoot;
 let server;
 let fakeLogger;
 let locationModel;
 describe('Locations route', () => {
     beforeAll(async () => {
+        urlRoot = `http://localhost:${PORT}`;
         const app = express_1.default();
         app.use(body_parser_1.default.json());
         app.use(morgan_1.default('dev'));
@@ -35,7 +37,7 @@ describe('Locations route', () => {
         app.use('/locations', getLocationsRouter_1.getLocationsRouter(locationModel));
         fakeLogger = new FakeLogger_1.FakeLogger();
         app.use(getErrorHandler_1.getErrorHandler(fakeLogger));
-        server = app.listen(3000);
+        server = app.listen(PORT);
     });
     afterAll(() => {
         server.close();
@@ -45,7 +47,7 @@ describe('Locations route', () => {
         await create_1.create(locationModel, testDB_1.locations);
     });
     it('can retrieve all locations', async () => {
-        const res = await superagent.get(`${URL_ROOT}/locations`);
+        const res = await superagent.get(`${urlRoot}/locations`);
         expect(res.status)
             .toBe(http_status_1.default.OK);
         const actual = res.body;

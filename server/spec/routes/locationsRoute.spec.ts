@@ -13,13 +13,16 @@ import { getErrorHandler } from '../../routes/getErrorHandler';
 import { getLocationsRouter } from '../../routes/getLocationsRouter';
 import { create } from './create';
 
-const URL_ROOT = 'http://localhost:3000';
+const PORT = 3000;
+
+let urlRoot: string;
 let server: http.Server;
 let fakeLogger: FakeLogger;
 let locationModel: Model<LocationDoc>;
 
 describe('Locations route', () => {
   beforeAll(async () => {
+    urlRoot = `http://localhost:${PORT}`;
     const app = express();
     app.use(bodyParser.json());
     app.use(morgan('dev'));
@@ -31,7 +34,7 @@ describe('Locations route', () => {
     );
     fakeLogger = new FakeLogger();
     app.use(getErrorHandler(fakeLogger));
-    server = app.listen(3000);
+    server = app.listen(PORT);
   });
 
   afterAll(() => {
@@ -44,7 +47,7 @@ describe('Locations route', () => {
   });
 
   it('can retrieve all locations', async () => {
-    const res = await superagent.get(`${URL_ROOT}/locations`);
+    const res = await superagent.get(`${urlRoot}/locations`);
     expect(res.status)
       .toBe(httpStatus.OK);
     const actual = res.body as Location[];

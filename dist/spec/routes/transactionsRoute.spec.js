@@ -21,7 +21,8 @@ const body_parser_1 = __importDefault(require("body-parser"));
 const morgan_1 = __importDefault(require("morgan"));
 const getErrorHandler_1 = require("../../routes/getErrorHandler");
 const create_1 = require("./create");
-const URL_ROOT = 'http://localhost:3000';
+const PORT = 3000;
+let urlRoot;
 let server;
 let fakeLogger;
 let transactionModel;
@@ -29,6 +30,7 @@ let locationModel;
 let itemModel;
 describe('Transactions route', () => {
     beforeAll(async () => {
+        urlRoot = `http://localhost:${PORT}`;
         const app = express_1.default();
         app.use(body_parser_1.default.json());
         app.use(morgan_1.default('dev'));
@@ -39,7 +41,7 @@ describe('Transactions route', () => {
         app.use('/transactions', getTransactionsRouter_1.getTransactionsRouter(transactionModel, locationModel, itemModel));
         fakeLogger = new FakeLogger_1.FakeLogger();
         app.use(getErrorHandler_1.getErrorHandler(fakeLogger));
-        server = app.listen(3000);
+        server = app.listen(PORT);
     });
     afterAll(() => {
         server.close();
@@ -79,7 +81,7 @@ describe('Transactions route', () => {
                 }
             ]
         };
-        const url = `${URL_ROOT}/transactions`;
+        const url = `${urlRoot}/transactions`;
         const res = await superagent.post(url)
             .send(given);
         expect(res.status)
@@ -99,7 +101,7 @@ describe('Transactions route', () => {
         fakeLogger.clearErrorLog();
         await (async () => {
             try {
-                await superagent.post(`${URL_ROOT}/transactions`);
+                await superagent.post(`${urlRoot}/transactions`);
                 fail('No transaction, but error not caught.');
             }
             catch (err) {
@@ -134,7 +136,7 @@ describe('Transactions route', () => {
         fakeLogger.clearErrorLog();
         await (async () => {
             try {
-                await superagent.post(`${URL_ROOT}/transactions`)
+                await superagent.post(`${urlRoot}/transactions`)
                     .send(given);
                 fail('Invalid transaction, but error not caught.');
             }
@@ -150,7 +152,7 @@ describe('Transactions route', () => {
     });
     it('can retrieve transaction by location.code', async () => {
         const locationCode = '27227668000122';
-        const res = await superagent.get(`${URL_ROOT}/transactions?companyLocation=${locationCode}`);
+        const res = await superagent.get(`${urlRoot}/transactions?companyLocation=${locationCode}`);
         expect(res.status)
             .toBe(http_status_1.default.OK);
         const actual = res.body;
@@ -164,7 +166,7 @@ describe('Transactions route', () => {
         }
     });
     it('can retrieve all transactions', async () => {
-        const res = await superagent.get(`${URL_ROOT}/transactions`);
+        const res = await superagent.get(`${urlRoot}/transactions`);
         expect(res.status)
             .toBe(http_status_1.default.OK);
         const actual = res.body;

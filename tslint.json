@@ -135,7 +135,7 @@
         "methods": { "privacies": ["public", "protected"] }
       }
     ],
-    "export-name": true,
+    "export-name": false,
     "file-name-casing": true,
     "function-name": false,
     "import-name": true,

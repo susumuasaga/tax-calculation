@@ -16,7 +16,9 @@ import { HttpError } from '../../httpErrors';
 import { getErrorHandler } from '../../routes/getErrorHandler';
 import { create } from './create';
 
-const URL_ROOT = 'http://localhost:3000';
+const PORT = 3000;
+
+let urlRoot: string;
 let server: http.Server;
 let fakeLogger: FakeLogger;
 let transactionModel: Model<TransactionDoc>;
@@ -25,6 +27,7 @@ let itemModel: Model<ItemDoc>;
 
 describe('Transactions route', () => {
   beforeAll(async () => {
+    urlRoot = `http://localhost:${PORT}`;
     const app = express();
     app.use(bodyParser.json());
     app.use(morgan('dev'));
@@ -38,7 +41,7 @@ describe('Transactions route', () => {
     );
     fakeLogger = new FakeLogger();
     app.use(getErrorHandler(fakeLogger));
-    server = app.listen(3000);
+    server = app.listen(PORT);
   });
 
   afterAll(() => {
@@ -82,7 +85,7 @@ describe('Transactions route', () => {
         }
       ]
     };
-    const url = `${URL_ROOT}/transactions`;
+    const url = `${urlRoot}/transactions`;
     const res = await superagent.post(url)
       .send(given);
     expect(res.status)
@@ -106,7 +109,7 @@ describe('Transactions route', () => {
     fakeLogger.clearErrorLog();
     await (async () => {
       try {
-        await superagent.post(`${URL_ROOT}/transactions`);
+        await superagent.post(`${urlRoot}/transactions`);
         fail('No transaction, but error not caught.');
       } catch (err) {
         // Error should have been logged on server side
@@ -145,7 +148,7 @@ describe('Transactions route', () => {
     fakeLogger.clearErrorLog();
     await (async () => {
       try {
-        await superagent.post(`${URL_ROOT}/transactions`)
+        await superagent.post(`${urlRoot}/transactions`)
           .send(given);
         fail('Invalid transaction, but error not caught.');
       } catch (err) {
@@ -165,7 +168,7 @@ describe('Transactions route', () => {
   it('can retrieve transaction by location.code', async () => {
     const locationCode = '27227668000122';
     const res = await superagent.get(
-      `${URL_ROOT}/transactions?companyLocation=${locationCode}`
+      `${urlRoot}/transactions?companyLocation=${locationCode}`
     );
     expect(res.status)
       .toBe(httpStatus.OK);
@@ -185,7 +188,7 @@ describe('Transactions route', () => {
   });
 
   it('can retrieve all transactions', async () => {
-    const res = await superagent.get(`${URL_ROOT}/transactions`);
+    const res = await superagent.get(`${urlRoot}/transactions`);
     expect(res.status)
       .toBe(httpStatus.OK);
     const actual = res.body as Transaction[];

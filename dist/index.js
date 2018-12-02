@@ -11,8 +11,9 @@ const getModelInstances_1 = require("./getModelInstances");
 const getTransactionsRouter_1 = require("./routes/getTransactionsRouter");
 const getErrorHandler_1 = require("./routes/getErrorHandler");
 const getLocationsRouter_1 = require("./routes/getLocationsRouter");
+const PORT = 3000;
 start();
-console.log('Server listening at port 3000.');
+console.log(`Server listening at port ${PORT}.`);
 async function start() {
     const app = express_1.default();
     app.use(body_parser_1.default.json());
@@ -38,5 +39,5 @@ async function start() {
         ]
     });
     app.use(getErrorHandler_1.getErrorHandler(logger));
-    app.listen(3000);
+    app.listen(PORT);
 }
