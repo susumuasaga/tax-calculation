@@ -11,8 +11,10 @@ import { ItemDoc } from './models/Item';
 import { getErrorHandler } from './routes/getErrorHandler';
 import { getLocationsRouter } from './routes/getLocationsRouter';
 
+const PORT = 80;
+
 start();
-console.log('Server listening at port 3000.');
+console.log(`Server listening at port ${PORT}.`);
 
 async function start(): Promise<void> {
   const app = express();
@@ -52,5 +54,5 @@ async function start(): Promise<void> {
   });
   app.use(getErrorHandler(logger));
 
-  app.listen(3000);
+  app.listen(PORT);
 }

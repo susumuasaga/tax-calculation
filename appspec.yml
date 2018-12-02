@@ -24,13 +24,13 @@ os: linux
 #   may cause associated deployments to fail.
 files:
   - source: /build
-    destination: /build
+    destination: /home/ec2-user/build
   - source: /dist
-    destination: /dist
+    destination: /home/ec2-user/dist
   - source: package.json
-    destination: package.json
+    destination: /home/ec2-user/package.json
   - source: gulpfile.js
-    destination: gulpfile.js
+    destination: /home/ec2-user/gulpfile.js
 # For deployments to Amazon Linux, Ubuntu Server, or RHEL instances,
 #   you can specify a "permissions" 
 #   section here that describes special permissions to apply to the files 
