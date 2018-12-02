@@ -24,13 +24,13 @@ os: linux
 #   may cause associated deployments to fail.
 files:
   - source: /build
-    destination: /home/ec2-user/build
+    destination: /home/ec2-user/tax-calculation/build
   - source: /dist
-    destination: /home/ec2-user/dist
+    destination: /home/ec2-user/tax-calculation/dist
   - source: package.json
-    destination: /home/ec2-user/package.json
+    destination: /home/ec2-user/tax-calculation/package.json
   - source: gulpfile.js
-    destination: /home/ec2-user/gulpfile.js
+    destination: /home/ec2-user/tax-calculation/gulpfile.js
 # For deployments to Amazon Linux, Ubuntu Server, or RHEL instances,
 #   you can specify a "permissions" 
 #   section here that describes special permissions to apply to the files 
