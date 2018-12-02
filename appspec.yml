@@ -28,9 +28,9 @@ files:
   - source: /dist
     destination: /home/ec2-user/tax-calculation/dist
   - source: package.json
-    destination: /home/ec2-user/tax-calculation/package.json
+    destination: /home/ec2-user/tax-calculation
   - source: gulpfile.js
-    destination: /home/ec2-user/tax-calculation/gulpfile.js
+    destination: /home/ec2-user/tax-calculation
 # For deployments to Amazon Linux, Ubuntu Server, or RHEL instances,
 #   you can specify a "permissions" 
 #   section here that describes special permissions to apply to the files 
