@@ -6,7 +6,7 @@ import { Location } from './models/Entity';
 import { ThunkAction } from 'redux-thunk';
 import { Transaction, Header, TransactionKey } from './models/Transaction';
 
-export const URL = 'http://localhost:3000/api';
+export const URL = '/api';
 
 /**
  * General Action this application
