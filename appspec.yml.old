@@ -1,30 +1,17 @@
-{
-  "version": 0.0,
-  "files": [{
-    "source": "/build",
-    "destination": "/home/ec2-user/tax-calculation/build"
-  },
-  {
-    "source": "/dist",
-    "destination": "/home/ec2-user/tax-calculation/dist"
-  },
-  {
-    "source": "package.json",
-    "destination": "/home/ec2-user/tax-calculation"
-  },
-  {}]
-}
 version: 0.0
 os: linux 
 files:
   - source: /build
-    
-  - 
+    destination: /home/ec2-user/tax-calculation/build
+  - source: /dist
+    destination: /home/ec2-user/tax-calculation/dist
+  - source: /scripts
+    destination: /home/ec2-user/tax-calculation/scripts
   - source: package.json
     destination: /home/ec2-user/tax-calculation
   - source: gulpfile.js
     destination: /home/ec2-user/tax-calculation
-  AplicationStop:
+  ApplicationStop:
     - location: scripts/stop_server.sh
   BeforeInstall:
     - location: scripts/install_forever.sh
