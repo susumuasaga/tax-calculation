@@ -69,20 +69,19 @@ files:
 # During the ApplicationStop deployment lifecycle event, run the commands 
 #   in the script specified in "location" starting from the root of the 
 #   revision's file bundle.
-#  AplicationStop:
-#    - location: scripts/stop_servers.sh
+  AplicationStop:
+    - location: scripts/stop_server.sh
 # During the BeforeInstall deployment lifecycle event, run the commands 
 #   in the script specified in "location".
-#  BeforeInstall:
-#    - location: scripts/start_cassandra.sh
+
 # During the AfterInstall deployment lifecycle event, run the commands 
 #   in the script specified in "location".
-#  AfterInstall:
-#    - location: scripts/install_dependencies.sh
+  AfterInstall:
+    - location: scripts/install_dependencies.sh
+    - location: scripts/test_backend.sh
 # During the ApplicationStart deployment lifecycle event, run the commands 
 #   in the script specified in "location".
-#  ApplicationStart:
-#    - location: scripts/start_server.sh 
-#    - location: scripts/test_backend.sh
+  ApplicationStart:
+    - location: scripts/start_server.sh 
 # During the ValidateService deployment lifecycle event, run the commands 
 #   in the script specified in "location".
