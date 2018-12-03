@@ -5,6 +5,10 @@ declare module 'express-cassandra' {
       deleteAsync(options?: DataManagementOptions): Promise<void>;
     }
 
+    function closeAsync(): Promise<void>;
+
+    function close(cb: (error: any) => void): void;
+
     function loadSchema<T extends Document>(
       name: string,
       schema: SchemaDefinition

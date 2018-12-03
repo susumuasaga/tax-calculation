@@ -1,7 +1,4 @@
 "use strict";
-var __importDefault = (this && this.__importDefault) || function (mod) {
-    return (mod && mod.__esModule) ? mod : { "default": mod };
-};
 var __importStar = (this && this.__importStar) || function (mod) {
     if (mod && mod.__esModule) return mod;
     var result = {};
@@ -9,7 +6,11 @@ var __importStar = (this && this.__importStar) || function (mod) {
     result["default"] = mod;
     return result;
 };
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
+const models = __importStar(require("express-cassandra"));
 const express_1 = __importDefault(require("express"));
 const http_status_1 = __importDefault(require("http-status"));
 const superagent = __importStar(require("superagent"));
@@ -39,8 +40,9 @@ describe('Locations route', () => {
         app.use(getErrorHandler_1.getErrorHandler(fakeLogger));
         server = app.listen(PORT);
     });
-    afterAll(() => {
+    afterAll(async () => {
         server.close();
+        await models.closeAsync();
     });
     beforeEach(async () => {
         await locationModel.truncateAsync();

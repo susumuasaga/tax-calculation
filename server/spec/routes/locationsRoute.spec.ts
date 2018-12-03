@@ -1,4 +1,4 @@
-import { Model } from 'express-cassandra';
+import * as models from 'express-cassandra';
 import express from 'express';
 import * as http from 'http';
 import httpStatus from 'http-status';
@@ -18,7 +18,7 @@ const PORT = 3000;
 let urlRoot: string;
 let server: http.Server;
 let fakeLogger: FakeLogger;
-let locationModel: Model<LocationDoc>;
+let locationModel: models.Model<LocationDoc>;
 
 describe('Locations route', () => {
   beforeAll(async () => {
@@ -27,7 +27,7 @@ describe('Locations route', () => {
     app.use(bodyParser.json());
     app.use(morgan('dev'));
     const modelInstances = await getModelInstances();
-    locationModel = modelInstances['Location'] as Model<LocationDoc>;
+    locationModel = modelInstances['Location'] as models.Model<LocationDoc>;
     app.use(
       '/locations',
       getLocationsRouter(locationModel)
@@ -37,8 +37,9 @@ describe('Locations route', () => {
     server = app.listen(PORT);
   });
 
-  afterAll(() => {
+  afterAll(async () => {
     server.close();
+    await models.closeAsync();
   });
 
   beforeEach(async () => {

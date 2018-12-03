@@ -1,4 +1,4 @@
-import { Model } from 'express-cassandra';
+import * as models from 'express-cassandra';
 import express from 'express';
 import * as http from 'http';
 import httpStatus from 'http-status';
@@ -21,9 +21,9 @@ const PORT = 3000;
 let urlRoot: string;
 let server: http.Server;
 let fakeLogger: FakeLogger;
-let transactionModel: Model<TransactionDoc>;
-let locationModel: Model<LocationDoc>;
-let itemModel: Model<ItemDoc>;
+let transactionModel: models.Model<TransactionDoc>;
+let locationModel: models.Model<LocationDoc>;
+let itemModel: models.Model<ItemDoc>;
 
 describe('Transactions route', () => {
   beforeAll(async () => {
@@ -32,9 +32,10 @@ describe('Transactions route', () => {
     app.use(bodyParser.json());
     app.use(morgan('dev'));
     const modelInstances = await getModelInstances();
-    transactionModel = modelInstances['Transaction'] as Model<TransactionDoc>;
-    locationModel = modelInstances['Location'] as Model<LocationDoc>;
-    itemModel = modelInstances['Item'] as Model<ItemDoc>;
+    transactionModel = modelInstances['Transaction'] as
+      models.Model<TransactionDoc>;
+    locationModel = modelInstances['Location'] as models.Model<LocationDoc>;
+    itemModel = modelInstances['Item'] as models.Model<ItemDoc>;
     app.use(
       '/transactions',
       getTransactionsRouter(transactionModel, locationModel, itemModel)
@@ -44,8 +45,9 @@ describe('Transactions route', () => {
     server = app.listen(PORT);
   });
 
-  afterAll(() => {
+  afterAll(async () => {
     server.close();
+    await models.closeAsync();
   });
 
   beforeEach(async () => {

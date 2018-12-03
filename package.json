@@ -38,7 +38,7 @@
     "watch": "gulp4 watch",
     "compile": "gulp4 compile",
     "coverage": "gulp4 coverage",
-    "test-back": "gulp4 test"
+    "test-back": "jest dist/spec/.*\\.spec\\.js --forceExit"
   },
   "devDependencies": {
     "@types/enzyme": "^3.1.15",
