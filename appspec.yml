@@ -13,4 +13,4 @@ files:
     destination: /home/ec2-user/tax-calculation
 hooks:
   ValidateService:
-    - location: scripts/install.sh
+    - location: scripts/change_mods.sh
