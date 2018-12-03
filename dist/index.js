@@ -16,6 +16,11 @@ start();
 console.log(`Server listening at port ${PORT}.`);
 async function start() {
     const app = express_1.default();
+    app.use((req, res, next) => {
+        res.header("Access-Control-Allow-Origin", "*")
+            .header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
+        next();
+    });
     app.use(body_parser_1.default.json());
     const modelInstances = await getModelInstances_1.getModelInstances();
     const transactionModel = modelInstances['Transaction'];

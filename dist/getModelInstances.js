@@ -10,6 +10,7 @@ const companySchema_1 = __importDefault(require("./schemas/companySchema"));
 const locationSchema_1 = __importDefault(require("./schemas/locationSchema"));
 const itemSchema_1 = __importDefault(require("./schemas/itemSchema"));
 const transactionSchema_1 = __importDefault(require("./schemas/transactionSchema"));
+const itemUdts_1 = require("./schemas/itemUdts");
 async function getModelInstances() {
     const models = express_cassandra_1.default.createClient({
         clientOptions: {
@@ -24,7 +25,7 @@ async function getModelInstances() {
                 replication_factor: 1
             },
             migration: 'drop',
-            udts: Object.assign({}, addressUdt_1.addressUdt, transactionUdts_1.transactionUdts)
+            udts: Object.assign({}, addressUdt_1.addressUdt, transactionUdts_1.transactionUdts, itemUdts_1.itemUdts)
         }
     });
     const companyModel = models.loadSchema('Company', Object.assign({}, companySchema_1.default));

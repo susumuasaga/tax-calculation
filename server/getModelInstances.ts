@@ -5,6 +5,7 @@ import companySchema from './schemas/companySchema';
 import locationSchema from './schemas/locationSchema';
 import itemSchema from './schemas/itemSchema';
 import transactionSchema from './schemas/transactionSchema';
+import { itemUdts } from './schemas/itemUdts';
 
 /**
  * Get Model Instances.
@@ -27,7 +28,8 @@ export async function getModelInstances():
       migration: 'drop',
       udts: {
         ...addressUdt,
-        ...transactionUdts
+        ...transactionUdts,
+        ...itemUdts
       }
     }
   });
