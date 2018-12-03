@@ -6,7 +6,7 @@ files:
   - source: /dist
     destination: /home/ec2-user/tax-calculation/dist
   - source: /scripts
-    destination: /home/ec2-user/tax-calculation/scripts
+    destination: /usr/local/bin
   - source: package.json
     destination: /home/ec2-user/tax-calculation
   - source: gulpfile.js
