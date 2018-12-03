@@ -2,5 +2,5 @@
 uid=$(forever list | grep dist/index.js | awk '{ print $3 }')
 if [ "${uid}" ]
 then
-  $(forever stop ${uid})
+  forever stop ${uid}
 fi

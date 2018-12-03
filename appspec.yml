@@ -12,7 +12,5 @@ files:
   - source: gulpfile.js
     destination: /home/ec2-user/tax-calculation
 hooks:
-  ApplicationStop:
-    - location: scripts/stop_server.sh
-  AfterInstall:
+  ValidateService:
     - location: scripts/change_mods.sh
