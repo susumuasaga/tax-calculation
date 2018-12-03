@@ -13,8 +13,6 @@ files:
     destination: /home/ec2-user/tax-calculation
   ApplicationStop:
     - location: scripts/stop_server.sh
-  BeforeInstall:
-    - location: scripts/install_forever.sh
   AfterInstall:
     - location: scripts/install_dependencies.sh
     - location: scripts/test_backend.sh
