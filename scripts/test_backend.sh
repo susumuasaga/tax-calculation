@@ -1,5 +1,5 @@
 #!/bin/bash
-cd ~/tax-calculation
+cd /home/ec2-user/tax-calculation
 sudo chmod -R 777 tax-calculation
 npm run test-back
-cd ~/tax-calculation/scripts
+cd /home/ec2-user/tax-calculation/scripts

@@ -1,4 +1,4 @@
 #!/bin/bash
-cd ~/tax-calculation
+cd /home/ec2-user/tax-calculation
 forever start dist/index.js
-cd ~/tax-calculation/scripts
+cd /home/ec2-user/tax-calculation/scripts
