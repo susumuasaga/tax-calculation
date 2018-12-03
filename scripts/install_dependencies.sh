@@ -1,4 +1,5 @@
-cd tax-calculation
+#!/bin/bash
+cd ~/tax-calculation
 npm install forever -g
 npm install
-cd ~
+cd ~/tax-calculation/scripts
