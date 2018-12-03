@@ -73,7 +73,7 @@ files:
     - location: scripts/stop_server.sh
 # During the BeforeInstall deployment lifecycle event, run the commands 
 #   in the script specified in "location".
-
+#
 # During the AfterInstall deployment lifecycle event, run the commands 
 #   in the script specified in "location".
   AfterInstall:
