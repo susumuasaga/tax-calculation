@@ -7,31 +7,31 @@ const plumber = require('gulp-plumber');
 
 let tsProject = ts.createProject('server/tsconfig.json');
 
-function compile() {
-  return tsProject
-    .src()
+function compile(done) {
+  return tsProject.src()
     .pipe(tsProject())
     .js
     .pipe(gulp.dest('dist'));
 }
 exports.compile = compile;
 
-function test() {
-  return gulp
-    .src('dist/spec/**/*.spec.js')
+function test(done) {
+  return gulp.src('dist/spec/**/*.spec.js')
     .pipe(plumber())
     .pipe(jest());
 }
 exports.test = test;
 
-function coverage() {
-  return gulp
-    .src('dist/spec/**/*.spec.js')
+function coverage(done) {
+  return gulp.src('dist/spec/**/*.spec.js')
     .pipe(jest({ collectCoverage: true }));
 }
 exports.coverage = coverage;
 
 function watch() {
-  gulp.watch('server/**/*.ts', gulp.series(compile, test));
+  gulp.watch(
+    'server/**/*.ts',
+    gulp.series(compile, test)
+  );
 }
 exports.watch = watch;

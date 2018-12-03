@@ -19,6 +19,7 @@ export function Line({ line, currency = 'BRL' }: Props) {
           <b>Código do produto: </b>{item.code}<br />
           {(item.description) && <span>{item.description}<br /></span>}
           {item.productType}<br />
+          {(line.useType) && <span><b>Uso: </b>{line.useType}<br /></span>}
           {(line.numberOfItems) &&
             <span>
               <b>Quantidade: </b>{line.numberOfItems}<br />
