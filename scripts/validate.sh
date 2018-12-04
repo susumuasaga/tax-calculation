@@ -1,2 +1,2 @@
 #!/bin/bash
-install.sh
+/usr/local/bin/install.sh
