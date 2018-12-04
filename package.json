@@ -2,16 +2,23 @@
   "name": "tax-calculation",
   "version": "0.1.0",
   "private": true,
+  "scripts": {
+    "start": "react-scripts-ts start",
+    "build": "react-scripts-ts build",
+    "test-front": "react-scripts-ts test --env=jsdom",
+    "eject": "react-scripts-ts eject",
+    "watch": "gulp4 watch",
+    "compile": "gulp4 compile",
+    "coverage": "gulp4 coverage",
+    "test-back": "jest dist/spec/.*\\.spec\\.js --forceExit"
+  },
   "dependencies": {
-    "await-to-js": "^2.1.1",
     "body-parser": "^1.18.3",
     "bootstrap": "^4.1.3",
     "enzyme": "^3.7.0",
     "enzyme-adapter-react-16": "^1.7.0",
     "express": "^4.16.4",
     "express-cassandra": "^2.2.3",
-    "gulp-plumber": "^1.2.0",
-    "history": "^4.7.2",
     "http-status": "^1.3.1",
     "lodash": "^4.17.11",
     "moment": "^2.22.2",
@@ -29,16 +36,6 @@
     "superagent": "^4.0.0-beta.5",
     "uuid-validate": "0.0.3",
     "winston": "^3.1.0"
-  },
-  "scripts": {
-    "start": "react-scripts-ts start",
-    "build": "react-scripts-ts build",
-    "test-front": "react-scripts-ts test --env=jsdom",
-    "eject": "react-scripts-ts eject",
-    "watch": "gulp4 watch",
-    "compile": "gulp4 compile",
-    "coverage": "gulp4 coverage",
-    "test-back": "jest dist/spec/.*\\.spec\\.js --forceExit"
   },
   "devDependencies": {
     "@types/enzyme": "^3.1.15",
@@ -58,6 +55,7 @@
     "@types/superagent": "^3.8.4",
     "@types/uuid-validate": "0.0.0",
     "gulp-jest": "^4.0.2",
+    "gulp-plumber": "^1.2.0",
     "gulp-typescript": "^5.0.0-alpha.3",
     "gulp4": "^4.0.2",
     "jest": "^23.6.0",
