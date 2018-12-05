@@ -1,4 +1,5 @@
 #!/bin/bash
+source /home/ec2-user/.bash_profile
 npm install forever -g
 sudo chmod -R 777 /usr/local/bin
 stop_server.sh

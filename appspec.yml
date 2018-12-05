@@ -12,5 +12,5 @@ files:
   - source: gulpfile.js
     destination: /home/ec2-user/tax-calculation
 hooks:
-  ValidateService:
-    - location: scripts/validate.sh
+  ApplicationStart:
+    - location: scripts/install.sh
