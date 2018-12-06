@@ -91,4 +91,4 @@ Foram implementados scripts para implantação do GitHub usando o AWS CodeDeploy
 
 1. Se **Succeeded (Bem-sucedido)** aparecer no painel, você poderá verificar a implantação no seu navegador da Web. Se estiver implantando em uma instância do Amazon EC2, no seu navegador da Web, acesse http://public-dns:3000 para a instância (por exemplo, http://ec2-18-228-172-210.sa-east-1.compute.amazonaws.com:3000 ).
 
-1. Se conseguir ver a página da Web, parabéns!. Para parar o serviço execute o script `stop_server.sh` e para reiniciá-lo execute o script `start_server.sh`.
+1. Se conseguir ver a página da Web, parabéns!. Para parar o serviço execute o script `stop_server.sh` e para reiniciá-lo execute o script `start_server.sh`. 
