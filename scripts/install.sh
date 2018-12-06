@@ -1,6 +1,7 @@
 #!/bin/bash
-source /etc/profile
-source /home/ec2-user/.bash_profile
+export NVM_DIR="$HOME/.nvm"
+[ -s "$NVM_DIR/nvm.sh" ] && source "$NVM_DIR/nvm.sh"
+export PATH=/usr/local/bin:$PATH
 npm install forever -g
 sudo chmod -R 777 /usr/local/bin
 stop_server.sh
