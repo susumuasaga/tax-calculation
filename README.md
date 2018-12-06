@@ -7,6 +7,13 @@ Instância do EC2 Amazon Linux com Cassandra e Node versão 10.14 instalados. O 
 
 **Adicione regras do grupo de segurança** para abrir o porto 3000, que será usado para acessar o servidor do API Rest.
 
+Para a aplicação rodar sem problemas é necessário criar espaço em disco para swap de memória virtual. Para isso, siga as instruções abaixo:
+  * `sudo fallocate -l 4G /swapfile` Cria um arquivo de swap de 4 GB.
+  * `sudo chmod 600 /swapfile` Proteja o arquivo de swap restringindo o acesso ao root.
+  * `sudo mkswap /swapfile`. Marque o arquivo como espaço de swap.
+  * `sudo swapon /swapfile` Abilite o swap.
+  * `echo "/swapfile none swap sw 0 0" | sudo tee -a /etc/fstab`. Persiste o arquivo de swap nas reinicializações.
+
 ## Aplicativo TaxCalculation
 O aplicativo já foi implantado em uma instância do EC2 e pode ser acessado de qualquer lugar por meio da url http://ec2-18-228-172-210.sa-east-1.compute.amazonaws.com:3000/ .
 
@@ -69,18 +76,11 @@ Foram implementados scripts para implantação do GitHub usando o AWS CodeDeploy
 ## Finalizar a implantação
 1. Na lista de implantações, procure a linha com um valor de **Application (Aplicativo)** de **TaxCalculation-App** e um valor de **Deployment Group (Grupo de implantação)** de **CodeDeployGitHubDemo-DepGrp**.
 
-2. Depois de algum tempo, **Bem-sucedido** aparecerá na coluna Status, você finalizará a implantação em um terminal SSH.
+1. Depois de algum tempo, **Bem-sucedido** aparecerá na coluna Status, você finalizará a implantação em um terminal SSH.
 
-3. Para a aplicação rodar sem problemas siga as instruções abaixo para criar um arquivo de swap de memória:
-  * `sudo fallocate -l 4G /swapfile` Cria um arquivo de swap de 4 GB.
-  * `sudo chmod 600 /swapfile` Proteja o arquivo de swap restringindo o acesso ao root.
-  * `sudo mkswap /swapfile`. Marque o arquivo como espaço de swap.
-  * `sudo swapon /swapfile` Abilite o swap.
-  * `echo "/swapfile none swap sw 0 0" | sudo tee -a /etc/fstab`. Persiste o arquivo de swap nas reinicializações.
+1. O AWS CodeDeploy já terá implantado a aplicação e iniciado a aplicação. Agora, com um navegador da Web, acesse a sua instância no porto 3000.
 
-4. O AWS CodeDeploy já terá baixado os arquivos da implantação no diretório `/home/ec2-user/tax-calculation`, bem como os scripts de implantação. Para terminar a instalação, você deverá executar `install.sh`, que instalas as dependência, inicializa o banco de dados com dados para teste e inicio o serviço para executar o TaxCalculation. Agora, no navegador da Web, acesse a sua instância no porto 3000.
-
-5. Se conseguir ver a página da Web, parabéns! Você terminou a implantação do TaxCalculation.
+1. Se conseguir ver a página da Web, parabéns! Você terminou a implantação do TaxCalculation.
 
 Para parar o serviço execute o script `stop_server.sh` e para reiniciá-lo execute o script `start_server.sh`.
 
