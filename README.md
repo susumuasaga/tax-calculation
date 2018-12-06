@@ -76,9 +76,9 @@ Foram implementados scripts para implantação do GitHub usando o AWS CodeDeploy
 ## Finalizar a implantação
 1. Na lista de implantações, procure a linha com um valor de **Application (Aplicativo)** de **TaxCalculation-App** e um valor de **Deployment Group (Grupo de implantação)** de **CodeDeployGitHubDemo-DepGrp**.
 
-1. Depois de algum tempo, **Bem-sucedido** aparecerá na coluna Status, você finalizará a implantação em um terminal SSH.
+1. Depois de algum tempo, **Bem-sucedido** aparecerá na coluna Status, indicando que a implantação terminou e a aplicação foi iniciada.
 
-1. O AWS CodeDeploy já terá implantado a aplicação e iniciado a aplicação. Agora, com um navegador da Web, acesse a sua instância no porto 3000.
+1. Agora, com um navegador da Web, acesse a sua instância no porto 3000.
 
 1. Se conseguir ver a página da Web, parabéns! Você terminou a implantação do TaxCalculation.
 
