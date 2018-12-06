@@ -1,0 +1,392 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <title>Code coverage report for src/components/Transactions.tsx</title>
+    <meta charset="utf-8" />
+    <link rel="stylesheet" href="../../prettify.css" />
+    <link rel="stylesheet" href="../../base.css" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style type='text/css'>
+        .coverage-summary .sorter {
+            background-image: url(../../sort-arrow-sprite.png);
+        }
+    </style>
+</head>
+<body>
+<div class='wrapper'>
+  <div class='pad1'>
+    <h1>
+      <a href="../../index.html">All files</a> / <a href="index.html">src/components</a> Transactions.tsx
+    </h1>
+    <div class='clearfix'>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">100% </span>
+        <span class="quiet">Statements</span>
+        <span class='fraction'>18/18</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">77.78% </span>
+        <span class="quiet">Branches</span>
+        <span class='fraction'>7/9</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">100% </span>
+        <span class="quiet">Functions</span>
+        <span class='fraction'>4/4</span>
+      </div>
+      <div class='fl pad1y space-right2'>
+        <span class="strong">100% </span>
+        <span class="quiet">Lines</span>
+        <span class='fraction'>15/15</span>
+      </div>
+    </div>
+  </div>
+  <div class='status-line high'></div>
+<pre><table class="coverage">
+<tr><td class="line-count quiet">1
+2
+3
+4
+5
+6
+7
+8
+9
+10
+11
+12
+13
+14
+15
+16
+17
+18
+19
+20
+21
+22
+23
+24
+25
+26
+27
+28
+29
+30
+31
+32
+33
+34
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50
+51
+52
+53
+54
+55
+56
+57
+58
+59
+60
+61
+62
+63
+64
+65
+66
+67
+68
+69
+70
+71
+72
+73
+74
+75
+76
+77
+78
+79
+80
+81
+82
+83
+84
+85
+86
+87
+88
+89
+90
+91
+92
+93
+94
+95
+96
+97
+98
+99
+100
+101
+102
+103
+104
+105
+106
+107
+108
+109
+110</td><td class="line-coverage quiet"><span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">10x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">import * as React from 'react';
+import { Container, ListGroup, ListGroupItem, Pagination, PaginationItem, Breadcrumb, BreadcrumbItem, Alert } from 'reactstrap';
+import * as queryString from 'query-string';
+import { TransactionsCache } from '../State';
+import { Link } from 'react-router-dom';
+import { TransactionHeader } from './TransactionHeader';
+&nbsp;
+export const PAGE_SIZE = 10;
+&nbsp;
+export type Props = {
+  page: number;
+  transactionsCache: TransactionsCache;
+  onInit(): void;
+};
+&nbsp;
+let query: string;
+&nbsp;
+/**
+ * Transactions component.
+ * Input transactions cache.
+ * Output onInit() Called at the start.
+ */
+export function Transactions({ page, transactionsCache, onInit }: Props) {
+  onInit();
+  const transactions = transactionsCache.transactions;
+  const error = transactionsCache.error;
+  query = queryString.stringify(transactionsCache.query!);
+&nbsp;
+  return (
+    &lt;Container&gt;
+      &lt;Breadcrumb&gt;
+        &lt;BreadcrumbItem&gt;
+          &lt;Link to="/locations"&gt;Empresas&lt;/Link&gt;
+        &lt;/BreadcrumbItem&gt;
+        &lt;BreadcrumbItem&gt;Transações&lt;/BreadcrumbItem&gt;
+      &lt;/Breadcrumb&gt;
+      {
+        !error &amp;&amp; !transactions &amp;&amp;
+        &lt;Alert color="primary"&gt;
+          &lt;h2&gt;Carregando...&lt;/h2&gt;;
+        &lt;/Alert&gt;
+      }
+      {
+        error &amp;&amp;
+<span class="branch-1 cbranch-no" title="branch not covered" >        &lt;Alert color="danger"&gt;</span>
+          &lt;h2&gt;Erro&lt;/h2&gt;
+          &lt;p&gt;{error.message}&lt;/p&gt;
+        &lt;/Alert&gt;
+      }
+      {
+        transactions &amp;&amp;
+        &lt;div&gt;
+          &lt;h2&gt;
+            Transações {(page - 1) * PAGE_SIZE + 1} a&amp;nbsp;
+            {Math.min(page * PAGE_SIZE, transactions.length)} de&amp;nbsp;
+            {transactions.length}
+          &lt;/h2&gt;
+          &lt;p&gt;
+            Clique sobre uma linha para abrir os detalhes da transação.
+          &lt;/p&gt;
+          &lt;ListGroup style={{
+            opacity: (transactionsCache.isFetching ? <span class="branch-0 cbranch-no" title="branch not covered" >0.5 </span>: 1)
+          }}&gt;
+            {
+              transactions.slice(
+                (page - 1) * PAGE_SIZE,
+                Math.min(page * PAGE_SIZE, transactions.length)
+              )
+                .map((transaction, index) =&gt;
+                  &lt;ListGroupItem key={index}&gt;
+                    &lt;Link to={
+                      `/transaction\
+?companyLocation=${transaction.header.companyLocation}\
+&amp;transactionDate=${transaction.header.transactionDate}\
+&amp;documentCode=${transaction.header.documentCode}`
+                    }&gt;
+                      &lt;TransactionHeader {...{ transaction }} /&gt;
+                    &lt;/Link&gt;
+                  &lt;/ListGroupItem&gt;
+                )
+            }
+          &lt;/ListGroup&gt;
+          &lt;p&gt;&lt;/p&gt;
+          &lt;Pagination style={{ justifyContent: 'center' }}&gt;
+            &lt;PaginationItem disabled={page &lt;= 1}&gt;
+              &lt;Link className="page-link" to={urlToPage(page - 1)}&gt;&amp;laquo;&lt;/Link&gt;
+            &lt;/PaginationItem&gt;
+            {Array.from({ length: Math.ceil(transactions.length / PAGE_SIZE) })
+              .map((e, index) =&gt;
+                &lt;PaginationItem active={page === index + 1} key={index}&gt;
+                  &lt;Link className="page-link" to={urlToPage(index + 1)}&gt;
+                    {index + 1}
+                  &lt;/Link&gt;
+                &lt;/PaginationItem&gt;)}
+            &lt;PaginationItem disabled={
+              page &gt;= Math.ceil(transactions.length / PAGE_SIZE)
+            }&gt;
+              &lt;Link className="page-link" to={urlToPage(page + 1)}&gt;&amp;raquo;&lt;/Link&gt;
+            &lt;/PaginationItem&gt;
+          &lt;/Pagination&gt;
+        &lt;/div&gt;
+      }
+    &lt;/Container&gt;
+  );
+}
+&nbsp;
+function urlToPage(page: number) {
+  return `/transactions?${query}&amp;page=${page.toString()}`;
+}
+&nbsp;</pre></td></tr>
+</table></pre>
+<div class='push'></div><!-- for sticky footer -->
+</div><!-- /wrapper -->
+<div class='footer quiet pad2 space-top1 center small'>
+  Code coverage
+  generated by <a href="https://istanbul.js.org/" target="_blank">istanbul</a> at Sat Dec 01 2018 04:16:55 GMT-0200 (GMT-02:00)
+</div>
+</div>
+<script src="../../prettify.js"></script>
+<script>
+window.onload = function () {
+        if (typeof prettyPrint === 'function') {
+            prettyPrint();
+        }
+};
+</script>
+<script src="../../sorter.js"></script>
+</body>
+</html>
