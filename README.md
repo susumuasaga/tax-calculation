@@ -17,7 +17,7 @@ Para a aplicação rodar sem problemas é necessário criar espaço em disco par
 ## Aplicativo TaxCalculation
 O aplicativo já foi implantado em uma instância do EC2 e pode ser acessado de qualquer lugar por meio da url http://ec2-18-228-172-210.sa-east-1.compute.amazonaws.com:3000/ .
 
-Pelo Browser o usuário terá acesso ao **frontend**, onde poderá visualizar uma tela de listagem das transações que foram enviadas e calculadas pelo •backend*.
+Pelo Browser o usuário terá acesso ao **frontend**, onde poderá visualizar uma tela de listagem das transações que foram enviadas e calculadas pelo **backend**.
 
 No mesma url, na rota POST(`/api/transactions`), o usuário poderá enviar uma transação que será completada com o cálculo dos impostos e devolvida como resposta pelo **backend**.
 ## Implantação em outra instância do EC2 Amazon Linux
