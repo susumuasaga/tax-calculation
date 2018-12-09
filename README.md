@@ -1,14 +1,13 @@
-# tax-calculation
-# Projeto para Vaga de Engenheiro de Software Sênior Avalara
+# tax-calculation: Projeto para Vaga de Engenheiro de Software Sênior Avalara
 Susumu Asaga
 
 ## Aplicativo TaxCalculation
 
-O aplicativo já foi implantado em uma instância do EC2 e pode ser acessado de qualquer lugar por meio da url http://ec2-18-228-172-210.sa-east-1.compute.amazonaws.com:3000 .
+O aplicativo já foi implantado em uma instância do EC2 e pode ser acessado de qualquer lugar por meio da url http://ec2-18-228-172-210.sa-east-1.compute.amazonaws.com:3000.
 
 Pelo Browser o usuário terá acesso ao **frontend**, onde poderá visualizar uma tela de listagem das transações que foram enviadas e calculadas pelo **backend**.
 
-No mesma url, na rota POST(`/api/transactions`), o usuário poderá enviar uma transação que será completada com o cálculo dos impostos e devolvida como resposta pelo **backend**. O formato de troca de dados é o JSON, usando a interface especificada com as correções propostas na issue #7.
+No mesmo url, na rota POST(`/api/transactions`), o usuário poderá enviar uma transação que será completada com o cálculo dos impostos e devolvida como resposta pelo **backend**. O formato de troca de dados é o JSON, usando a interface especificada com as correções propostas na issue #7.
 
 ## Implantação em outra instância do EC2 Amazon Linux
 
@@ -68,12 +67,11 @@ Foram implementados scripts para implantação do GitHub usando o AWS CodeDeploy
 1. Em **Revision type (Tipo de revisão)**, selecione **GitHub**.
 
 1. Em Conectar-se ao GitHub, faça um dos seguintes procedimentos:
-
   * Em **GitHub account (Conta do GitHub)**, digite um nome para identificar essa conexão e escolha **Connect to GitHub (Conectar-se ao GitHub)**. A página da web solicita que você autorize o AWS CodeDeploy a interagir com o GitHub para o aplicativo chamado **TaxCalculation-App**. Continue na etapa 5.
-
+  
   * Para usar uma conexão já criada, em **Conta do GitHub**, selecione seu nome e escolha **Conectar-se ao GitHub**. Continue na etapa 7.
 
-1. Siga as instruções na página **Fazer login** para entrar com a sua conta do GitHub.
+5. Siga as instruções na página **Fazer login** para entrar com a sua conta do GitHub.
 
 1. Na página para **Autorizar aplicativo**, escolha **Autorizar aplicativo**.
 
@@ -89,6 +87,44 @@ Foram implementados scripts para implantação do GitHub usando o AWS CodeDeploy
 
 1. Se **Failed (Falhou)** aparecer no painel **Deployment status (Situação da implantação**, verifique o que aconteceu no painel **Deployment lifecycle events (Eventos de ciclo de vida da implantação)**.
 
-1. Se **Succeeded (Bem-sucedido)** aparecer no painel, você poderá verificar a implantação no seu navegador da Web. Se estiver implantando em uma instância do Amazon EC2, no seu navegador da Web, acesse http://public-dns:3000 para a instância (por exemplo, http://ec2-18-228-172-210.sa-east-1.compute.amazonaws.com:3000 ).
+1. Se **Succeeded (Bem-sucedido)** aparecer no painel, você poderá verificar a implantação no seu navegador da Web. Se estiver implantando em uma instância do Amazon EC2, no seu navegador da Web, acesse a url de sua instância no porto 3000 (por exemplo, http://ec2-18-228-172-210.sa-east-1.compute.amazonaws.com:3000).
 
-1. Se conseguir ver a página da Web, parabéns!. Para parar o serviço execute o script `stop_server.sh` e para reiniciá-lo execute o script `start_server.sh`. 
+1. Se conseguir ver a página para seleção de empresa, a implantação foi concluída com êxito, parabéns!.
+
+## O serviço tax-calculation
+
+O comando `service` pode ser usado para iniciar, parar e reiniciar o serviço `tax-calculation`.
+
+A sintaxe geral é a seguinte:
+```
+service tax-calculation <comando>
+```
+O `<comando>` pode ser `start`, `stop`, `status` e `restart`.
+
+### O comando stop
+
+Para parar o serviço `tax-calculation`, entre:
+```
+service tax-calculation stop
+```
+
+### O comando start
+
+Para iniciar o serviço `tax-calculation`, entre:
+```
+service tax-calculation start
+```
+
+### O comando status
+
+Para obter a situação atual do serviço `tax-calculation`, entre:
+```
+service tax-calculation status
+```
+
+### O comando restart
+
+Para reiniciar o serviço `tax-calculation`, entre:
+```
+service tax-calculation restart
+```

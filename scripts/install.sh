@@ -1,12 +1,11 @@
 #!/bin/bash
-export NVM_DIR="/home/ec2-user/.nvm"
-[ -s "$NVM_DIR/nvm.sh" ] && . "$NVM_DIR/nvm.sh"
-export PATH=/usr/local/bin:$PATH
+source /home/ec2-user/.nvm/nvm.sh
 npm install forever -g
-sudo chmod -R 777 /usr/local/bin
-stop_server.sh
-sudo chmod -R 777 /home/ec2-user/tax-calculation
+chmod -R 755 /usr/local/bin
+/usr/local/bin/stop_server.sh
+chmod -R 644 /home/ec2-user/tax-calculation
 cd /home/ec2-user/tax-calculation
 npm install --production
 npm run test-back
-start_server.sh
+/usr/local/bin/start_server.sh
+chmod 755 /etc/init.d/tax-calculation

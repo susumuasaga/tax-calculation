@@ -1,0 +1,31 @@
+#!/bin/bash
+
+start() {
+  sudo sh -c /usr/local/bin/start_server.sh
+}
+
+stop() {
+  sudo sh -c /usr/local/bin/stop_server.sh
+}
+
+status() {
+  sudo sh -c /usr/local/bin/status_server.sh
+}
+
+case "$1" in
+  start)
+    start
+    ;;
+  stop)
+    stop
+    ;;
+  restart)
+    stop
+    start
+    ;;
+  status)
+    status
+    ;;
+  *)
+    echo $"Uso: tax-calculation ( start | stop | restart | status )"
+esac
