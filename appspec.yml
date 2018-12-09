@@ -18,5 +18,7 @@ files:
   - source: gulpfile.js
     destination: /home/ec2-user/tax-calculation
 hooks:
+  BeforeInstall:
+    - location: scripts/rm_old.sh
   AfterInstall:
     - location: scripts/install.sh
