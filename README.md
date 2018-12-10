@@ -130,3 +130,7 @@ Para reiniciar o serviço `tax-calculation`, entre:
 ```
 sudo service tax-calculation restart
 ```
+
+### O log de erros
+
+O serviço `tax-calculation` faz o log de erros no arquivo `/home/ec2-user/tax-calculation/error.log`.
