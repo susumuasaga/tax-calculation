@@ -1,17 +1,23 @@
 #!/bin/bash
 
 start() {
-  sudo sh -c /usr/local/bin/start_server.sh
+  cd /home/ec2-user/tax-calculation
+  forever start dist/index.js
 }
 
 stop() {
-  sudo sh -c /usr/local/bin/stop_server.sh
+  uid=$(forever list | grep dist/index.js | awk '{ print $3 }')
+  if [ "${uid}" ]
+  then
+    forever stop ${uid}
+  fi
 }
 
 status() {
-  sudo sh -c /usr/local/bin/status_server.sh
+  forever list
 }
 
+source /home/ec2-user/.nvm/nvm.sh
 case "$1" in
   start)
     start

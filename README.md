@@ -95,9 +95,11 @@ Foram implementados scripts para implantação do GitHub usando o AWS CodeDeploy
 
 O comando `service` pode ser usado para iniciar, parar e reiniciar o serviço `tax-calculation`.
 
+**Nota** Você deve ter permissão de root para controlar o serviço `tax-calculation`.
+
 A sintaxe geral é a seguinte:
 ```
-service tax-calculation <comando>
+sudo service tax-calculation <comando>
 ```
 O `<comando>` pode ser `start`, `stop`, `status` e `restart`.
 
@@ -105,26 +107,26 @@ O `<comando>` pode ser `start`, `stop`, `status` e `restart`.
 
 Para parar o serviço `tax-calculation`, entre:
 ```
-service tax-calculation stop
+sudo service tax-calculation stop
 ```
 
 ### O comando start
 
 Para iniciar o serviço `tax-calculation`, entre:
 ```
-service tax-calculation start
+sudo service tax-calculation start
 ```
 
 ### O comando status
 
 Para obter a situação atual do serviço `tax-calculation`, entre:
 ```
-service tax-calculation status
+sudo service tax-calculation status
 ```
 
 ### O comando restart
 
 Para reiniciar o serviço `tax-calculation`, entre:
 ```
-service tax-calculation restart
+sudo service tax-calculation restart
 ```
