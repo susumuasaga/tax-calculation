@@ -5,12 +5,14 @@ files:
     destination: /home/ec2-user/tax-calculation/build
   - source: /dist
     destination: /home/ec2-user/tax-calculation/dist
-  - source: /scripts
-    destination: /usr/local/bin
+  - source: /scripts/tax-calculation
+    destination: /etc/init.d
   - source: package.json
     destination: /home/ec2-user/tax-calculation
   - source: gulpfile.js
     destination: /home/ec2-user/tax-calculation
 hooks:
+  BeforeInstall:
+    - location: scripts/rm_old.sh
   AfterInstall:
     - location: scripts/install.sh
