@@ -1,4 +1,4 @@
-# tax-calculation: Projeto para Vaga de Engenheiro de Software Sênior Avalara
+# Tax-calculation
 Susumu Asaga
 
 ## Aplicativo TaxCalculation
